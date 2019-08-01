@@ -1,10 +1,13 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Emit;
+using Microsoft.Graph;
 using MsGraphSDKSnippetsCompiler.Models;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MsGraphSDKSnippetsCompiler
 {
@@ -26,14 +29,21 @@ namespace MsGraphSDKSnippetsCompiler
         public CompilationResultsModel CompileSnippet(string codeSnippet)
         {
             SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(codeSnippet);
+
             string assemblyName = Path.GetRandomFileName();
-            string assemblyPath = Path.GetDirectoryName(typeof(object).Assembly.Location);
+            string commonAssemblyPath = Path.GetDirectoryName(typeof(object).Assembly.Location);
+            string graphAssemblyPath = Path.GetDirectoryName(typeof(GraphServiceClient).Assembly.Location);
 
             MetadataReference[] metadataReferences = new MetadataReference[]
             {
-                MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "System.Private.CoreLib.dll")),
-                MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "System.Console.dll")),
-                MetadataReference.CreateFromFile(Path.Combine(assemblyPath, "System.Runtime.dll"))
+                MetadataReference.CreateFromFile(Path.Combine(commonAssemblyPath, "System.Private.CoreLib.dll")),
+                MetadataReference.CreateFromFile(Path.Combine(commonAssemblyPath, "System.Console.dll")),
+                MetadataReference.CreateFromFile(Path.Combine(commonAssemblyPath, "System.Runtime.dll")),
+                MetadataReference.CreateFromFile(Path.Combine(graphAssemblyPath, "Microsoft.Graph.dll")),
+                MetadataReference.CreateFromFile(Path.Combine(Path.GetDirectoryName(typeof(IAuthenticationProvider).Assembly.Location), "Microsoft.Graph.Core.dll")),
+                MetadataReference.CreateFromFile(Path.Combine(Path.GetDirectoryName(typeof(AuthenticationProvider).Assembly.Location), "msgraph-sdk-raptor-compiler-lib.dll")),
+                MetadataReference.CreateFromFile(Path.Combine(Path.GetDirectoryName(typeof(Task).Assembly.Location), "System.Threading.Tasks.dll")),
+                MetadataReference.CreateFromFile(Path.Combine(Path.GetDirectoryName(typeof(JToken).Assembly.Location), "Newtonsoft.Json.dll"))
             };
 
             CSharpCompilation compilation = CSharpCompilation.Create(
@@ -72,16 +82,16 @@ namespace MsGraphSDKSnippetsCompiler
             if (!emitResult.Success)
             {
                 //We are only interested with warnings and errors hence the diagnostics filter
-                IEnumerable<Diagnostic> failures = emitResult.Diagnostics.Where(diagnostic =>
+                IEnumerable<Microsoft.CodeAnalysis.Diagnostic> failures = emitResult.Diagnostics.Where(diagnostic =>
                     diagnostic.IsWarningAsError ||
                     diagnostic.Severity == DiagnosticSeverity.Error);
 
-                compilationResultsModel.IsSuccess = true;
+                compilationResultsModel.IsSuccess = false;
                 compilationResultsModel.Diagnostics = failures;
             }
             else
             {
-                compilationResultsModel.IsSuccess = false;
+                compilationResultsModel.IsSuccess = true;
                 compilationResultsModel.Diagnostics = null;
             }
 

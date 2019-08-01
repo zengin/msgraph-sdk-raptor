@@ -2,7 +2,7 @@
 
 namespace MsGraphSDKSnippetsCompiler
 {
-    internal class AppSettings
+    public class AppSettings
     {
         public static IConfigurationRoot Config()
         {
