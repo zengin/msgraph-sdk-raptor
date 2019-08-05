@@ -16,9 +16,11 @@ namespace MsGraphSDKSnippetsCompiler
     /// </summary>
     public class MicrosoftGraphCSharpCompiler : IMicrosoftGraphSnippetsCompiler
     {
-        public MicrosoftGraphCSharpCompiler()
-        {
+        private string  _markdownFileName;
 
+        public MicrosoftGraphCSharpCompiler(string markdownFileName)
+        {
+            _markdownFileName = markdownFileName;
         }
 
         /// <summary>
@@ -81,18 +83,20 @@ namespace MsGraphSDKSnippetsCompiler
 
             if (!emitResult.Success)
             {
-                //We are only interested with warnings and errors hence the diagnostics filter
+                // We are only interested with warnings and errors hence the diagnostics filter
                 IEnumerable<Microsoft.CodeAnalysis.Diagnostic> failures = emitResult.Diagnostics.Where(diagnostic =>
                     diagnostic.IsWarningAsError ||
                     diagnostic.Severity == DiagnosticSeverity.Error);
 
                 compilationResultsModel.IsSuccess = false;
                 compilationResultsModel.Diagnostics = failures;
+                compilationResultsModel.MarkdownFileName = _markdownFileName;
             }
             else
             {
                 compilationResultsModel.IsSuccess = true;
-                compilationResultsModel.Diagnostics = null;
+                compilationResultsModel.Diagnostics = null;             
+                compilationResultsModel.MarkdownFileName = _markdownFileName;
             }
 
             return compilationResultsModel;

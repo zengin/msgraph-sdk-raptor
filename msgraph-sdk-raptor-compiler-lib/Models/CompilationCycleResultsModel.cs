@@ -1,0 +1,16 @@
+﻿using MsGraphSDKSnippetsCompiler.Models;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace MsGraphSDKSnippetsCompiler.Models
+{
+    public class CompilationCycleResultsModel
+    {
+        public List<CompilationResultsModel> compilationResultsModelList { get; set; }
+        public int TotalCompiledSnippets { get; set; }
+        public int TotalErrors { get; set; }
+        public Languages Language { get; set; }
+        public decimal ExecutionTime { get; set; }
+    }
+}

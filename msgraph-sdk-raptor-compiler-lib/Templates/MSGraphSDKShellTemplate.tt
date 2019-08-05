@@ -7,9 +7,9 @@ using MsGraphSDKSnippetsCompiler;
 
 public class GraphSDKTest
 {
-	private static IAuthenticationProvider authProvider = null;
+	private IAuthenticationProvider authProvider = null;
 
-	private async static void Main()
+	private async void Main()
 	{
 	    authProvider = AuthenticationProvider.GetIAuthenticationProvider();
 

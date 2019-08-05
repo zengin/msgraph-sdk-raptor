@@ -7,7 +7,7 @@
 //     the code is regenerated.
 // </auto-generated>
 // ------------------------------------------------------------------------------
-namespace msgraph_sdk_raptor_compiler_lib.Templates
+namespace MsGraphSDKSnippetsCompiler.Templates
 {
     using System;
     
@@ -15,7 +15,7 @@ namespace msgraph_sdk_raptor_compiler_lib.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\Users\v-tigich\source\repos\msgraph-sdk-raptor\msgraph-sdk-raptor-compiler-lib\Templates\MSGraphSDKShellTemplate.tt"
+    #line 1 "C:\Users\v-tigich\Downloads\msgraph-sdk-raptor-dotnet-prototype-features\msgraph-sdk-raptor-compiler-lib\Templates\MSGraphSDKShellTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
     public partial class MSGraphSDKShellTemplate : MSGraphSDKShellTemplateBase
     {
@@ -25,7 +25,8 @@ namespace msgraph_sdk_raptor_compiler_lib.Templates
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write(@"using System;
+            this.Write(@"
+using System;
 using Microsoft.Graph;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -33,9 +34,9 @@ using MsGraphSDKSnippetsCompiler;
 
 public class GraphSDKTest
 {
-	private static IAuthenticationProvider authProvider = null;
+	private IAuthenticationProvider authProvider = null;
 
-	private async static void Main()
+	private async void Main()
 	{
 	    authProvider = AuthenticationProvider.GetIAuthenticationProvider();
 
