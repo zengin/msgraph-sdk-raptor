@@ -10,4 +10,10 @@
     <ProjectReference Include="..\msgraph-sdk-raptor-compiler-lib\msgraph-sdk-raptor-compiler-lib.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="CompileLog.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

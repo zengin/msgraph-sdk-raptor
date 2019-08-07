@@ -2,8 +2,8 @@
 
 namespace MsGraphSDKSnippetsCompiler
 {
-    interface ICompilationResultsLogger
+    public interface ICompilationResultsLogger
     {
-        void Log(CompilationCycleResultsModel compilationResultsModelList);
+        void Log(CompilationCycleResultsModel compilationCycleResultsModel);
     }
 }

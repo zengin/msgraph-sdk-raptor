@@ -12,52 +12,113 @@ namespace MsGraphSDKRaptor
     public class Program
     {
         private static readonly IConfigurationRoot _configuration = AppSettings.Config();
-        private static SnippetsFileManager _snippetsFileManager = null;
+        private static ISnippetsFileManager _snippetsFileManager = null;
 
         static void Main(string[] args)
         {
-            CompilationCycleResultsModel logData = CompileCSharpSnippets();
+            MenuSelection();
 
-            //Log Compilation Results
-            /* Uncomment this block to log to database
-            string dbConnectioSettings = GetSettingsValue("ConnectionStrings", "Raptor");
-            CompilationResultsLogger compilationResultsLogger = new CompilationResultsLogger(dbConnectioSettings);
-            compilationResultsLogger.Log(logData);
-            */
+            Console.ResetColor();
+            Console.WriteLine("Press any key to exit app");
             Console.ReadKey();
         }
 
-        private static CompilationCycleResultsModel CompileCSharpSnippets()
+        private static void LogCompilationResults(CompilationCycleResultsModel logData)
+        {
+            //Log Compilation Results
+            ICompilationResultsLogger compilationResultsLogger = new CompilationResultsTextFileLogger();
+            compilationResultsLogger.Log(logData);
+
+            /* Uncomment this section to use database logging
+            string dbConnectioSettings = GetSettingsValue("ConnectionStrings", "Raptor");
+            ICompilationResultsLogger compilationResultsLogger = new CompilationResultsSQLDatabaseLogger(dbConnectioSettings);
+            compilationResultsLogger.Log(logData);
+            */
+
+            ShowConsoleMessage("Logging Complete!", ConsoleColor.Green);
+        }
+
+        #region Menu
+        private static void MenuSelection()
+        {
+            string menuSelection;
+            CompilationCycleResultsModel logData;
+
+            do
+            {
+                menuSelection = DrawMenu();
+
+                switch (menuSelection)
+                {
+                    case "1":
+                        logData = CompileCSharpSnippets("CSharpPath-v1.0");
+                        LogCompilationResults(logData);
+                        break;
+                    case "2":
+                        logData = CompileCSharpSnippets("CSharpPath-beta");
+                        LogCompilationResults(logData);
+                        break;
+                    case "3":
+                        menuSelection = "Exit";
+                        break;
+                    default:
+                        Console.WriteLine("Invalid Selection");
+                        break;
+                }
+                Console.ReadKey();
+            } while (menuSelection != "Exit");
+        }
+
+        private static string DrawMenu()
+        {
+            Console.Clear();
+            Console.ResetColor();
+            Console.WriteLine("|+- + - + - + - + - + -+|");
+            Console.WriteLine("|+  Compile Snippets   +|");
+            Console.WriteLine("|+- - - - - - - - - - -+|");
+            Console.WriteLine("|+- CSharp            -+|");
+            Console.WriteLine("|+-   1. v1.0         -+|");
+            Console.WriteLine("|+-   2. beta         -+|");
+            Console.WriteLine("|+- - - - - - - - - - -+|");
+            Console.WriteLine("|+- + - + - + - + - + -+|");
+            Console.WriteLine("Please select the menu option");
+            string selection = Console.ReadLine();
+
+            return selection;
+        }
+        #endregion
+
+        private static CompilationCycleResultsModel CompileCSharpSnippets(string version)
         {
             //get the base csharp base template
             string microsoftGraphShellTemplateResult = GetBaseCSharpTemplate();
 
             // get all files from the specified directory
-            string targetDirectoryPath = GetSettingsValue("SnippetsDirectory", "CSharpPath");
+            string targetDirectoryPath = GetSettingsValue("SnippetsDirectory", version);
             IEnumerable<string> snippetFiles = GetAllSnippetsFilesFromDirectory(targetDirectoryPath);
 
             List<CompilationResultsModel> compilationResultsModelsList = new List<CompilationResultsModel>();
             int totalCompiledSnippets = 0;
+            int totalSnippetsWithError = 0;
             int totalErrors = 0;
             DateTime startCompilation = DateTime.Now;
 
             foreach (string markdownFile in snippetFiles)
             {
                 string[] fileContent = ReadMarkdownFile(markdownFile);
-
                 string codeToCompile = ConcatBaseTemplateWithSnippet(fileContent, microsoftGraphShellTemplateResult);
                 Console.WriteLine(codeToCompile);
 
                 //Compile Code
-                MicrosoftGraphCSharpCompiler microsoftGraphCSharpCompiler = new MicrosoftGraphCSharpCompiler(markdownFile);
-                CompilationResultsModel compilationResultsModel = microsoftGraphCSharpCompiler
-                    .CompileSnippet(codeToCompile);
+                IMicrosoftGraphSnippetsCompiler microsoftGraphCSharpCompiler = new MicrosoftGraphCSharpCompiler(markdownFile);
+                CompilationResultsModel compilationResultsModel = microsoftGraphCSharpCompiler.CompileSnippet(codeToCompile);
 
                 if (!compilationResultsModel.IsSuccess)
                 {
+                    totalSnippetsWithError += 1;
                     foreach (Diagnostic diagnostic in compilationResultsModel.Diagnostics)
                     {
-                        ShowConsoleMessage($"{diagnostic.GetMessage()} - {diagnostic.Id}" , ConsoleColor.Red);
+                        ShowConsoleMessage($"{diagnostic.Id}\n {diagnostic.GetMessage()}", ConsoleColor.Red);
                         totalErrors += 1;
                     }
                 }
@@ -67,6 +128,7 @@ namespace MsGraphSDKRaptor
                 }
 
                 compilationResultsModel.Snippet = codeToCompile;
+                //get the markdown filename only from the full path
                 compilationResultsModel.MarkdownFileName = Path.GetFileName(markdownFile);
                 compilationResultsModelsList.Add(compilationResultsModel);
                 totalCompiledSnippets += 1;
@@ -74,16 +136,18 @@ namespace MsGraphSDKRaptor
                 Console.ResetColor();
             }
 
-            //Time taken to complete compiling the snippets
+            //Time taken to complete compiling the snippets in seconds
             decimal executionTimeTimeSpan = Convert.ToDecimal((DateTime.Now - startCompilation).TotalSeconds);
 
             CompilationCycleResultsModel compilationCycleResultsModel = new CompilationCycleResultsModel();
             compilationCycleResultsModel.compilationResultsModelList = compilationResultsModelsList;
             compilationCycleResultsModel.TotalCompiledSnippets = totalCompiledSnippets;
+            compilationCycleResultsModel.TotalSnippetsWithError = totalSnippetsWithError;
             compilationCycleResultsModel.TotalErrors = totalErrors;
             compilationCycleResultsModel.Language = Languages.CSharp;
             compilationCycleResultsModel.ExecutionTime = executionTimeTimeSpan;
-         
+
+            ShowConsoleMessage("Compilation Cycle Complete!", ConsoleColor.Green);
             return compilationCycleResultsModel;
         }
 

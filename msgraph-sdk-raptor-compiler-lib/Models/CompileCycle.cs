@@ -8,6 +8,7 @@ namespace MsGraphSDKSnippetsCompiler.Models
         [Key]
         public Guid CompileCycleID { get; set; }
         public int TotalCompiledSnippets { get; set; }
+        public int TotalSnippetsWithError { get; set; }
         public int TotalErrors { get; set; }
         public Languages Language { get; set; }
         public decimal ExecutionTime { get; set; }

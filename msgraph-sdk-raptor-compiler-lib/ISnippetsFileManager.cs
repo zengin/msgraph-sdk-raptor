@@ -2,7 +2,7 @@
 
 namespace MsGraphSDKSnippetsCompiler
 {
-    interface ISnippetsFileManager
+    public interface ISnippetsFileManager
     {
         string[] ReadMarkdownFile(string fileName);
         IEnumerable<string> GetAllSnippetsFilesFromDirectory(string directoryFile);
