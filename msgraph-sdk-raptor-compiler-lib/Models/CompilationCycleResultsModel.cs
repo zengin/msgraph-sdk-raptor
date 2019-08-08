@@ -12,6 +12,7 @@ namespace MsGraphSDKSnippetsCompiler.Models
         public int TotalSnippetsWithError { get; set; }
         public int TotalErrors { get; set; }
         public Languages Language { get; set; }
+        public Versions Version { get; set; }
         public decimal ExecutionTime { get; set; }
     }
 }

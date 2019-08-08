@@ -1,4 +1,6 @@
-﻿using Microsoft.CodeAnalysis;
+﻿extern alias beta;
+
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Emit;
 using Microsoft.Graph;
@@ -28,26 +30,36 @@ namespace MsGraphSDKSnippetsCompiler
         /// </summary>
         /// <param name="codeSnippet">The code snippet to be compiled.</param>
         /// <returns>CompilationResultsModel</returns>
-        public CompilationResultsModel CompileSnippet(string codeSnippet)
+        public CompilationResultsModel CompileSnippet(string codeSnippet, Versions version)
         {
             SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(codeSnippet);
 
             string assemblyName = Path.GetRandomFileName();
             string commonAssemblyPath = Path.GetDirectoryName(typeof(object).Assembly.Location);
-            string graphAssemblyPath = Path.GetDirectoryName(typeof(GraphServiceClient).Assembly.Location);
+            string graphAssemblyPathV1 = Path.GetDirectoryName(typeof(GraphServiceClient).Assembly.Location);
+            string graphAssemblyPathBeta = Path.GetDirectoryName(typeof(beta.Microsoft.Graph.GraphServiceClient).Assembly.Location);
 
-            MetadataReference[] metadataReferences = new MetadataReference[]
+            List<MetadataReference> metadataReferences = new List<MetadataReference>
             {
                 MetadataReference.CreateFromFile(Path.Combine(commonAssemblyPath, "System.Private.CoreLib.dll")),
                 MetadataReference.CreateFromFile(Path.Combine(commonAssemblyPath, "System.Console.dll")),
                 MetadataReference.CreateFromFile(Path.Combine(commonAssemblyPath, "System.Runtime.dll")),
-                MetadataReference.CreateFromFile(Path.Combine(graphAssemblyPath, "Microsoft.Graph.dll")),
                 MetadataReference.CreateFromFile(Path.Combine(Path.GetDirectoryName(typeof(IAuthenticationProvider).Assembly.Location), "Microsoft.Graph.Core.dll")),
                 MetadataReference.CreateFromFile(Path.Combine(Path.GetDirectoryName(typeof(AuthenticationProvider).Assembly.Location), "msgraph-sdk-raptor-compiler-lib.dll")),
                 MetadataReference.CreateFromFile(Path.Combine(Path.GetDirectoryName(typeof(Task).Assembly.Location), "System.Threading.Tasks.dll")),
                 MetadataReference.CreateFromFile(Path.Combine(Path.GetDirectoryName(typeof(JToken).Assembly.Location), "Newtonsoft.Json.dll"))
             };
 
+            //Use the right Microsoft Graph Version
+            if(version == Versions.V1)
+            {
+                metadataReferences.Add(MetadataReference.CreateFromFile(Path.Combine(graphAssemblyPathV1, "Microsoft.Graph.dll")));
+            }
+            else
+            {
+                metadataReferences.Add(MetadataReference.CreateFromFile(Path.Combine(graphAssemblyPathBeta, "Microsoft.Graph.Beta.dll")));
+            }
+           
             CSharpCompilation compilation = CSharpCompilation.Create(
                assemblyName,
                syntaxTrees: new[] { syntaxTree },

@@ -27,11 +27,12 @@ namespace MsGraphSDKSnippetsCompiler
                     //Log Compile Cycle
                     streamWriter.WriteLine("|++++++++++++++++++++++++|");
                     streamWriter.Write($"#### Total CompiledSnippets:  {compilationCycleResultsModel.TotalCompiledSnippets}");
-                    streamWriter.Write($"\r Total Snippets With Errors: {compilationCycleResultsModel.TotalSnippetsWithError}");
-                    streamWriter.Write($"\r Total Errors: {compilationCycleResultsModel.TotalErrors}");
-                    streamWriter.Write($"\r Language: {compilationCycleResultsModel.Language}");
-                    streamWriter.Write($"\r Execution Time: {compilationCycleResultsModel.ExecutionTime} secs");
-                    streamWriter.Write($"\r Compilation Date: {DateTime.Now}");
+                    streamWriter.Write($"#### Total Snippets With Errors: {compilationCycleResultsModel.TotalSnippetsWithError}");
+                    streamWriter.Write($"#### Total Errors: {compilationCycleResultsModel.TotalErrors}");
+                    streamWriter.Write($"#### Language: {compilationCycleResultsModel.Language}");
+                    streamWriter.Write($"#### Version: {compilationCycleResultsModel.Version}");
+                    streamWriter.Write($"#### Execution Time: {compilationCycleResultsModel.ExecutionTime} secs");
+                    streamWriter.Write($"#### Compilation Date: {DateTime.Now}");
                     streamWriter.WriteLine("|++++++++++++++++++++++++|\n");
 
                     //Log CompileCycle Results in txt

@@ -11,6 +11,7 @@ namespace MsGraphSDKSnippetsCompiler.Models
         public int TotalSnippetsWithError { get; set; }
         public int TotalErrors { get; set; }
         public Languages Language { get; set; }
+        public Versions Version { get; set; }
         public decimal ExecutionTime { get; set; }
         public DateTime CompileDate { get; set; }
     }
@@ -21,5 +22,11 @@ namespace MsGraphSDKSnippetsCompiler.Models
         JavaScript,
         Java,
         ObjC
+    }
+
+    public enum Versions
+    {
+        V1,
+        Beta
     }
 }

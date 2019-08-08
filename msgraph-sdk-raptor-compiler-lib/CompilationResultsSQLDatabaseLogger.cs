@@ -28,6 +28,7 @@ namespace MsGraphSDKSnippetsCompiler
             compileCycle.TotalSnippetsWithError = compilationCycleResultsModel.TotalSnippetsWithError;
             compileCycle.TotalErrors = compilationCycleResultsModel.TotalErrors;
             compileCycle.Language = compilationCycleResultsModel.Language;
+            compileCycle.Version = compilationCycleResultsModel.Version;
             compileCycle.ExecutionTime = compilationCycleResultsModel.ExecutionTime;
             compileCycle.CompileDate = DateTime.Now;
 

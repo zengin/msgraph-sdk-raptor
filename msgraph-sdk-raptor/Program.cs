@@ -51,11 +51,11 @@ namespace MsGraphSDKRaptor
                 switch (menuSelection)
                 {
                     case "1":
-                        logData = CompileCSharpSnippets("CSharpPath-v1.0");
+                        logData = CompileCSharpSnippets("CSharpPath-v1.0", Versions.V1);
                         LogCompilationResults(logData);
                         break;
                     case "2":
-                        logData = CompileCSharpSnippets("CSharpPath-beta");
+                        logData = CompileCSharpSnippets("CSharpPath-beta", Versions.Beta);
                         LogCompilationResults(logData);
                         break;
                     case "3":
@@ -88,13 +88,13 @@ namespace MsGraphSDKRaptor
         }
         #endregion
 
-        private static CompilationCycleResultsModel CompileCSharpSnippets(string version)
+        private static CompilationCycleResultsModel CompileCSharpSnippets(string versionPath, Versions version)
         {
             //get the base csharp base template
             string microsoftGraphShellTemplateResult = GetBaseCSharpTemplate();
 
             // get all files from the specified directory
-            string targetDirectoryPath = GetSettingsValue("SnippetsDirectory", version);
+            string targetDirectoryPath = GetSettingsValue("SnippetsDirectory", versionPath);
             IEnumerable<string> snippetFiles = GetAllSnippetsFilesFromDirectory(targetDirectoryPath);
 
             List<CompilationResultsModel> compilationResultsModelsList = new List<CompilationResultsModel>();
@@ -111,7 +111,7 @@ namespace MsGraphSDKRaptor
 
                 //Compile Code
                 IMicrosoftGraphSnippetsCompiler microsoftGraphCSharpCompiler = new MicrosoftGraphCSharpCompiler(markdownFile);
-                CompilationResultsModel compilationResultsModel = microsoftGraphCSharpCompiler.CompileSnippet(codeToCompile);
+                CompilationResultsModel compilationResultsModel = microsoftGraphCSharpCompiler.CompileSnippet(codeToCompile, version);
 
                 if (!compilationResultsModel.IsSuccess)
                 {
@@ -145,9 +145,17 @@ namespace MsGraphSDKRaptor
             compilationCycleResultsModel.TotalSnippetsWithError = totalSnippetsWithError;
             compilationCycleResultsModel.TotalErrors = totalErrors;
             compilationCycleResultsModel.Language = Languages.CSharp;
+            compilationCycleResultsModel.Version = version;
             compilationCycleResultsModel.ExecutionTime = executionTimeTimeSpan;
 
             ShowConsoleMessage("Compilation Cycle Complete!", ConsoleColor.Green);
+            Console.WriteLine($"Total Compiled Snippets: {compilationCycleResultsModel.TotalCompiledSnippets}");
+            Console.WriteLine($"Total Snippets With Error:{compilationCycleResultsModel.TotalSnippetsWithError}");
+            Console.WriteLine($"Total Errors: {compilationCycleResultsModel.TotalErrors}");
+            Console.WriteLine($"Language: {compilationCycleResultsModel.Language}");
+            Console.WriteLine($"Version: {compilationCycleResultsModel.Version}");
+            Console.WriteLine($"Execution Time: {compilationCycleResultsModel.ExecutionTime} Secs");
+
             return compilationCycleResultsModel;
         }
 

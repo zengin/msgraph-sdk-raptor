@@ -19,6 +19,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
     <PackageReference Include="Microsoft.Graph" Version="1.16.0" />
     <PackageReference Include="Microsoft.Graph.Auth" Version="1.0.0-preview.0" />
+    <PackageReference Include="Microsoft.Graph.Beta" Version="0.7.0-preview" />
     <PackageReference Include="Microsoft.Identity.Client" Version="3.0.8" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="System.CodeDom" Version="4.5.0" />
@@ -46,4 +47,12 @@
     </Compile>
   </ItemGroup>
 
+  <Target Name="ChangeAliasesOfStrongNameAssemblies" BeforeTargets="FindReferenceAssembliesForReferences;ResolveReferences">
+    <ItemGroup>
+      <ReferencePath Condition="'%(FileName)' == 'Microsoft.Graph.Beta'">
+        <Aliases>beta</Aliases>
+      </ReferencePath>
+    </ItemGroup>
+  </Target>
+  
 </Project>
