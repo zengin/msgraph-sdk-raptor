@@ -45,7 +45,7 @@ To run **Raptor**, you need to setup the snippets directory path for both **v1.0
 
 The Raptor dashboard displays the results of a compilation cycle and is visible from the screenshot below. The information displayed include total snippets compiled, total errors found in a given compilation cycle and the total number of snippets that compiled without any errors.
 
-![Dashboard Screenshot](msgraph-sdk-raptor-dashboard/wwwroot/dist/img/raptor-dashboard-screenshot.png)
+![Dashboard Screenshot](raptor-dashboard-screenshot.png)
 
 To setup the dashboard on your local PC using visual studio;
 
