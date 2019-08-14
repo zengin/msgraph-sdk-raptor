@@ -41,6 +41,26 @@ To run **Raptor**, you need to setup the snippets directory path for both **v1.0
   }
 }
 ```
+Raptor supports logging compilation output in either a **markdown file** or in a **SQL server database**. To enable either, comment or uncomment the lines within the **LogCompilationResults** function within the [Program.cs](msgraph-sdk-raptor/Program.cs) file as shown below. 
+
+```
+private static void LogCompilationResults(CompilationCycleResultsModel logData)
+{
+    //Log Compilation Results
+    ICompilationResultsLogger compilationResultsLogger = new CompilationResultsTextFileLogger();
+    compilationResultsLogger.Log(logData);
+
+    /* Uncomment this section to use database logging
+    string dbConnectioSettings = GetSettingsValue("ConnectionStrings", "Raptor");
+    ICompilationResultsLogger compilationResultsLogger = new CompilationResultsSQLDatabaseLogger(dbConnectioSettings);
+    compilationResultsLogger.Log(logData);
+    */
+
+    ShowConsoleMessage("Logging Complete!", ConsoleColor.Green);
+}
+```
+While using the markdown output option, the compilation results will be in a file named **CompileLog.md** within the bin output directory.
+
 ## Setup Raptor Dashboard
 
 The Raptor dashboard displays the results of a compilation cycle and is visible from the screenshot below. The information displayed include total snippets compiled, total errors found in a given compilation cycle and the total number of snippets that compiled without any errors.
