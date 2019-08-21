@@ -1,4 +1,5 @@
-﻿using MsGraphSDKSnippetsCompiler.Models;
+﻿using Microsoft.CodeAnalysis;
+using MsGraphSDKSnippetsCompiler.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,5 +15,8 @@ namespace MsGraphSDKSnippetsCompiler.Models
         public Languages Language { get; set; }
         public Versions Version { get; set; }
         public decimal ExecutionTime { get; set; }
+
+        //this property may introduce a dependancy on roslyn will require refactoring
+        public List<Diagnostic> CompilationCycleDiagnostics { get; set; }
     }
 }

@@ -1,0 +1,92 @@
+[
+    {
+      "Id": "CS1061",
+      "Error": "This error occurs when you try to call a method or access a class member that does not exist.",
+      "Description": "'type' does not contain a definition for 'member' and no extension method 'name' accepting a first argument of type 'type' could be found (are you missing a using directive or an assembly reference?)."
+    },
+    {
+      "Id": "CS1501",
+      "Error": "No overload for method 'method' takes 'number' arguments.",
+      "Description": "A call was made to a class method, but no definition of the method takes the specified number of arguments."
+    },
+    {
+      "Id": "CS1660",
+      "Error": "Cannot convert anonymous method block to type 'type' because it is not a delegate type",
+      "Description": "This error occurs if you try to assign or otherwise convert an anonymous method block to a type which is not a delegate type."
+    },
+    {
+      "Id": "CS0029",
+      "Error": "Cannot implicitly convert type 'type' to 'type'",
+      "Description": "The compiler requires an explicit conversion. For example, you may need to cast an r-value to be the same type as an l-value. "
+    },
+    {
+      "Id": "CS0266",
+      "Error": "Cannot implicitly convert type 'type1' to 'type2'. An explicit conversion exists (are you missing a cast?)",
+      "Description": "This error occurs when your code tries to convert between two types that cannot be implicitly converted, but where an explicit conversion is available."
+    },
+    {
+      "Id": "CS1503",
+      "Error": "Argument 'number' cannot convert from TypeA to TypeB",
+      "Description": "The type of one argument in a method does not match the type that was passed when the class was instantiated."
+    },
+    {
+      "Id": "CS0117",
+      "Error": "'type' does not contain a definition for 'identifier'",
+      "Description": "This error occurs in some situations when a reference is made to a member that does not exist for the data type."
+    },
+    {
+      "Id": "CS0103",
+      "Error": "The name 'identifier' does not exist in the current context",
+      "Description": "An attempt was made to use a name that does not exist in the class, namespace, or scope."
+    },
+    {
+      "Id": "CS0122",
+      "Error": "'member' is inaccessible due to its protection level",
+      "Description": "The access modifier for a class member prevents accessing the member. "
+    },
+    {
+      "Id": "CS0747",
+      "Error": "Invalid initializer member declarator.",
+      "Description": "An object initializer is used to assign values to properties or fields. Any expression which is not an assignment to a property or field is a compile-time error."
+    },
+    {
+      "Id": "CS1525",
+      "Error": "Invalid expression term 'character'",
+      "Description": "The compiler detected an invalid character in an expression."
+    },
+    {
+      "Id": "CS0246",
+      "Error": "The type or namespace name 'type/namespace' could not be found (are you missing a using directive or an assembly reference?)",
+      "Description": "A type or namespace that is used in the program was not found."
+    },
+    {
+      "Id": "CS1003",
+      "Error": "Syntax error, 'char' expected",
+      "Description": "The compiler will generate this error for any one of several error conditions. Review your code to find the syntax error."
+    },
+    {
+      "Id": "CS1002",
+      "Error": "; expected",
+      "Description": "The compiler detected a missing semicolon."
+    },
+    {
+      "Id": "CS1012",
+      "Error": "Too many characters in character literal",
+      "Description": "An attempt was made to initialize a char constant with more than one character."
+    },
+    {
+      "Id": "CS1001",
+      "Error": "Identifier expected",
+      "Description": "You did not supply an identifier. An identifier is the name of a class, struct, namespace, method, variable and so on that you provide."
+    },
+    {
+      "Id": "CS1513",
+      "Error": "} expected",
+      "Description": "The compiler expected a closing curly brace (}) that was not found."
+    },
+    {
+      "Id": "CS0118",
+      "Error": "'construct1_name' is a 'construct1' but is used like a 'construct2'",
+      "Description": "The compiler detected a situation in which a construct was used in some erroneous way or a disallowed operation was tried on a construct."
+    }
+  ]

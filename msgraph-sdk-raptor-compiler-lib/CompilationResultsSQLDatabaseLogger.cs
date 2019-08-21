@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.CodeAnalysis;
 using MsGraphSDKSnippetsCompiler.Data;
 using MsGraphSDKSnippetsCompiler.Models;
@@ -13,6 +14,11 @@ namespace MsGraphSDKSnippetsCompiler
         public CompilationResultsSQLDatabaseLogger(string connectionString)
         {
             _connectionString = connectionString;
+        }
+
+        public IEnumerable<ErrorReferenceDictionaryStats> GetCompilationCycleStatus(List<Diagnostic> allErrorDiagnostics)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>

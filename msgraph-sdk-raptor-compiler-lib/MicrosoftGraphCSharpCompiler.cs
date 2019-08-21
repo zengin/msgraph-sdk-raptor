@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace MsGraphSDKSnippetsCompiler
 {
     /// <summary>
@@ -44,6 +45,9 @@ namespace MsGraphSDKSnippetsCompiler
                 MetadataReference.CreateFromFile(Path.Combine(commonAssemblyPath, "System.Private.CoreLib.dll")),
                 MetadataReference.CreateFromFile(Path.Combine(commonAssemblyPath, "System.Console.dll")),
                 MetadataReference.CreateFromFile(Path.Combine(commonAssemblyPath, "System.Runtime.dll")),
+                MetadataReference.CreateFromFile(Path.Combine(commonAssemblyPath, "System.IO.dll")),
+                MetadataReference.CreateFromFile(Path.Combine(commonAssemblyPath, "System.Linq.Expressions.dll")),
+
                 MetadataReference.CreateFromFile(Path.Combine(Path.GetDirectoryName(typeof(IAuthenticationProvider).Assembly.Location), "Microsoft.Graph.Core.dll")),
                 MetadataReference.CreateFromFile(Path.Combine(Path.GetDirectoryName(typeof(AuthenticationProvider).Assembly.Location), "msgraph-sdk-raptor-compiler-lib.dll")),
                 MetadataReference.CreateFromFile(Path.Combine(Path.GetDirectoryName(typeof(Task).Assembly.Location), "System.Threading.Tasks.dll")),

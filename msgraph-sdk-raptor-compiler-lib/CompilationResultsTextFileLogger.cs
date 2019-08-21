@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Microsoft.CodeAnalysis;
 using MsGraphSDKSnippetsCompiler.Models;
+using Newtonsoft.Json;
 
 namespace MsGraphSDKSnippetsCompiler
 {
@@ -26,16 +29,30 @@ namespace MsGraphSDKSnippetsCompiler
                 {
                     //Log Compile Cycle
                     streamWriter.WriteLine("|++++++++++++++++++++++++|");
-                    streamWriter.Write($"#### Total CompiledSnippets:  {compilationCycleResultsModel.TotalCompiledSnippets}");
-                    streamWriter.Write($"#### Total Snippets With Errors: {compilationCycleResultsModel.TotalSnippetsWithError}");
-                    streamWriter.Write($"#### Total Errors: {compilationCycleResultsModel.TotalErrors}");
-                    streamWriter.Write($"#### Language: {compilationCycleResultsModel.Language}");
-                    streamWriter.Write($"#### Version: {compilationCycleResultsModel.Version}");
-                    streamWriter.Write($"#### Execution Time: {compilationCycleResultsModel.ExecutionTime} secs");
-                    streamWriter.Write($"#### Compilation Date: {DateTime.Now}");
+                    streamWriter.WriteLine($"#### Execution Time: {compilationCycleResultsModel.ExecutionTime} secs");
+                    streamWriter.WriteLine($"#### Compilation Date: {DateTime.Now}");
                     streamWriter.WriteLine("|++++++++++++++++++++++++|\n");
 
-                    //Log CompileCycle Results in txt
+                    streamWriter.WriteLine("Total CompiledSnippets| Total Snippets With Errors| Total Errors| Language| Version|");
+                    streamWriter.WriteLine("|--|--|--|--|--|");
+                    streamWriter.WriteLine($"{compilationCycleResultsModel.TotalCompiledSnippets} | {compilationCycleResultsModel.TotalSnippetsWithError} " +
+                                $"| {compilationCycleResultsModel.TotalErrors} | {compilationCycleResultsModel.Language} | {compilationCycleResultsModel.Version}");
+                    streamWriter.WriteLine("\n\n");
+
+                    IEnumerable<ErrorReferenceDictionaryStats> result = GetCompilationCycleStatus(compilationCycleResultsModel.CompilationCycleDiagnostics);
+
+                    if (result != null)
+                    {
+                        streamWriter.WriteLine("Error Count| Error Id | Error Description |");
+                        streamWriter.WriteLine("|--|--|--|");
+
+                        foreach (ErrorReferenceDictionaryStats errorStat in result)
+                        {
+                            streamWriter.WriteLine($"{errorStat.Count} | {errorStat.Id} | {errorStat.Error} |");
+                        }
+                    }
+
+                    //Log CompileCycle Results in Markdown file
                     foreach (CompilationResultsModel compilationResultsModel in compilationCycleResultsModel.compilationResultsModelList)
                     {
                         streamWriter.WriteLine($"#### Markdown FileName: {compilationResultsModel.MarkdownFileName}");
@@ -55,6 +72,34 @@ namespace MsGraphSDKSnippetsCompiler
                         }
                     }
                 }
+            }
+        }
+
+        public IEnumerable<ErrorReferenceDictionaryStats> GetCompilationCycleStatus(List<Diagnostic> allErrorDiagnostics)
+        {
+            //log error categories
+            List<ErrorGroup> errorGroupResults = (from d in allErrorDiagnostics
+                                                  group d by d.Id into g
+                                                  where g.Count() > 1
+                                                  select new ErrorGroup { Key = g.Key, Count = g.Count() }).ToList();
+
+            List<ErrorReferenceDictionary> errorReferenceDictionary = GetErrorReferenceDictionary();
+
+            IEnumerable<ErrorReferenceDictionaryStats> result = (from d in errorGroupResults
+                                                                 join s in errorReferenceDictionary on d.Key equals s.Id
+                                                                 select new ErrorReferenceDictionaryStats { Id = s.Id, Error = s.Error, Description = s.Description, Count = d.Count });
+
+            return result;
+        }
+
+        private static List<ErrorReferenceDictionary> GetErrorReferenceDictionary()
+        {
+            using (StreamReader streamReader = new StreamReader("ErrorCodes/CSharp.json"))
+            {
+                string json = @streamReader.ReadToEnd().ToString();
+                List<ErrorReferenceDictionary> errorReferenceDictionary = JsonConvert.DeserializeObject<List<ErrorReferenceDictionary>>(json);
+
+                return errorReferenceDictionary;
             }
         }
     }

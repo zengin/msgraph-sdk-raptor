@@ -29,13 +29,27 @@ namespace MsGraphSDKRaptor
             ICompilationResultsLogger compilationResultsLogger = new CompilationResultsTextFileLogger();
             compilationResultsLogger.Log(logData);
 
+            IEnumerable<ErrorReferenceDictionaryStats> errorReferenceDictionaryStats = compilationResultsLogger.GetCompilationCycleStatus(logData.CompilationCycleDiagnostics);
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"___________________________________________");
+            Console.WriteLine($"\nCount \tCode \tError Desc");
+            Console.WriteLine($"___________________________________________");
+            Console.ForegroundColor = ConsoleColor.Green;
+            foreach (var errorStat in errorReferenceDictionaryStats)
+            {
+                Console.WriteLine($"{errorStat.Count}\t{ errorStat.Id}\t{ errorStat.Error}");
+            }
+            Console.ResetColor();
+            Console.WriteLine();
+
             /* Uncomment this section to use database logging
             string dbConnectioSettings = GetSettingsValue("ConnectionStrings", "Raptor");
             ICompilationResultsLogger compilationResultsLogger = new CompilationResultsSQLDatabaseLogger(dbConnectioSettings);
             compilationResultsLogger.Log(logData);
             */
 
-            ShowConsoleMessage("Logging Complete!", ConsoleColor.Green);
+            ShowConsoleMessage("Logging Complete!", ConsoleColor.Yellow);
         }
 
         #region Menu
@@ -101,6 +115,7 @@ namespace MsGraphSDKRaptor
             int totalCompiledSnippets = 0;
             int totalSnippetsWithError = 0;
             int totalErrors = 0;
+            List<Diagnostic> compilationCycleDiagnostics = new List<Diagnostic>();
             DateTime startCompilation = DateTime.Now;
 
             foreach (string markdownFile in snippetFiles)
@@ -120,6 +135,7 @@ namespace MsGraphSDKRaptor
                     {
                         ShowConsoleMessage($"{diagnostic.Id}\n {diagnostic.GetMessage()}", ConsoleColor.Red);
                         totalErrors += 1;
+                        compilationCycleDiagnostics.Add(diagnostic);
                     }
                 }
                 else
@@ -144,6 +160,7 @@ namespace MsGraphSDKRaptor
             compilationCycleResultsModel.TotalCompiledSnippets = totalCompiledSnippets;
             compilationCycleResultsModel.TotalSnippetsWithError = totalSnippetsWithError;
             compilationCycleResultsModel.TotalErrors = totalErrors;
+            compilationCycleResultsModel.CompilationCycleDiagnostics = compilationCycleDiagnostics;
             compilationCycleResultsModel.Language = Languages.CSharp;
             compilationCycleResultsModel.Version = version;
             compilationCycleResultsModel.ExecutionTime = executionTimeTimeSpan;
@@ -156,6 +173,7 @@ namespace MsGraphSDKRaptor
             Console.WriteLine($"Version: {compilationCycleResultsModel.Version}");
             Console.WriteLine($"Execution Time: {compilationCycleResultsModel.ExecutionTime} Secs");
 
+           
             return compilationCycleResultsModel;
         }
 
