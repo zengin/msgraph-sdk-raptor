@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29111.141
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "msgraph-sdk-raptor", "msgraph-sdk-raptor\msgraph-sdk-raptor.csproj", "{DBDE176D-06CA-4873-8853-0C5D916B69F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "msgraph-sdk-raptor", "msgraph-sdk-raptor\msgraph-sdk-raptor.csproj", "{DBDE176D-06CA-4873-8853-0C5D916B69F0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "msgraph-sdk-raptor-compiler-lib", "msgraph-sdk-raptor-compiler-lib\msgraph-sdk-raptor-compiler-lib.csproj", "{744E3FE7-F945-4230-A4AC-D6157BFD5788}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "msgraph-sdk-raptor-dashboard", "msgraph-sdk-raptor-dashboard\msgraph-sdk-raptor-dashboard.csproj", "{FFF18830-A45F-4397-913B-6CFED7A47601}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{DBDE176D-06CA-4873-8853-0C5D916B69F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBDE176D-06CA-4873-8853-0C5D916B69F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBDE176D-06CA-4873-8853-0C5D916B69F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{744E3FE7-F945-4230-A4AC-D6157BFD5788}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{744E3FE7-F945-4230-A4AC-D6157BFD5788}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{744E3FE7-F945-4230-A4AC-D6157BFD5788}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{744E3FE7-F945-4230-A4AC-D6157BFD5788}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFF18830-A45F-4397-913B-6CFED7A47601}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFF18830-A45F-4397-913B-6CFED7A47601}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFF18830-A45F-4397-913B-6CFED7A47601}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFF18830-A45F-4397-913B-6CFED7A47601}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
