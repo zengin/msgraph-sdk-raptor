@@ -31,6 +31,10 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using MsGraphSDKSnippetsCompiler;
 
+// Disambiguate colliding namespaces
+using DayOfWeek = Microsoft.Graph.DayOfWeek;
+using KeyValuePair = Microsoft.Graph.KeyValuePair;
+
 public class GraphSDKTest
 {
     private IAuthenticationProvider authProvider = null;
