@@ -9,11 +9,6 @@ resources:
      endpoint: microsoftgraph
      name: microsoftgraph/microsoft-graph-docs
      ref: master
-   - repository: msgraph-sdk-raptor
-     type: github
-     endpoint: microsoftgraph
-     name: microsoftgraph/msgraph-sdk-raptor
-     ref: master
 
 pool:
   vmImage: 'windows-2019'
@@ -27,7 +22,7 @@ steps:
   fetchDepth: 1
   persistCredentials: true
 
-- checkout: msgraph-sdk-raptor
+- checkout: self
   clean: true
   fetchDepth: 1
 
