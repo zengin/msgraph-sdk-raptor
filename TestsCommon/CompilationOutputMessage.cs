@@ -22,14 +22,21 @@ namespace TestsCommon
         private readonly string Code;
 
         /// <summary>
+        /// Docs page where the snippet is shown
+        /// </summary>
+        private readonly string DocsLink;
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="model">Compilation result</param>
         /// <param name="code">Code that was attempted to be compiled</param>
-        public CompilationOutputMessage(CompilationResultsModel model, string code)
+        /// <param name="docsLink">documentation page where the snippet is shown</param>
+        public CompilationOutputMessage(CompilationResultsModel model, string code, string docsLink)
         {
             Model = model;
             Code = code;
+            DocsLink = docsLink;
         }
 
         /// <summary>
@@ -38,7 +45,16 @@ namespace TestsCommon
         /// <returns>
         /// Code with line numbers and compiler errors
         /// </returns>
-        public override string ToString() => GetCodeWithLineNumbers() + CompilerErrors();
+        public override string ToString() => GetDocsLink() + GetCodeWithLineNumbers() + CompilerErrors();
+
+        /// <summary>
+        /// Gets documentation link for the snippet
+        /// </summary>
+        /// <returns>Error message if the link is not found, link itself if found</returns>
+        private string GetDocsLink()
+        {
+            return DocsLink == null ? "No link has been found in the documentation for this snippet. \r\n" : $"{DocsLink}\r\n";
+        }
 
         /// <summary>
         /// For each compiler error, generates an error string with code location references

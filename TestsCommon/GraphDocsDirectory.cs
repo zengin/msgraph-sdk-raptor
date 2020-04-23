@@ -37,17 +37,23 @@ namespace TestsCommon
                 return SnippetsDirectory;
             }
 
-            string versionString = version switch
-            {
-                Versions.V1 => "v1.0",
-                Versions.Beta => "beta",
-                _ => throw new ArgumentException("Unexpected version, we can't resolve this to a source code path."),
-            };
-
             var msGraphDocsRepoLocation = Environment.GetEnvironmentVariable("BUILD_SOURCESDIRECTORY") ?? RootGitDirectory;
-            SnippetsDirectory = Path.Join(msGraphDocsRepoLocation, $@"microsoft-graph-docs\api-reference\{versionString}\includes\snippets\csharp");
+            SnippetsDirectory = Path.Join(msGraphDocsRepoLocation, $@"microsoft-graph-docs\api-reference\{new VersionString(version)}\includes\snippets\csharp");
 
             return SnippetsDirectory;
+        }
+
+        /// <summary>
+        /// Gets directory holding Microsoft Graph documentation in markdown format
+        /// </summary>
+        /// <param name="version">Docs version (e.g. V1 or Beta)</param>
+        /// <returns>
+        /// Directory holding Microsoft Graph documentation in markdown format
+        /// </returns>
+        public static string GetDocumentationDirectory(Versions version)
+        {
+            var msGraphDocsRepoLocation = Environment.GetEnvironmentVariable("BUILD_SOURCESDIRECTORY") ?? RootGitDirectory;
+            return Path.Join(msGraphDocsRepoLocation, $@"microsoft-graph-docs\api-reference\{new VersionString(version)}\api");
         }
     }
 }
