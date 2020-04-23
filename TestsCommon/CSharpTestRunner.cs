@@ -2,7 +2,6 @@
 
 using MsGraphSDKSnippetsCompiler;
 using MsGraphSDKSnippetsCompiler.Models;
-using MsGraphSDKSnippetsCompiler.Templates;
 using NUnit.Framework;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -14,6 +13,33 @@ namespace TestsCommon
     /// </summary>
     public static class CSharpTestRunner
     {
+        /// <summary>
+        /// template to compile snippets in
+        /// </summary>
+        private const string SDKShellTemplate = @"using System;
+using Microsoft.Graph;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using MsGraphSDKSnippetsCompiler;
+
+// Disambiguate colliding namespaces
+using DayOfWeek = Microsoft.Graph.DayOfWeek;
+using KeyValuePair = Microsoft.Graph.KeyValuePair;
+
+public class GraphSDKTest
+{
+    private IAuthenticationProvider authProvider = null;
+
+    private async void Main()
+    {
+        authProvider = AuthenticationProvider.GetIAuthenticationProvider();
+
+        #region msgraphsnippets
+        //insert-code-here
+        #endregion
+    }
+}";
+
         /// <summary>
         /// matches csharp snippet from C# snippets markdown output
         /// </summary>
@@ -34,11 +60,8 @@ namespace TestsCommon
         /// </returns>
         private static string ConcatBaseTemplateWithSnippet(string snippet)
         {
-            //get the base template
-            var microsoftGraphShellTemplate = new MSGraphSDKShellTemplate().TransformText();
-
             // there are mixture of line endings, namely \r\n and \n, normalize that into \r\n
-            string codeToCompile = microsoftGraphShellTemplate
+            string codeToCompile = SDKShellTemplate
                        .Replace("//insert-code-here", snippet)
                        .Replace("\r\n", "\n").Replace("\n", "\r\n");
 
@@ -52,8 +75,9 @@ namespace TestsCommon
         /// 4. Attempts to compile and reports errors if there is any
         /// </summary>
         /// <param name="fileName">C# snippet file name</param>
+        /// <param name="docsLink">documentation page where the snippet is shown</param>
         /// <param name="version">Docs version (e.g. V1, Beta)</param>
-        public static void Run(string fileName, Versions version)
+        public static void Run(string fileName, string docsLink, Versions version)
         {
             var fullPath = Path.Join(GraphDocsDirectory.GetCsharpSnippetsDirectory(version), fileName);
             var fileContent = File.ReadAllText(fullPath);
@@ -80,7 +104,7 @@ namespace TestsCommon
                 Assert.Pass();
             }
 
-            Assert.Fail(new CompilationOutputMessage(compilationResultsModel, codeToCompile).ToString());
+            Assert.Fail($"{new CompilationOutputMessage(compilationResultsModel, codeToCompile, docsLink)}");
         }
     }
 }
