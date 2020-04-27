@@ -50,10 +50,10 @@ namespace TestsCommon
         /// <summary>
         /// Gets documentation link for the snippet
         /// </summary>
-        /// <returns>Error message if the link is not found, link itself if found</returns>
+        /// <returns>Documentation link for the snippet</returns>
         private string GetDocsLink()
         {
-            return DocsLink == null ? "No link has been found in the documentation for this snippet. \r\n" : $"{DocsLink}\r\n";
+            return $"{DocsLink}\r\n";
         }
 
         /// <summary>
