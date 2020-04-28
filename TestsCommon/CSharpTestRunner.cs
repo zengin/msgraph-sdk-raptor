@@ -80,12 +80,11 @@ public class GraphSDKTest
         public static void Run(string fileName, string docsLink, Versions version)
         {
             var fullPath = Path.Join(GraphDocsDirectory.GetCsharpSnippetsDirectory(version), fileName);
+            Assert.IsTrue(File.Exists(fullPath), "Snippet file referenced in documentation is not found!");
+
             var fileContent = File.ReadAllText(fullPath);
-
             var match = RegExp.Match(fileContent);
-
-            // match groups return the full text in Groups[0] and matched portion in Groups[1]
-            Assert.AreEqual(2, match.Groups.Count, "There should be only one match!");
+            Assert.IsTrue(match.Success, "Csharp snippet file is not in expected format!");
 
             var codeSnippetFormatted = match.Groups[1].Value
                 .Replace("\r\n", "\r\n        ")            // add indentation to match with the template

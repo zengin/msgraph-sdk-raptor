@@ -63,12 +63,11 @@ namespace TestsCommon
         public static IEnumerable<TestCaseData> GetTestCaseData(Versions version)
         {
             var documentationLinks = GetDocumentationLinks(version);
-            var directory = GraphDocsDirectory.GetCsharpSnippetsDirectory(version);
-            return from file in Directory.GetFiles(directory, "*.md")
-                   let fileName = Path.GetFileName(file)                            // e.g. application-addpassword-csharp-snippets.md
+            var snippetFileNames = documentationLinks.Keys.ToList();
+            return from fileName in snippetFileNames                                // e.g. application-addpassword-csharp-snippets.md
                    let testNamePostfix = version.ToString() + "-compiles"           // e.g. Beta-compiles
                    let testName = fileName.Replace("snippets.md", testNamePostfix)  // e.g. application-addpassword-csharp-Beta-compiles
-                   let docsLink = documentationLinks.ContainsKey(fileName) ? documentationLinks[fileName] : null
+                   let docsLink = documentationLinks[fileName]
                    select new TestCaseData(fileName, docsLink, version).SetName(testName);
         }
     }
