@@ -18,9 +18,10 @@ namespace TestsCommon
         /// </summary>
         private const string SDKShellTemplate = @"using System;
 using Microsoft.Graph;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using MsGraphSDKSnippetsCompiler;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
 
 // Disambiguate colliding namespaces
 using DayOfWeek = Microsoft.Graph.DayOfWeek;
