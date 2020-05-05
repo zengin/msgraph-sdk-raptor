@@ -20,6 +20,7 @@ namespace TestsCommon
         private const string SDKShellTemplate = @"using System;
 using Microsoft.Graph;
 using MsGraphSDKSnippetsCompiler;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
