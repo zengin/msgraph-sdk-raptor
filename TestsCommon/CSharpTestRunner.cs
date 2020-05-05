@@ -3,6 +3,7 @@
 using MsGraphSDKSnippetsCompiler;
 using MsGraphSDKSnippetsCompiler.Models;
 using NUnit.Framework;
+using System;
 using System.IO;
 using System.Text.RegularExpressions;
 
@@ -75,12 +76,15 @@ public class GraphSDKTest
         /// 3. Wraps snippet with compilable template
         /// 4. Attempts to compile and reports errors if there is any
         /// </summary>
-        /// <param name="fileName">C# snippet file name</param>
-        /// <param name="docsLink">documentation page where the snippet is shown</param>
-        /// <param name="version">Docs version (e.g. V1, Beta)</param>
-        public static void Run(string fileName, string docsLink, Versions version)
+        /// <param name="testData">Test data containing information such as snippet file name</param>
+        public static void Run(CsharpTestData testData)
         {
-            var fullPath = Path.Join(GraphDocsDirectory.GetCsharpSnippetsDirectory(version), fileName);
+            if (testData == null)
+            {
+                throw new ArgumentNullException(nameof(testData));
+            }
+
+            var fullPath = Path.Join(GraphDocsDirectory.GetCsharpSnippetsDirectory(testData.Version), testData.FileName);
             Assert.IsTrue(File.Exists(fullPath), "Snippet file referenced in documentation is not found!");
 
             var fileContent = File.ReadAllText(fullPath);
@@ -95,16 +99,31 @@ public class GraphSDKTest
 
             var codeToCompile = ConcatBaseTemplateWithSnippet(codeSnippetFormatted);
 
-            //Compile Code
-            var microsoftGraphCSharpCompiler = new MicrosoftGraphCSharpCompiler(fileName);
-            var compilationResultsModel = microsoftGraphCSharpCompiler.CompileSnippet(codeToCompile, version);
+            // Compile Code
+            var microsoftGraphCSharpCompiler = new MicrosoftGraphCSharpCompiler(testData.FileName);
+            var compilationResultsModel = microsoftGraphCSharpCompiler.CompileSnippet(codeToCompile, testData.Version);
 
             if (compilationResultsModel.IsSuccess)
             {
-                Assert.Pass();
+                if (testData.IsKnownIssue)
+                {
+                    Assert.Fail("This snippet started compiling, it should be removed from known issues!");
+                }
+                else
+                {
+                    Assert.Pass();
+                }
             }
 
-            Assert.Fail($"{new CompilationOutputMessage(compilationResultsModel, codeToCompile, docsLink)}");
+            var compilationOutputMessage = new CompilationOutputMessage(compilationResultsModel, codeToCompile, testData.DocsLink, testData.KnownIssueMessage, testData.IsKnownIssue);
+            if (testData.IsKnownIssue)
+            {
+                Assert.Ignore($"{compilationOutputMessage}");
+            }
+            else
+            {
+                Assert.Fail($"{compilationOutputMessage}");
+            }
         }
     }
 }

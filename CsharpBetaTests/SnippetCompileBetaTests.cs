@@ -24,9 +24,9 @@ namespace CsharpBetaTests
         /// <param name="version">Docs version (e.g. V1, Beta)</param>
         [Test]
         [TestCaseSource(typeof(SnippetCompileBetaTests), nameof(TestDataBeta))]
-        public void Test(string fileName, string docsLink, Versions version)
+        public void Test(CsharpTestData testData)
         {
-            CSharpTestRunner.Run(fileName, docsLink, version);
+            CSharpTestRunner.Run(testData);
         }
     }
 }

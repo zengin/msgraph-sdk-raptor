@@ -2,7 +2,6 @@
 
 using MsGraphSDKSnippetsCompiler.Models;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,6 +9,26 @@ using System.Text.RegularExpressions;
 
 namespace TestsCommon
 {
+    public static class KnownIssues
+    {
+        /// <summary>
+        /// Known issue message for cases where there is a feature missing in SDK
+        /// </summary>
+        private const string NotSupported = "Feature not supported by SDK";
+
+        /// <summary>
+        /// Gets known issues
+        /// </summary>
+        /// <returns>A mapping of test names into known issues</returns>
+        public static Dictionary<string, string> GetIssues()
+        {
+            return new Dictionary<string, string>()
+            {
+                { "get-rangeformat-csharp-V1-compiles", NotSupported }
+            };
+        }
+    }
+
     /// <summary>
     /// Generates TestCaseData for NUnit
     /// </summary>
@@ -63,12 +82,23 @@ namespace TestsCommon
         public static IEnumerable<TestCaseData> GetTestCaseData(Versions version)
         {
             var documentationLinks = GetDocumentationLinks(version);
+            var knownIssues = KnownIssues.GetIssues();
             var snippetFileNames = documentationLinks.Keys.ToList();
             return from fileName in snippetFileNames                                // e.g. application-addpassword-csharp-snippets.md
                    let testNamePostfix = version.ToString() + "-compiles"           // e.g. Beta-compiles
                    let testName = fileName.Replace("snippets.md", testNamePostfix)  // e.g. application-addpassword-csharp-Beta-compiles
                    let docsLink = documentationLinks[fileName]
-                   select new TestCaseData(fileName, docsLink, version).SetName(testName);
+                   let isKnownIssue = knownIssues.ContainsKey(testName)
+                   let knownIssueMessage = isKnownIssue ? knownIssues[testName] : string.Empty
+                   let testCaseData = new CsharpTestData
+                   {
+                       Version = version,
+                       IsKnownIssue = isKnownIssue,
+                       KnownIssueMessage = knownIssueMessage,
+                       DocsLink = docsLink,
+                       FileName = fileName
+                   }
+                   select new TestCaseData(testCaseData).SetName(testName);
         }
     }
 }
