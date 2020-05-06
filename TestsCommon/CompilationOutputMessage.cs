@@ -27,16 +27,34 @@ namespace TestsCommon
         private readonly string DocsLink;
 
         /// <summary>
+        /// Message for known issue
+        /// </summary>
+        private readonly string KnownIssueMessage;
+
+        /// <summary>
+        /// Whether the issue is known or not
+        /// </summary>
+        private readonly bool IsKnownIssue;
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="model">Compilation result</param>
         /// <param name="code">Code that was attempted to be compiled</param>
         /// <param name="docsLink">documentation page where the snippet is shown</param>
-        public CompilationOutputMessage(CompilationResultsModel model, string code, string docsLink)
+        /// <param name="knownIssueMessage">message for known issue</param>
+        public CompilationOutputMessage(
+            CompilationResultsModel model,
+            string code,
+            string docsLink,
+            string knownIssueMessage,
+            bool isKnownIssue)
         {
             Model = model;
             Code = code;
             DocsLink = docsLink;
+            KnownIssueMessage = knownIssueMessage;
+            IsKnownIssue = isKnownIssue;
         }
 
         /// <summary>
@@ -45,16 +63,19 @@ namespace TestsCommon
         /// <returns>
         /// Code with line numbers and compiler errors
         /// </returns>
-        public override string ToString() => GetDocsLink() + GetCodeWithLineNumbers() + CompilerErrors();
+        public override string ToString() => GetKnownIssueMessage() + GetDocsLink() + GetCodeWithLineNumbers() + CompilerErrors();
+
+        /// <summary>
+        /// Get string representation of known issue message
+        /// </summary>
+        /// <returns>Known issue message if the issue is known, empty string if not</returns>
+        private string GetKnownIssueMessage() => IsKnownIssue ? $"Known Issue: {KnownIssueMessage}\r\n" : string.Empty;
 
         /// <summary>
         /// Gets documentation link for the snippet
         /// </summary>
         /// <returns>Documentation link for the snippet</returns>
-        private string GetDocsLink()
-        {
-            return $"{DocsLink}\r\n";
-        }
+        private string GetDocsLink() => $"{DocsLink}\r\n";
 
         /// <summary>
         /// For each compiler error, generates an error string with code location references
