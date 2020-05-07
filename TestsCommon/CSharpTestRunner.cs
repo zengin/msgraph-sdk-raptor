@@ -106,25 +106,11 @@ public class GraphSDKTest
 
             if (compilationResultsModel.IsSuccess)
             {
-                if (testData.IsKnownIssue)
-                {
-                    Assert.Fail("This snippet started compiling, it should be removed from known issues!");
-                }
-                else
-                {
-                    Assert.Pass();
-                }
+                Assert.Pass();
             }
 
             var compilationOutputMessage = new CompilationOutputMessage(compilationResultsModel, codeToCompile, testData.DocsLink, testData.KnownIssueMessage, testData.IsKnownIssue);
-            if (testData.IsKnownIssue)
-            {
-                Assert.Ignore($"{compilationOutputMessage}");
-            }
-            else
-            {
-                Assert.Fail($"{compilationOutputMessage}");
-            }
+            Assert.Fail($"{compilationOutputMessage}");
         }
     }
 }
