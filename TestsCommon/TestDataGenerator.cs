@@ -42,7 +42,6 @@ namespace TestsCommon
         {
             return new Dictionary<string, string>()
             {
-                { "call-transfer-csharp-V1-compiles", GetPropertyNotFoundMessage("InvitationParticipantInfo", "EndpointType") },
                 { "create-educationschool-from-educationroot-csharp-V1-compiles", GetPropertyNotFoundMessage("EducationSchool", "Status") },
                 { "create-item-attachment-from-eventmessage-csharp-V1-compiles", HttpSnippetWrong + ": Item needs to be an OutlookItem object, not a string" },
                 { "create-rangeborder-from-rangeformat-csharp-V1-compiles", FeatureNotSupported },
