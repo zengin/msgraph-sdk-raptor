@@ -195,10 +195,11 @@ namespace TestsCommon
         /// Test case name is also set to to unique name based on file name
         /// </summary>
         /// <param name="version">Docs version (e.g. V1, Beta)</param>
+        /// <param name="knownFailuresRequested">return whether known failures as test cases or not</param>
         /// <returns>
         /// TestCaseData to be consumed by C# compilation tests
         /// </returns>
-        public static IEnumerable<TestCaseData> GetTestCaseData(Versions version)
+        public static IEnumerable<TestCaseData> GetTestCaseData(Versions version, bool knownFailuresRequested = false)
         {
             var documentationLinks = GetDocumentationLinks(version);
             var knownIssues = KnownIssues.GetIssues();
@@ -217,6 +218,7 @@ namespace TestsCommon
                        DocsLink = docsLink,
                        FileName = fileName
                    }
+                   where !(isKnownIssue ^ knownFailuresRequested) // select known issues if requested
                    select new TestCaseData(testCaseData).SetName(testName);
         }
     }
