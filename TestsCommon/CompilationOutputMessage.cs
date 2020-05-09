@@ -75,7 +75,7 @@ namespace TestsCommon
         /// Gets documentation link for the snippet
         /// </summary>
         /// <returns>Documentation link for the snippet</returns>
-        private string GetDocsLink() => $"{DocsLink}\r\n";
+        private string GetDocsLink() => $"[Docs Link]({DocsLink})\r\n";
 
         /// <summary>
         /// For each compiler error, generates an error string with code location references
@@ -122,7 +122,7 @@ namespace TestsCommon
 
             var widestLineNumberWidth = lines.Length.ToString(CultureInfo.InvariantCulture).Length;
 
-            var builder = new StringBuilder("\r\n");
+            var builder = new StringBuilder("\r\n```\r\n");
             for (int lineNumber = 1; lineNumber < lines.Length + 1; lineNumber++)
             {
                 builder.Append(lineNumber.ToString(CultureInfo.InvariantCulture).PadLeft(widestLineNumberWidth)) // align line numbers to the right
@@ -130,6 +130,8 @@ namespace TestsCommon
                        .Append(lines[lineNumber - 1])
                        .Append("\r\n");
             }
+
+            builder.Append("```\r\n");
 
             return builder.ToString();
         }
