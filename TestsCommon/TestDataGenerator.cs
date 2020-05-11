@@ -10,6 +10,31 @@ using System.Text.RegularExpressions;
 
 namespace TestsCommon
 {
+    public class KnownIssue
+    {
+        /// <summary>
+        /// owner of known issue
+        /// This field is used to categorize known test failures, so that we can redirect issues faster
+        /// </summary>
+        public string Owner { get; set; }
+
+        /// <summary>
+        /// known issue message
+        /// </summary>
+        public string Message { get; set; }
+
+        /// <summary>
+        /// known issue constructor
+        /// </summary>
+        /// <param name="owner">owner of known issue</param>
+        /// <param name="message">known issue message</param>
+        public KnownIssue(string owner, string message)
+        {
+            Owner = owner;
+            Message = message;
+        }
+    }
+
     public static class KnownIssues
     {
         /// <summary>
@@ -22,6 +47,16 @@ namespace TestsCommon
         /// Known issue message for cases where HTTP snippet input should be fixed
         /// </summary>
         private const string HttpSnippetWrong = "Http snippet should be fixed";
+
+        /// <summary>
+        /// SDK team as owner
+        /// </summary>
+        private const string SDK = "SDK";
+
+        /// <summary>
+        /// Owner value where HTTP snippet needs fixing
+        /// </summary>
+        private const string HTTP = "HTTP";
 
         /// <summary>
         /// Constructs property not found message
@@ -38,122 +73,122 @@ namespace TestsCommon
         /// Gets known issues
         /// </summary>
         /// <returns>A mapping of test names into known issues</returns>
-        public static Dictionary<string, string> GetIssues()
+        public static Dictionary<string, KnownIssue> GetIssues()
         {
-            return new Dictionary<string, string>()
+            return new Dictionary<string, KnownIssue>()
             {
-                { "create-educationschool-from-educationroot-csharp-Beta-compiles", GetPropertyNotFoundMessage("EducationSchool", "Status") },
-                { "create-educationschool-from-educationroot-csharp-V1-compiles", GetPropertyNotFoundMessage("EducationSchool", "Status") },
-                { "create-item-attachment-from-eventmessage-csharp-Beta-compiles", HttpSnippetWrong + ": Item needs to be an OutlookItem object, not a string" },
-                { "create-item-attachment-from-eventmessage-csharp-V1-compiles", HttpSnippetWrong + ": Item needs to be an OutlookItem object, not a string" },
-                { "create-rangeborder-from-rangeformat-csharp-V1-compiles", FeatureNotSupported },
-                { "create-reference-attachment-with-post-csharp-Beta-compiles", GetPropertyNotFoundMessage("ReferenceAttachment", "SourceUrl, ProviderType, Permission and IsFolder") },
-                { "create-reference-attachment-with-post-csharp-V1-compiles", GetPropertyNotFoundMessage("ReferenceAttachment", "SourceUrl, ProviderType, Permission and IsFolder") },
-                { "create-tablecolumn-from-table-csharp-Beta-compiles", HttpSnippetWrong + ": Id should be string not int" },
-                { "create-tablecolumn-from-table-csharp-V1-compiles", HttpSnippetWrong + ": Id should be string not int" },
-                { "get-borders-csharp-V1-compiles", FeatureNotSupported },
-                { "get-formatprotection-csharp-V1-compiles", FeatureNotSupported },
-                { "get-rangeborder-csharp-V1-compiles", FeatureNotSupported },
-                { "get-rangebordercollection-csharp-V1-compiles", FeatureNotSupported },
-                { "get-rangefill-csharp-V1-compiles", FeatureNotSupported },
-                { "get-rangefont-csharp-V1-compiles", FeatureNotSupported },
-                { "get-rangeformat-csharp-V1-compiles", FeatureNotSupported },
-                { "post-reply-csharp-Beta-compiles", HttpSnippetWrong + ": Odata.Type for concreate Attachment type should be added" },
-                { "post-reply-csharp-V1-compiles", HttpSnippetWrong + ": Odata.Type for concreate Attachment type should be added" },
-                { "rangefill-clear-csharp-V1-compiles", FeatureNotSupported },
-                { "rangeformat-autofitcolumns-csharp-V1-compiles", FeatureNotSupported },
-                { "rangeformat-autofitrows-csharp-V1-compiles", FeatureNotSupported },
-                { "update-activitybasedtimeoutpolicy-csharp-Beta-compiles", GetPropertyNotFoundMessage("ActivityBasedTimeoutPolicy", "Type")},
-                { "update-activitybasedtimeoutpolicy-csharp-V1-compiles", GetPropertyNotFoundMessage("ActivityBasedTimeoutPolicy", "Type")},
-                { "update-formatprotection-csharp-V1-compiles", FeatureNotSupported },
-                { "update-homerealmdiscoverypolicy-csharp-Beta-compiles", GetPropertyNotFoundMessage("HomeRealmDiscoveryPolicy", "Type") },
-                { "update-homerealmdiscoverypolicy-csharp-V1-compiles", GetPropertyNotFoundMessage("HomeRealmDiscoveryPolicy", "Type") },
-                { "update-rangeborder-csharp-V1-compiles", FeatureNotSupported },
-                { "update-rangefill-csharp-V1-compiles", FeatureNotSupported },
-                { "update-rangefont-csharp-V1-compiles", FeatureNotSupported },
-                { "update-rangeformat-csharp-V1-compiles", FeatureNotSupported },
-                { "update-rangeformat-fill-csharp-V1-compiles", FeatureNotSupported },
-                { "update-rangeformat-fill-three-csharp-V1-compiles", FeatureNotSupported },
-                { "update-rangeformat-fill-two-csharp-V1-compiles", FeatureNotSupported },
-                { "update-rangeformat-font-csharp-V1-compiles", FeatureNotSupported },
-                { "update-rangeformat-font-two-csharp-V1-compiles", FeatureNotSupported },
-                { "update-rangeformat-three-csharp-V1-compiles", FeatureNotSupported },
-                { "update-rangeformat-two-csharp-V1-compiles", FeatureNotSupported },
-                { "update-tokenissuancepolicy-csharp-Beta-compiles", GetPropertyNotFoundMessage("TokenIssuancePolicy", "Type")},
-                { "update-tokenissuancepolicy-csharp-V1-compiles", GetPropertyNotFoundMessage("TokenIssuancePolicy", "Type")},
-                { "update-tokenlifetimepolicy-csharp-Beta-compiles", GetPropertyNotFoundMessage("TokenLifetimePolicy", "Type") },
-                { "update-tokenlifetimepolicy-csharp-V1-compiles", GetPropertyNotFoundMessage("TokenLifetimePolicy", "Type") },
-                { "user-findmeetingtimes-csharp-Beta-compiles", HttpSnippetWrong + ": timeslots should be renamed as timeSlots" },
-                { "user-findmeetingtimes-csharp-V1-compiles", HttpSnippetWrong + ": timeslots should be renamed as timeSlots" },
-                {" range-cell-csharp-V1-compiles", FeatureNotSupported },
-                {" range-clear-csharp-V1-compiles", FeatureNotSupported },
-                {" range-column-csharp-V1-compiles", FeatureNotSupported },
-                {" range-delete-csharp-Beta-compiles", FeatureNotSupported },
-                {" range-delete-csharp-V1-compiles", FeatureNotSupported },
-                {" range-usedrange-valuesonly-csharp-V1-compiles", FeatureNotSupported },
-                {" update-rangeformat-font-three-csharp-V1-compiles", FeatureNotSupported },
-                {" workbookrange-columnsafter-csharp-Beta-compiles", FeatureNotSupported },
-                {" workbookrange-columnsafter-csharp-V1-compiles", FeatureNotSupported },
-                {" workbookrange-columnsbefore-csharp-Beta-compiles", FeatureNotSupported },
-                {" workbookrange-columnsbefore-csharp-V1-compiles", FeatureNotSupported },
-                {"create-rangeborder-from-rangeformat-csharp-Beta-compiles", FeatureNotSupported },
-                {"get-borders-csharp-Beta-compiles", FeatureNotSupported },
-                {"get-formatprotection-csharp-Beta-compiles", FeatureNotSupported },
-                {"get-rangeborder-csharp-Beta-compiles", FeatureNotSupported },
-                {"get-rangebordercollection-csharp-Beta-compiles", FeatureNotSupported },
-                {"get-rangefill-csharp-Beta-compiles", FeatureNotSupported },
-                {"get-rangefont-csharp-Beta-compiles", FeatureNotSupported },
-                {"get-rangeformat-csharp-Beta-compiles", FeatureNotSupported },
-                {"get-rows-csharp-Beta-compiles", FeatureNotSupported },
-                {"get-rows-csharp-V1-compiles", FeatureNotSupported },
-                {"range-clear-csharp-Beta-compiles", FeatureNotSupported },
-                {"range-entirecolumn-csharp-Beta-compiles", FeatureNotSupported },
-                {"range-entirecolumn-csharp-V1-compiles", FeatureNotSupported },
-                {"range-entirerow-csharp-Beta-compiles", FeatureNotSupported },
-                {"range-entirerow-csharp-V1-compiles", FeatureNotSupported },
-                {"range-insert-csharp-Beta-compiles", FeatureNotSupported },
-                {"range-insert-csharp-V1-compiles", FeatureNotSupported },
-                {"range-lastcell-csharp-Beta-compiles", FeatureNotSupported },
-                {"range-lastcell-csharp-V1-compiles", FeatureNotSupported },
-                {"range-lastcolumn-csharp-Beta-compiles", FeatureNotSupported },
-                {"range-lastcolumn-csharp-V1-compiles", FeatureNotSupported },
-                {"range-lastrow-csharp-Beta-compiles", FeatureNotSupported },
-                {"range-lastrow-csharp-V1-compiles", FeatureNotSupported },
-                {"range-merge-csharp-Beta-compiles", FeatureNotSupported },
-                {"range-merge-csharp-V1-compiles", FeatureNotSupported },
-                {"range-unmerge-csharp-Beta-compiles", FeatureNotSupported },
-                {"range-unmerge-csharp-V1-compiles", FeatureNotSupported },
-                {"range-usedrange-csharp-Beta-compiles", FeatureNotSupported },
-                {"range-usedrange-csharp-V1-compiles", FeatureNotSupported },
-                {"range-usedrange-valuesonly-csharp-V1-compiles", FeatureNotSupported },
-                {"rangefill-clear-csharp-Beta-compiles", FeatureNotSupported },
-                {"rangeformat-autofitcolumns-csharp-Beta-compiles", FeatureNotSupported },
-                {"rangeformat-autofitrows-csharp-Beta-compiles", FeatureNotSupported },
-                {"rangesort-apply-csharp-Beta-compiles", FeatureNotSupported },
-                {"rangesort-apply-csharp-V1-compiles", FeatureNotSupported },
-                {"update-formatprotection-csharp-Beta-compiles", FeatureNotSupported },
-                {"update-rangeborder-csharp-Beta-compiles", FeatureNotSupported },
-                {"update-rangefill-csharp-Beta-compiles", FeatureNotSupported },
-                {"update-rangefont-csharp-Beta-compiles", FeatureNotSupported },
-                {"update-rangeformat-csharp-Beta-compiles", FeatureNotSupported },
-                {"update-rangeformat-fill-csharp-Beta-compiles", FeatureNotSupported },
-                {"update-rangeformat-fill-three-csharp-Beta-compiles", FeatureNotSupported },
-                {"update-rangeformat-fill-two-csharp-Beta-compiles", FeatureNotSupported },
-                {"update-rangeformat-font-csharp-Beta-compiles", FeatureNotSupported },
-                {"update-rangeformat-font-three-csharp-Beta-compiles", FeatureNotSupported },
-                {"update-rangeformat-font-two-csharp-Beta-compiles", FeatureNotSupported },
-                {"update-rangeformat-three-csharp-Beta-compiles", FeatureNotSupported },
-                {"update-rangeformat-two-csharp-Beta-compiles", FeatureNotSupported },
-                {"workbookrange-rowsabove-csharp-Beta-compiles", FeatureNotSupported },
-                {"workbookrange-rowsabove-csharp-V1-compiles", FeatureNotSupported },
-                {"workbookrange-rowsabove-nocount-csharp-V1-compiles", FeatureNotSupported },
-                {"workbookrange-rowsbelow-csharp-Beta-compiles", FeatureNotSupported },
-                {"workbookrange-rowsbelow-csharp-V1-compiles", FeatureNotSupported },
-                {"workbookrange-rowsbelow-nocount-csharp-V1-compiles", FeatureNotSupported },
-                {"workbookrange-visibleview-csharp-Beta-compiles", FeatureNotSupported },
-                {"workbookrange-visibleview-csharp-V1-compiles", FeatureNotSupported },
-                {"workbookrangeview-range-csharp-Beta-compiles", FeatureNotSupported },
-                {"workbookrangeview-range-csharp-V1-compiles", FeatureNotSupported },
+                { "create-educationschool-from-educationroot-csharp-Beta-compiles", new KnownIssue(HTTP, GetPropertyNotFoundMessage("EducationSchool", "Status")) },
+                { "create-educationschool-from-educationroot-csharp-V1-compiles", new KnownIssue(HTTP, GetPropertyNotFoundMessage("EducationSchool", "Status")) },
+                { "create-item-attachment-from-eventmessage-csharp-Beta-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": Item needs to be an OutlookItem object, not a string") },
+                { "create-item-attachment-from-eventmessage-csharp-V1-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": Item needs to be an OutlookItem object, not a string") },
+                { "create-rangeborder-from-rangeformat-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                { "create-reference-attachment-with-post-csharp-Beta-compiles", new KnownIssue(HTTP, GetPropertyNotFoundMessage("ReferenceAttachment", "SourceUrl, ProviderType, Permission and IsFolder")) },
+                { "create-reference-attachment-with-post-csharp-V1-compiles", new KnownIssue(HTTP, GetPropertyNotFoundMessage("ReferenceAttachment", "SourceUrl, ProviderType, Permission and IsFolder")) },
+                { "create-tablecolumn-from-table-csharp-Beta-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": Id should be string not int") },
+                { "create-tablecolumn-from-table-csharp-V1-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": Id should be string not int") },
+                { "get-borders-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                { "get-formatprotection-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                { "get-rangeborder-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                { "get-rangebordercollection-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                { "get-rangefill-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                { "get-rangefont-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                { "get-rangeformat-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                { "post-reply-csharp-Beta-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": Odata.Type for concreate Attachment type should be added") },
+                { "post-reply-csharp-V1-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": Odata.Type for concreate Attachment type should be added") },
+                { "rangefill-clear-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                { "rangeformat-autofitcolumns-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                { "rangeformat-autofitrows-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                { "update-activitybasedtimeoutpolicy-csharp-Beta-compiles", new KnownIssue(HTTP, GetPropertyNotFoundMessage("ActivityBasedTimeoutPolicy", "Type")) },
+                { "update-activitybasedtimeoutpolicy-csharp-V1-compiles", new KnownIssue(HTTP, GetPropertyNotFoundMessage("ActivityBasedTimeoutPolicy", "Type")) },
+                { "update-formatprotection-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                { "update-homerealmdiscoverypolicy-csharp-Beta-compiles", new KnownIssue(HTTP, GetPropertyNotFoundMessage("HomeRealmDiscoveryPolicy", "Type")) },
+                { "update-homerealmdiscoverypolicy-csharp-V1-compiles", new KnownIssue(HTTP, GetPropertyNotFoundMessage("HomeRealmDiscoveryPolicy", "Type")) },
+                { "update-rangeborder-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                { "update-rangefill-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                { "update-rangefont-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                { "update-rangeformat-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                { "update-rangeformat-fill-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                { "update-rangeformat-fill-three-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                { "update-rangeformat-fill-two-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                { "update-rangeformat-font-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                { "update-rangeformat-font-two-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                { "update-rangeformat-three-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                { "update-rangeformat-two-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                { "update-tokenissuancepolicy-csharp-Beta-compiles", new KnownIssue(HTTP, GetPropertyNotFoundMessage("TokenIssuancePolicy", "Type")) },
+                { "update-tokenissuancepolicy-csharp-V1-compiles", new KnownIssue(HTTP, GetPropertyNotFoundMessage("TokenIssuancePolicy", "Type")) },
+                { "update-tokenlifetimepolicy-csharp-Beta-compiles", new KnownIssue(HTTP, GetPropertyNotFoundMessage("TokenLifetimePolicy", "Type")) },
+                { "update-tokenlifetimepolicy-csharp-V1-compiles", new KnownIssue(HTTP, GetPropertyNotFoundMessage("TokenLifetimePolicy", "Type")) },
+                { "user-findmeetingtimes-csharp-Beta-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": timeslots should be renamed as timeSlots") },
+                { "user-findmeetingtimes-csharp-V1-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": timeslots should be renamed as timeSlots") },
+                {" range-cell-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {" range-clear-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {" range-column-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {" range-delete-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {" range-delete-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {" range-usedrange-valuesonly-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {" update-rangeformat-font-three-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {" workbookrange-columnsafter-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {" workbookrange-columnsafter-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {" workbookrange-columnsbefore-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {" workbookrange-columnsbefore-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"create-rangeborder-from-rangeformat-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"get-borders-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"get-formatprotection-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"get-rangeborder-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"get-rangebordercollection-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"get-rangefill-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"get-rangefont-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"get-rangeformat-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"get-rows-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"get-rows-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"range-clear-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"range-entirecolumn-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"range-entirecolumn-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"range-entirerow-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"range-entirerow-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"range-insert-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"range-insert-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"range-lastcell-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"range-lastcell-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"range-lastcolumn-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"range-lastcolumn-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"range-lastrow-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"range-lastrow-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"range-merge-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"range-merge-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"range-unmerge-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"range-unmerge-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"range-usedrange-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"range-usedrange-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"range-usedrange-valuesonly-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"rangefill-clear-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"rangeformat-autofitcolumns-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"rangeformat-autofitrows-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"rangesort-apply-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"rangesort-apply-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"update-formatprotection-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"update-rangeborder-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"update-rangefill-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"update-rangefont-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"update-rangeformat-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"update-rangeformat-fill-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"update-rangeformat-fill-three-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"update-rangeformat-fill-two-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"update-rangeformat-font-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"update-rangeformat-font-three-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"update-rangeformat-font-two-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"update-rangeformat-three-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"update-rangeformat-two-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"workbookrange-rowsabove-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"workbookrange-rowsabove-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"workbookrange-rowsabove-nocount-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"workbookrange-rowsbelow-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"workbookrange-rowsbelow-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"workbookrange-rowsbelow-nocount-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"workbookrange-visibleview-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"workbookrange-visibleview-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"workbookrangeview-range-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {"workbookrangeview-range-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
             };
         }
     }
@@ -219,7 +254,9 @@ namespace TestsCommon
                    let testName = fileName.Replace("snippets.md", testNamePostfix)  // e.g. application-addpassword-csharp-Beta-compiles
                    let docsLink = documentationLinks[fileName]
                    let isKnownIssue = knownIssues.ContainsKey(testName)
-                   let knownIssueMessage = isKnownIssue ? knownIssues[testName] : string.Empty
+                   let knownIssue = isKnownIssue ? knownIssues[testName] : null
+                   let knownIssueMessage = knownIssue?.Message ?? string.Empty
+                   let owner = knownIssue?.Owner ?? string.Empty
                    let testCaseData = new CsharpTestData
                    {
                        Version = version,
@@ -229,7 +266,7 @@ namespace TestsCommon
                        FileName = fileName
                    }
                    where !(isKnownIssue ^ knownFailuresRequested) // select known issues if requested
-                   select new TestCaseData(testCaseData).SetName(testName);
+                   select new TestCaseData(testCaseData).SetName(testName).SetProperty("Owner", owner);
         }
     }
 }
