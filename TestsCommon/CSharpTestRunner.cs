@@ -27,6 +27,7 @@ using System.Threading.Tasks;
 
 // Disambiguate colliding namespaces
 using DayOfWeek = Microsoft.Graph.DayOfWeek;
+using TimeOfDay = Microsoft.Graph.TimeOfDay;
 using KeyValuePair = Microsoft.Graph.KeyValuePair;
 
 public class GraphSDKTest
