@@ -27,7 +27,7 @@ namespace MsGraphSDKSnippetsCompiler.Models
     /// </summary>
     public class VersionString
     {
-        private Versions Version;
+        private readonly Versions Version;
 
         public VersionString(Versions version)
         {
