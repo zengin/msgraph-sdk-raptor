@@ -83,11 +83,9 @@ namespace MsGraphSDKSnippetsCompiler
         /// <param name="compilation">Immutable respresentation of a single invocation of the compiler</param>
         private EmitResult GetEmitResult(CSharpCompilation compilation)
         {
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                EmitResult emitResult = compilation.Emit(memoryStream);
-                return emitResult;
-            }
+            using MemoryStream memoryStream = new MemoryStream();
+            EmitResult emitResult = compilation.Emit(memoryStream);
+            return emitResult;
         }
 
         /// <summary>
