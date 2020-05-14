@@ -1,6 +1,7 @@
 # Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.  See License in the project root for license information.
 
 trigger: none # disable triggers based on commits.
+name: $(BuildDefinitionName)_$(testRunTitle)_$(Date:yyyyMMdd)$(Rev:.r)
 
 resources:
  repositories:
@@ -8,7 +9,7 @@ resources:
      type: github
      endpoint: microsoftgraph
      name: microsoftgraph/microsoft-graph-docs
-     ref: master
+     ref: zengin/snippets-staging # will refer to this branch as latest until master gets updated often
 
 pool:
   vmImage: 'windows-latest'
