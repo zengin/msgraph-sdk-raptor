@@ -53,6 +53,11 @@ namespace TestsCommon
         private const string MetadataWrong = "Metadata should be fixed";
 
         /// <summary>
+        /// Known issue message for cases where HTTP sample needs to modify the URL to end with /$ref
+        /// </summary>
+        private const string RefNeeded = "URL needs to end with /$ref for reference types";
+
+        /// <summary>
         /// SDK team as owner
         /// </summary>
         private const string SDK = "SDK";
@@ -66,6 +71,16 @@ namespace TestsCommon
         /// Oner value where Metadata needs fixing
         /// </summary>
         private const string Metadata = "Metadata";
+
+        #region HTTP methods
+
+        private const string DELETE = "DELETE";
+        private const string PUT = "PUT";
+        private const string POST = "POST";
+        private const string GET = "GET";
+        private const string PATCH = "PATCH";
+
+        #endregion
 
         /// <summary>
         /// Constructs property not found message
@@ -90,6 +105,17 @@ namespace TestsCommon
         }
 
         /// <summary>
+        /// Constructs error message where HTTP method is wrong
+        /// </summary>
+        /// <param name="docsMethod">wrong HTTP method in docs</param>
+        /// <param name="expectedMethod">expected HTTP method in the samples</param>
+        /// <returns>String representation of HTTP method wrong error</returns>
+        private static string GetMethodWrongMessage(string docsMethod, string expectedMethod)
+        {
+            return HttpSnippetWrong + $": Docs has HTTP method {docsMethod}, it should be {expectedMethod}";
+        }
+
+        /// <summary>
         /// Gets known issues
         /// </summary>
         /// <returns>A mapping of test names into known issues</returns>
@@ -99,6 +125,9 @@ namespace TestsCommon
             {
                 { "create-acceptedsender-csharp-Beta-compiles", new KnownIssue(Metadata, GetContainsTargetRemoveMessage("group", "acceptedSender")) },
                 { "create-acceptedsender-csharp-V1-compiles", new KnownIssue(Metadata, GetContainsTargetRemoveMessage("group", "rejectedSender")) },
+                { "create-certificatebasedauthconfiguration-from-certificatebasedauthconfiguration-csharp-Beta-compiles", new KnownIssue(HTTP, RefNeeded) },
+                { "create-certificatebasedauthconfiguration-from-certificatebasedauthconfiguration-csharp-V1-compiles", new KnownIssue(HTTP, RefNeeded) },
+                { "create-directoryobject-from-device-csharp-V1-compiles", new KnownIssue(HTTP, RefNeeded) },
                 { "create-educationschool-from-educationroot-csharp-Beta-compiles", new KnownIssue(HTTP, GetPropertyNotFoundMessage("EducationSchool", "Status")) },
                 { "create-educationschool-from-educationroot-csharp-V1-compiles", new KnownIssue(HTTP, GetPropertyNotFoundMessage("EducationSchool", "Status")) },
                 { "create-item-attachment-from-eventmessage-csharp-Beta-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": Item needs to be an OutlookItem object, not a string") },
@@ -127,6 +156,8 @@ namespace TestsCommon
                 { "get-rangeformat-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
                 { "get-rows-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
                 { "get-rows-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                { "nameditem-range-csharp-Beta-compiles", new KnownIssue(HTTP, GetMethodWrongMessage(POST, GET)) },
+                { "nameditem-range-csharp-V1-compiles", new KnownIssue(HTTP, GetMethodWrongMessage(POST, GET)) },
                 { "post-reply-csharp-Beta-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": Odata.Type for concreate Attachment type should be added") },
                 { "post-reply-csharp-V1-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": Odata.Type for concreate Attachment type should be added") },
                 { "range-cell-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
@@ -165,12 +196,40 @@ namespace TestsCommon
                 { "remove-group-from-rejectedsenderslist-of-group-csharp-Beta-compiles", new KnownIssue(Metadata, GetContainsTargetRemoveMessage("group", "rejectedSender")) },
                 { "remove-rejectedsender-from-group-csharp-V1-compiles", new KnownIssue(Metadata, GetContainsTargetRemoveMessage("group", "rejectedSender")) },
                 { "remove-user-from-rejectedsenderslist-of-group-csharp-Beta-compiles", new KnownIssue(Metadata, GetContainsTargetRemoveMessage("group", "rejectedSender")) },
+                { "schedule-put-schedulinggroups-csharp-Beta-compiles", new KnownIssue(HTTP, GetMethodWrongMessage(PUT, PATCH)) },
+                { "schedule-put-schedulinggroups-csharp-V1-compiles", new KnownIssue(HTTP, GetMethodWrongMessage(PUT, PATCH)) },
+                { "shift-get-csharp-Beta-compiles", new KnownIssue(HTTP, GetMethodWrongMessage(PUT, PATCH)) },
+                { "shift-get-csharp-V1-compiles", new KnownIssue(HTTP, GetMethodWrongMessage(PUT, PATCH)) },
+                { "shift-put-csharp-Beta-compiles", new KnownIssue(HTTP, GetMethodWrongMessage(PUT, PATCH)) },
+                { "shift-put-csharp-V1-compiles", new KnownIssue(HTTP, GetMethodWrongMessage(PUT, PATCH)) },
+                { "table-databodyrange-csharp-Beta-compiles", new KnownIssue(HTTP, GetMethodWrongMessage(POST, GET)) },
+                { "table-databodyrange-csharp-V1-compiles", new KnownIssue(HTTP, GetMethodWrongMessage(POST, GET)) },
+                { "table-headerrowrange-csharp-Beta-compiles", new KnownIssue(HTTP, GetMethodWrongMessage(POST, GET)) },
+                { "table-headerrowrange-csharp-V1-compiles", new KnownIssue(HTTP, GetMethodWrongMessage(POST, GET)) },
+                { "table-totalrowrange-csharp-Beta-compiles", new KnownIssue(HTTP, GetMethodWrongMessage(POST, GET)) },
+                { "table-totalrowrange-csharp-V1-compiles", new KnownIssue(HTTP, GetMethodWrongMessage(POST, GET)) },
+                { "tablecolumn-databodyrange-csharp-Beta-compiles", new KnownIssue(HTTP, GetMethodWrongMessage(POST, GET)) },
+                { "tablecolumn-databodyrange-csharp-V1-compiles", new KnownIssue(HTTP, GetMethodWrongMessage(POST, GET)) },
+                { "tablecolumn-headerrowrange-csharp-Beta-compiles", new KnownIssue(HTTP, GetMethodWrongMessage(POST, GET)) },
+                { "tablecolumn-headerrowrange-csharp-V1-compiles", new KnownIssue(HTTP, GetMethodWrongMessage(POST, GET)) },
+                { "tablecolumn-range-csharp-Beta-compiles", new KnownIssue(HTTP, GetMethodWrongMessage(POST, GET)) },
+                { "tablecolumn-range-csharp-V1-compiles", new KnownIssue(HTTP, GetMethodWrongMessage(POST, GET)) },
+                { "tablecolumn-totalrowrange-csharp-Beta-compiles", new KnownIssue(HTTP, GetMethodWrongMessage(POST, GET)) },
+                { "tablecolumn-totalrowrange-csharp-V1-compiles", new KnownIssue(HTTP, GetMethodWrongMessage(POST, GET)) },
+                { "timeoff-put-csharp-Beta-compiles", new KnownIssue(HTTP, GetMethodWrongMessage(PUT, PATCH)) },
+                { "timeoff-put-csharp-V1-compiles", new KnownIssue(HTTP, GetMethodWrongMessage(PUT, PATCH)) },
+                { "timeoffreason-put-csharp-Beta-compiles", new KnownIssue(HTTP, GetMethodWrongMessage(PUT, PATCH)) },
+                { "timeoffreason-put-csharp-V1-compiles", new KnownIssue(HTTP, GetMethodWrongMessage(PUT, PATCH)) },
+                { "unfollow-item-csharp-Beta-compiles", new KnownIssue(HTTP, GetMethodWrongMessage(DELETE, POST)) },
+                { "unfollow-item-csharp-V1-compiles", new KnownIssue(HTTP, GetMethodWrongMessage(DELETE, POST)) },
                 { "update-activitybasedtimeoutpolicy-csharp-Beta-compiles", new KnownIssue(HTTP, GetPropertyNotFoundMessage("ActivityBasedTimeoutPolicy", "Type")) },
                 { "update-activitybasedtimeoutpolicy-csharp-V1-compiles", new KnownIssue(HTTP, GetPropertyNotFoundMessage("ActivityBasedTimeoutPolicy", "Type")) },
                 { "update-formatprotection-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
                 { "update-formatprotection-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
                 { "update-homerealmdiscoverypolicy-csharp-Beta-compiles", new KnownIssue(HTTP, GetPropertyNotFoundMessage("HomeRealmDiscoveryPolicy", "Type")) },
                 { "update-homerealmdiscoverypolicy-csharp-V1-compiles", new KnownIssue(HTTP, GetPropertyNotFoundMessage("HomeRealmDiscoveryPolicy", "Type")) },
+                { "update-openshift-csharp-Beta-compiles", new KnownIssue(HTTP, GetMethodWrongMessage(PUT, PATCH)) },
+                { "update-openshift-csharp-V1-compiles", new KnownIssue(HTTP, GetMethodWrongMessage(PUT, PATCH)) },
                 { "update-rangeborder-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
                 { "update-rangeborder-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
                 { "update-rangefill-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
