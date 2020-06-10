@@ -43,6 +43,11 @@ namespace TestsCommon
             + "https://github.com/microsoftgraph/msgraph-sdk-dotnet/issues/490";
 
         /// <summary>
+        /// Known issue message for cases where types from different namespaces are referenced.
+        /// </summary>
+        private const string NamespacesSupport = "Multiple namespaces are not yet supported.";
+
+        /// <summary>
         /// Known issue message for cases where HTTP snippet input should be fixed
         /// </summary>
         private const string HttpSnippetWrong = "Http snippet should be fixed";
@@ -173,6 +178,8 @@ namespace TestsCommon
                 { "create-reference-attachment-with-post-csharp-V1-compiles", new KnownIssue(HTTP, GetPropertyNotFoundMessage("ReferenceAttachment", "SourceUrl, ProviderType, Permission and IsFolder")) },
                 { "create-rejectedsender-csharp-Beta-compiles", new KnownIssue(Metadata, GetContainsTargetRemoveMessage("group", "rejectedSender")) },
                 { "create-rejectedsenders-from-group-csharp-V1-compiles", new KnownIssue(Metadata, GetContainsTargetRemoveMessage("group", "rejectedSender")) },
+                { "create-serviceprincipal-from-serviceprincipals-csharp-Beta-compiles", new KnownIssue(HTTP, GetCasingIssueMessage("serviceprincipal", "servicePrincipal")) },
+                { "create-serviceprincipal-from-serviceprincipals-csharp-V1-compiles", new KnownIssue(HTTP, GetCasingIssueMessage("serviceprincipal", "servicePrincipal")) },
                 { "create-tablecolumn-from-table-csharp-Beta-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": Id should be string not int") },
                 { "create-tablecolumn-from-table-csharp-V1-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": Id should be string not int") },
                 { "delete-acceptedsenders-from-group-csharp-V1-compiles", new KnownIssue(Metadata, GetContainsTargetRemoveMessage("group", "acceptedSender")) },
@@ -182,7 +189,16 @@ namespace TestsCommon
                 { "delete-educationrubric-from-educationassignment-csharp-Beta-compiles", new KnownIssue(Metadata, GetContainsTargetRemoveMessage("educationAssignment", "rubric"))},
                 { "get-borders-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
                 { "get-borders-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "get-callrecord-csharp-Beta-compiles", new KnownIssue(Metadata, "CallRecord type is not defined in metadata") },
+                { "get-callrecord-csharp-Beta-compiles", new KnownIssue(SDK, NamespacesSupport) },
+                { "get-callrecord-csharp-V1-compiles", new KnownIssue(SDK, NamespacesSupport) },
+                { "get-callrecord-expanded-csharp-Beta-compiles", new KnownIssue(SDK, NamespacesSupport) },
+                { "get-callrecord-expanded-csharp-V1-compiles", new KnownIssue(SDK, NamespacesSupport) },
+                { "get-callrecord-sessions-csharp-Beta-compiles", new KnownIssue(SDK, NamespacesSupport) },
+                { "get-callrecord-sessions-csharp-V1-compiles", new KnownIssue(SDK, NamespacesSupport) },
+                { "get-callrecord-sessions-expanded-csharp-Beta-compiles", new KnownIssue(SDK, NamespacesSupport) },
+                { "get-callrecord-sessions-expanded-csharp-V1-compiles", new KnownIssue(SDK, NamespacesSupport) },
+                { "get-endpoint-csharp-V1-compiles", new KnownIssue(HTTP, "This is only available in Beta") },
+                { "get-endpoints-csharp-V1-compiles", new KnownIssue(HTTP, "This is only available in Beta") },
                 { "get-formatprotection-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
                 { "get-formatprotection-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
                 { "get-rangeborder-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
@@ -202,6 +218,8 @@ namespace TestsCommon
                 { "informationprotectionlabel-evaluateclassificationresults-csharp-Beta-compiles", new KnownIssue(HTTPCamelCase, GetCasingIssueMessage("informationprotection","informationProtection")) },
                 { "informationprotectionlabel-evaluateremoval-csharp-Beta-compiles", new KnownIssue(HTTPCamelCase, GetCasingIssueMessage("informationprotection","informationProtection")) },
                 { "informationprotectionlabel-extractlabel-csharp-Beta-compiles", new KnownIssue(HTTPCamelCase, GetCasingIssueMessage("informationprotection","informationProtection")) },
+                { "list-serviceprincipal-csharp-Beta-compiles", new KnownIssue(HTTP, GetCasingIssueMessage("serviceprincipal", "servicePrincipal")) },
+                { "list-serviceprincipal-csharp-V1-compiles", new KnownIssue(HTTP, GetCasingIssueMessage("serviceprincipal", "servicePrincipal")) },
                 { "nameditem-range-csharp-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(POST, GET)) },
                 { "oauth2permissiongrant-delta-csharp-Beta-compiles", new KnownIssue(HTTPCamelCase, GetCasingIssueMessage("oAuth2permissiongrants","oAuth2PermissionGrants")) },
                 { "post-reply-csharp-Beta-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": Odata.Type for concreate Attachment type should be added") },
@@ -245,6 +263,10 @@ namespace TestsCommon
                 { "remove-user-from-rejectedsenderslist-of-group-csharp-Beta-compiles", new KnownIssue(Metadata, GetContainsTargetRemoveMessage("group", "rejectedSender")) },
                 { "schedule-put-schedulinggroups-csharp-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
                 { "securescorecontrolprofiles-update-csharp-Beta-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": A list of SecureScoreControlStateUpdate objects should be provided instead of placeholder string.") },
+                { "serviceprincipal-addkey-csharp-V1-compiles", new KnownIssue(HTTP, GetCasingIssueMessage("serviceprincipal", "servicePrincipal")) },
+                { "serviceprincipal-delete-owners-csharp-Beta-compiles", new KnownIssue(HTTP, GetCasingIssueMessage("serviceprincipal", "servicePrincipal")) },
+                { "serviceprincipal-delete-owners-csharp-V1-compiles", new KnownIssue(HTTP, GetCasingIssueMessage("serviceprincipal", "servicePrincipal")) },
+                { "serviceprincipal-removekey-csharp-V1-compiles", new KnownIssue(HTTP, GetCasingIssueMessage("serviceprincipal", "servicePrincipal")) },
                 { "shift-get-csharp-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
                 { "shift-put-csharp-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
                 { "table-databodyrange-csharp-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(POST, GET)) },
@@ -303,7 +325,9 @@ namespace TestsCommon
                 { "update-rangeformat-two-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
                 { "update-rangeformat-two-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
                 { "update-room-csharp-Beta-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": Capacity should be int, isWheelchairAccessible should be renamed as isWheelChairAccessible") },
+                { "update-room-csharp-V1-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": Capacity should be int, isWheelchairAccessible should be renamed as isWheelChairAccessible") },
                 { "update-roomlist-csharp-Beta-compiles", new KnownIssue(HTTPCamelCase, GetCasingIssueMessage("roomlist", "roomList")) },
+                { "update-roomlist-csharp-V1-compiles", new KnownIssue(HTTPCamelCase, GetCasingIssueMessage("roomlist", "roomList")) },
                 { "update-synchronizationschema-csharp-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
                 { "update-synchronizationtemplate-csharp-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
                 { "update-tokenissuancepolicy-csharp-Beta-compiles", new KnownIssue(HTTP, GetPropertyNotFoundMessage("TokenIssuancePolicy", "Type")) },
