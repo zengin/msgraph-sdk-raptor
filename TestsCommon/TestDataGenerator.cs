@@ -435,7 +435,8 @@ namespace TestsCommon
                        IsKnownIssue = isKnownIssue,
                        KnownIssueMessage = knownIssueMessage,
                        DocsLink = docsLink,
-                       FileName = fileName
+                       FileName = fileName,
+                       Owner = owner
                    }
                    where !(isKnownIssue ^ knownFailuresRequested) // select known issues if requested
                    select new TestCaseData(testCaseData).SetName(testName).SetProperty("Owner", owner);

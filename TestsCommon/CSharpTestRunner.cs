@@ -120,6 +120,11 @@ public class GraphSDKTest
                 WriteLinqFile(testData, codeSnippetFormatted);
             }
 
+            var testNamePostfix = testData.Version.ToString() + "-compiles";           // e.g. Beta-compiles
+            var testName = testData.FileName.Replace("snippets.md", testNamePostfix);  // e.g. application-addpassword-csharp-Beta-compiles
+
+            Console.WriteLine(string.Join("\t", testData.Owner, testName, testData.DocsLink, testData.KnownIssueMessage.Replace("\r\n", " ").Replace("\n", " ")));
+
             Assert.Fail($"{compilationOutputMessage}");
         }
 
