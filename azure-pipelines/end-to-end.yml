@@ -58,11 +58,9 @@ steps:
   clean: true
   fetchDepth: 1
 
-- task: DotNetCoreCLI@2
+- task: MSBuild@1
   inputs:
-    command: build
-    projects: MSGraph-SDK-Code-Generator/**/*.csproj
-    arguments: '--configuration $(buildConfiguration)'
+    solution: '**/Typewriter.sln'
   displayName: 'Build Typewriter'
 
 - task: DotNetCoreCLI@2
@@ -78,3 +76,4 @@ steps:
     projects: msgraph-sdk-raptor/**/*.csproj
     arguments: '--configuration $(buildConfiguration)'
   displayName: 'Build Raptor'
+
