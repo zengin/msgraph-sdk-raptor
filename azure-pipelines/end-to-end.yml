@@ -6,8 +6,8 @@ resources:
  repositories:
    - repository: docs
      type: github
-     endpoint: microsoftgraph
-     name: microsoftgraph/microsoft-graph-docs
+     endpoint: zengin
+     name: zengin/microsoft-graph-docs
      ref: master
    - repository: apidoctor
      type: github
@@ -16,8 +16,8 @@ resources:
      ref: zengin/snippets
    - repository: dotnet
      type: github
-     endpoint: microsoftgraph
-     name: microsoftgraph/msgraph-sdk-dotnet
+     endpoint: zengin
+     name: zengin/msgraph-sdk-dotnet
      ref: dev
 
 pool:
