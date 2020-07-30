@@ -19,11 +19,11 @@ resources:
      endpoint: zengin
      name: zengin/msgraph-sdk-dotnet
      ref: dev
-   - repository: generator
-     type: github
-     endpoint: zengin
-     name: zengin/MSGraph-SDK-Code-Generator
-     ref: dev
+#   - repository: generator
+#     type: github
+#     endpoint: zengin
+#     name: zengin/MSGraph-SDK-Code-Generator
+#     ref: dev
 
 
 pool:
@@ -58,10 +58,31 @@ steps:
   clean: true
   fetchDepth: 1
 
-- task: MSBuild@1
+#- task: MSBuild@1
+#  inputs:
+#    solution: '**/Typewriter.sln'
+#  displayName: 'Build Typewriter'
+
+- task: PowerShell@2
   inputs:
-    solution: '**/Typewriter.sln'
-  displayName: 'Build Typewriter'
+    targetType: 'inline'
+    script: |
+      $loc_download = $(Agent.TempDirectory)
+
+      $response = (Invoke-WebRequest api.github.com/repos/microsoftgraph/MSGraph-SDK-Code-Generator/releases).Content | ConvertFrom-Json
+      $typewriterUrl = $response[0].assets[0].browser_download_url
+
+      $zipLocation = Join-Path $loc_download "typewriter.zip"
+      Invoke-WebRequest $typewriterUrl -OutFile $zipLocation
+      Write-Host "downloaded to: ",(Resolve-Path $zipLocation).Path
+
+      # unzip
+      $unzipLocation = Join-Path $loc_download "unzipped"
+      mkdir $unzipLocation
+
+      Add-Type -AssemblyName System.IO.Compression.FileSystem
+      [System.IO.Compression.ZipFile]::ExtractToDirectory($zipLocation, $unzipLocation)
+      Write-Host "unzipped to: ",(Resolve-Path $unzipLocation).Path
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -76,4 +97,3 @@ steps:
     projects: msgraph-sdk-raptor/**/*.csproj
     arguments: '--configuration $(buildConfiguration)'
   displayName: 'Build Raptor'
-
