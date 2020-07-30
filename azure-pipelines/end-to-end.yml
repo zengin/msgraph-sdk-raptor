@@ -25,6 +25,7 @@ resources:
      name: zengin/MSGraph-SDK-Code-Generator
      ref: dev
 
+
 pool:
   vmImage: 'windows-latest'
 
@@ -51,6 +52,7 @@ steps:
   clean: true
   fetchDepth: 1
   persistCredentials: true
+  submodules: recursive
 
 - checkout: self
   clean: true
