@@ -19,6 +19,11 @@ resources:
      endpoint: zengin
      name: zengin/msgraph-sdk-dotnet
      ref: dev
+   - repository: generator
+     type: github
+     endpoint: zengin
+     name: zengin/MSGraph-SDK-Code-Generator
+     ref: dev
 
 pool:
   vmImage: 'windows-latest'
@@ -42,6 +47,32 @@ steps:
   fetchDepth: 1
   persistCredentials: true
 
+- checkout: generator
+  clean: true
+  fetchDepth: 1
+  persistCredentials: true
+
 - checkout: self
   clean: true
   fetchDepth: 1
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: build
+    projects: MSGraph-SDK-Code-Generator/**/*.csproj
+    arguments: '--configuration $(buildConfiguration)'
+  displayName: 'Build Typewriter'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: build
+    projects: apidoctor/**/*.csproj
+    arguments: '--configuration $(buildConfiguration)'
+  displayName: 'Build ApiDoctor'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: msgraph-sdk-raptor/**/*.csproj
+    arguments: '--configuration $(buildConfiguration)'
+  displayName: 'Build Raptor'
