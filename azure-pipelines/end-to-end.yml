@@ -1,0 +1,47 @@
+# Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.  See License in the project root for license information.
+
+trigger: none # disable triggers based on commits
+
+resources:
+ repositories:
+   - repository: docs
+     type: github
+     endpoint: microsoftgraph
+     name: microsoftgraph/microsoft-graph-docs
+     ref: master
+   - repository: apidoctor
+     type: github
+     endpoint: zengin
+     name: zengin/apidoctor
+     ref: zengin/snippets
+   - repository: dotnet
+     type: github
+     endpoint: microsoftgraph
+     name: microsoftgraph/msgraph-sdk-dotnet
+     ref: dev
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+- checkout: docs
+  clean: true
+  fetchDepth: 1
+  persistCredentials: true
+
+- checkout: apidoctor
+  clean: true
+  fetchDepth: 1
+  persistCredentials: true
+
+- checkout: dotnet
+  clean: true
+  fetchDepth: 1
+  persistCredentials: true
+
+- checkout: self
+  clean: true
+  fetchDepth: 1
