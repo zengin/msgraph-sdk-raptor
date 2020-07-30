@@ -81,6 +81,7 @@ steps:
       Add-Type -AssemblyName System.IO.Compression.FileSystem
       [System.IO.Compression.ZipFile]::ExtractToDirectory($zipLocation, $unzipLocation)
       Write-Host "unzipped to: ",(Resolve-Path $unzipLocation).Path
+  continueOnError: true
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -88,6 +89,7 @@ steps:
     projects: apidoctor/**/*.csproj
     arguments: '--configuration $(buildConfiguration)'
   displayName: 'Build ApiDoctor'
+  continueOnError: true
 
 - task: DotNetCoreCLI@2
   inputs:
