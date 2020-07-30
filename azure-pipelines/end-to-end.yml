@@ -48,11 +48,11 @@ steps:
   fetchDepth: 1
   persistCredentials: true
 
-- checkout: generator
-  clean: true
-  fetchDepth: 1
-  persistCredentials: true
-  submodules: recursive
+#- checkout: generator
+#  clean: true
+#  fetchDepth: 1
+#  persistCredentials: true
+#  submodules: recursive
 
 - checkout: self
   clean: true
