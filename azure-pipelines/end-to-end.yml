@@ -67,17 +67,15 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      $loc_download = $(Agent.TempDirectory)
-
       $response = (Invoke-WebRequest api.github.com/repos/microsoftgraph/MSGraph-SDK-Code-Generator/releases).Content | ConvertFrom-Json
       $typewriterUrl = $response[0].assets[0].browser_download_url
 
-      $zipLocation = Join-Path $loc_download "typewriter.zip"
+      $zipLocation = Join-Path $(Agent.TempDirectory) "typewriter.zip"
       Invoke-WebRequest $typewriterUrl -OutFile $zipLocation
       Write-Host "downloaded to: ",(Resolve-Path $zipLocation).Path
 
       # unzip
-      $unzipLocation = Join-Path $loc_download "unzipped"
+      $unzipLocation = Join-Path $(Agent.TempDirectory) "unzipped"
       mkdir $unzipLocation
 
       Add-Type -AssemblyName System.IO.Compression.FileSystem
