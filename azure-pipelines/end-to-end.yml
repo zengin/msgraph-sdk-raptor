@@ -26,9 +26,7 @@ resources:
      ref: master
 
 variables:
-  snippetInjectionRepo: 'https://github.com/zengin/apidoctor.git'
-  snippetInjectionBranch: 'generate-snippets'
-  snippetInjectionPath: 'ApiDoctor'
+  snippetInjectionPath: 'apidoctor'
   solution: '$(snippetInjectionPath)/**/*.sln'
   snippetApiUrl: 'https://graphexplorerapi.azurewebsites.net/api/GraphExplorerSnippets'
   snippetLanguages: 'C#'
@@ -55,12 +53,6 @@ steps:
 - checkout: self
   clean: true
   fetchDepth: 1
-
-- task: PowerShell@1
-  displayName: "Clone Snippet injection tool"
-  inputs:
-    scriptType: inlineScript
-    inlineScript: "git clone -b '$(snippetInjectionBranch)' '$(snippetInjectionRepo)' --recurse-submodules '$(snippetInjectionPath)' 2>&1 | Write-Host"
 
 - task: NuGetToolInstaller@1
   displayName: "Install Nuget.exe"
