@@ -55,6 +55,26 @@ steps:
   clean: true
   fetchDepth: 1
 
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      $response = (Invoke-WebRequest api.github.com/repos/microsoftgraph/MSGraph-SDK-Code-Generator/releases).Content | ConvertFrom-Json
+      $typewriterUrl = $response[0].assets[0].browser_download_url
+
+      $zipLocation = Join-Path $(Agent.TempDirectory) "typewriter.zip"
+      Invoke-WebRequest $typewriterUrl -OutFile $zipLocation
+      Write-Host "downloaded to: ",(Resolve-Path $zipLocation).Path
+
+      # unzip
+      $unzipLocation = Join-Path $(Agent.TempDirectory) "unzipped"
+      mkdir $unzipLocation
+
+      Add-Type -AssemblyName System.IO.Compression.FileSystem
+      [System.IO.Compression.ZipFile]::ExtractToDirectory($zipLocation, $unzipLocation)
+      Write-Host "unzipped to: ",(Resolve-Path $unzipLocation).Path
+  continueOnError: true
+
 - task: NuGetToolInstaller@1
   displayName: "Install Nuget.exe"
 
@@ -70,12 +90,12 @@ steps:
     platform: 'Any CPU'
     configuration: 'Release'
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    projects: msgraph-sdk-raptor/**/*.csproj
-    arguments: '--configuration $(buildConfiguration)'
-  displayName: 'Build Raptor'
+#- task: DotNetCoreCLI@2
+#  inputs:
+#    command: 'build'
+#    projects: msgraph-sdk-raptor/**/*.csproj
+#    arguments: '--configuration $(buildConfiguration)'
+#  displayName: 'Build Raptor'
 
 #- task: CmdLine@2
 #  displayName: "Run snippet injection against docs"
