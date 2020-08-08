@@ -24,21 +24,28 @@ resources:
      endpoint: zengin
      name: zengin/msgraph-metadata
      ref: master
+   - repository: generator
+     type: github
+     endpoint: zengin
+     name: zengin/MSGraph-SDK-Code-Generator
+     ref: feature-namespaces
 
 variables:
   snippetInjectionPath: 'apidoctor'
   solution: '$(snippetInjectionPath)/**/*.sln'
   snippetApiUrl: 'https://graphexplorerapi.azurewebsites.net/api/GraphExplorerSnippets'
   snippetLanguages: 'C#'
+  generatorPath: 'MSGraph-SDK-Code-Generator'
+  typewriterSolution: '$(generatorPath)/**/Typewriter.sln'
 
 pool:
   vmImage: 'windows-latest'
 
 steps:
-- checkout: docs
-  clean: true
-  fetchDepth: 1
-  persistCredentials: true
+#- checkout: docs
+#  clean: true
+#  fetchDepth: 1
+#  persistCredentials: true
 
 - checkout: apidoctor
   clean: true
@@ -46,34 +53,40 @@ steps:
   submodules: recursive
   persistCredentials: true
 
-- checkout: dotnet
-  clean: true
-  fetchDepth: 1
-  persistCredentials: true
+#- checkout: dotnet
+#  clean: true
+#  fetchDepth: 1
+#  persistCredentials: true
 
 - checkout: self
   clean: true
   fetchDepth: 1
+  
+- checkout: generator
+  clean: true
+  fetchDepth: 1
+  submodules: recursive
+  persistCredentials: true
 
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: |
-      $response = (Invoke-WebRequest api.github.com/repos/microsoftgraph/MSGraph-SDK-Code-Generator/releases).Content | ConvertFrom-Json
-      $typewriterUrl = $response[0].assets[0].browser_download_url
-
-      $zipLocation = Join-Path $(Agent.TempDirectory) "typewriter.zip"
-      Invoke-WebRequest $typewriterUrl -OutFile $zipLocation
-      Write-Host "downloaded to: ",(Resolve-Path $zipLocation).Path
-
-      # unzip
-      $unzipLocation = Join-Path $(Agent.TempDirectory) "unzipped"
-      mkdir $unzipLocation
-
-      Add-Type -AssemblyName System.IO.Compression.FileSystem
-      [System.IO.Compression.ZipFile]::ExtractToDirectory($zipLocation, $unzipLocation)
-      Write-Host "unzipped to: ",(Resolve-Path $unzipLocation).Path
-  continueOnError: true
+#- task: PowerShell@2
+#  inputs:
+#    targetType: 'inline'
+#    script: |
+#      $response = (Invoke-WebRequest api.github.com/repos/microsoftgraph/MSGraph-SDK-Code-Generator/releases).Content | ConvertFrom-Json
+#      $typewriterUrl = $response[0].assets[0].browser_download_url
+#
+#      $zipLocation = Join-Path $(Agent.TempDirectory) "typewriter.zip"
+#      Invoke-WebRequest $typewriterUrl -OutFile $zipLocation
+#      Write-Host "downloaded to: ",(Resolve-Path $zipLocation).Path
+#
+#      # unzip
+#      $unzipLocation = Join-Path $(Agent.TempDirectory) "unzipped"
+#      mkdir $unzipLocation
+#
+#      Add-Type -AssemblyName System.IO.Compression.FileSystem
+#      [System.IO.Compression.ZipFile]::ExtractToDirectory($zipLocation, $unzipLocation)
+#      Write-Host "unzipped to: ",(Resolve-Path $unzipLocation).Path
+#  continueOnError: true
 
 - task: NuGetToolInstaller@1
   displayName: "Install Nuget.exe"
@@ -82,6 +95,18 @@ steps:
   displayName: "Restore Packages for  Snippets Injection Tool"
   inputs:
     restoreSolution: '$(solution)'
+
+- task: NuGetCommand@2
+  displayName: "Restore Packages for  Typewriter"
+  inputs:
+    restoreSolution: '$(typewriterSolution)'
+
+- task: VSBuild@1
+  displayName: "Build Source for Typewriter"
+  inputs:
+    solution: '$(typewriterSolution)'
+    platform: 'Any CPU'
+    configuration: 'Release'
 
 - task: VSBuild@1
   displayName: "Build Source for Snippets Injection Tool"
