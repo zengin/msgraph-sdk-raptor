@@ -28,7 +28,7 @@ resources:
      type: github
      endpoint: zengin
      name: zengin/MSGraph-SDK-Code-Generator
-     ref: feature-namespaces
+     ref: master
 
 variables:
   snippetInjectionPath: 'apidoctor'
