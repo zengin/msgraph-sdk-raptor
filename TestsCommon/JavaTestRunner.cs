@@ -14,15 +14,16 @@ namespace TestsCommon
         /// <summary>
         /// template to compile snippets in
         /// </summary>
-        private const string SDKShellTemplate = @"// import com.microsoft.graph.httpcore.*;
+        private const string SDKShellTemplate = @"package com.microsoft.graph.raptor;
+// import com.microsoft.graph.httpcore.*;
 import com.microsoft.graph.authentication.IAuthenticationProvider;
 import com.microsoft.graph.http.IHttpRequest;
-import com.microsoft.graph.core.IGraphServiceClient;
-import com.microsoft.graph.core.GraphServiceClient;
-
-package com.microsoft.graph.raptor;
-
-public class GraphSDKTest
+import com.microsoft.graph.models.extensions.IGraphServiceClient;
+import com.microsoft.graph.requests.extensions.GraphServiceClient;
+import java.util.LinkedList;
+import com.microsoft.graph.models.extensions.*;
+import com.microsoft.graph.requests.extensions.*;
+public class App
 {
     public static void main(String[] args)
     {
@@ -65,7 +66,7 @@ public class GraphSDKTest
 
             var fileContent = File.ReadAllText(fullPath);
             var match = RegExp.Match(fileContent);
-            Assert.IsTrue(match.Success, "Csharp snippet file is not in expected format!");
+            Assert.IsTrue(match.Success, "Java snippet file is not in expected format!");
 
             var codeSnippetFormatted = match.Groups[1].Value
                 .Replace("\r\n", "\r\n        ")            // add indentation to match with the template
@@ -76,7 +77,7 @@ public class GraphSDKTest
             var codeToCompile = BaseTestRunner.ConcatBaseTemplateWithSnippet(codeSnippetFormatted, SDKShellTemplate);
 
             // Compile Code
-            var microsoftGraphCSharpCompiler = new MicrosoftGraphCSharpCompiler(testData.FileName);
+            var microsoftGraphCSharpCompiler = new MicrosoftGraphJavaCompiler(testData.FileName);
             var compilationResultsModel = microsoftGraphCSharpCompiler.CompileSnippet(codeToCompile, testData.Version);
 
             if (compilationResultsModel.IsSuccess)
@@ -85,14 +86,6 @@ public class GraphSDKTest
             }
 
             var compilationOutputMessage = new CompilationOutputMessage(compilationResultsModel, codeToCompile, testData.DocsLink, testData.KnownIssueMessage, testData.IsKnownIssue);
-
-            // environment variable for sources directory is defined only for cloud runs
-            var config = AppSettings.Config();
-            if (bool.Parse(config.GetSection("IsLocalRun").Value)
-                && bool.Parse(config.GetSection("GenerateLinqPadOutputInLocalRun").Value))
-            {
-                //WriteLinqFile(testData, codeSnippetFormatted);
-            }
 
             Assert.Fail($"{compilationOutputMessage}");
         }
