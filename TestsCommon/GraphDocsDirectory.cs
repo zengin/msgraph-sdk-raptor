@@ -26,7 +26,7 @@ namespace TestsCommon
         /// <returns>
         /// C# snippets directory
         /// </returns>
-        public static string GetCsharpSnippetsDirectory(Versions version)
+        public static string GetSnippetsDirectory(Versions version, Languages language)
         {
             if (SnippetsDirectory is object)
             {
@@ -34,7 +34,7 @@ namespace TestsCommon
             }
 
             var msGraphDocsRepoLocation = GetSourcesDirectory();
-            SnippetsDirectory = Path.Join(msGraphDocsRepoLocation, $@"microsoft-graph-docs\api-reference\{new VersionString(version)}\includes\snippets\csharp");
+            SnippetsDirectory = Path.Join(msGraphDocsRepoLocation, $@"microsoft-graph-docs\api-reference\{new VersionString(version)}\includes\snippets\{language.ToString().ToLowerInvariant()}");
 
             return SnippetsDirectory;
         }

@@ -24,7 +24,7 @@ namespace JavaV1Tests
         [TestCaseSource(typeof(SnippetCompileV1Tests), nameof(TestDataV1))]
         public void Test(LanguageTestData testData)
         {
-            CSharpTestRunner.Run(testData);
+            JavaTestRunner.Run(testData);
         }
     }
 }
