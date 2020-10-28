@@ -1,20 +1,18 @@
-// Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.  See License in the project root for license information.
-
 using MsGraphSDKSnippetsCompiler.Models;
 using NUnit.Framework;
 using System.Collections.Generic;
 using TestsCommon;
 
-namespace CsharpV1KnownFailureTests
+namespace JavaV1Tests
 {
     [TestFixture]
-    public class KnownFailuresV1
+    public class SnippetCompileV1Tests
     {
         /// <summary>
-        /// Gets TestCaseData for V1 known failures
+        /// Gets TestCaseData for V1
         /// TestCaseData contains snippet file name, version and test case name
         /// </summary>
-        public static IEnumerable<TestCaseData> TestDataV1 => TestDataGenerator.GetTestCaseData(Versions.V1, Languages.CSharp, knownFailuresRequested: true);
+        public static IEnumerable<TestCaseData> TestDataV1 => TestDataGenerator.GetTestCaseData(Versions.V1, Languages.Java);
 
         /// <summary>
         /// Represents test runs generated from test case data
@@ -23,7 +21,7 @@ namespace CsharpV1KnownFailureTests
         /// <param name="docsLink">documentation page where the snippet is shown</param>
         /// <param name="version">Docs version (e.g. V1, Beta)</param>
         [Test]
-        [TestCaseSource(typeof(KnownFailuresV1), nameof(TestDataV1))]
+        [TestCaseSource(typeof(SnippetCompileV1Tests), nameof(TestDataV1))]
         public void Test(LanguageTestData testData)
         {
             CSharpTestRunner.Run(testData);

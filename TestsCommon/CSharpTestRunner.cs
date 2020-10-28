@@ -79,7 +79,7 @@ public class GraphSDKTest
         /// 4. Attempts to compile and reports errors if there is any
         /// </summary>
         /// <param name="testData">Test data containing information such as snippet file name</param>
-        public static void Run(CsharpTestData testData)
+        public static void Run(LanguageTestData testData)
         {
             if (testData == null)
             {
@@ -128,7 +128,7 @@ public class GraphSDKTest
         /// </summary>
         /// <param name="testData">test data</param>
         /// <param name="codeSnippetFormatted">code snippet</param>
-        private static void WriteLinqFile(CsharpTestData testData, string codeSnippetFormatted)
+        private static void WriteLinqFile(LanguageTestData testData, string codeSnippetFormatted)
         {
             var linqPadQueriesDefaultFolder = Path.Join(
                     Environment.GetEnvironmentVariable("USERPROFILE"),

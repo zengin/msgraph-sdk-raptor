@@ -154,8 +154,8 @@ namespace TestsCommon
         /// <summary>
         /// Gets known issues
         /// </summary>
-        /// <returns>A mapping of test names into known issues</returns>
-        public static Dictionary<string, KnownIssue> GetIssues()
+        /// <returns>A mapping of test names into known CSharp issues</returns>
+        public static Dictionary<string, KnownIssue> GetCSharpIssues()
         {
             return new Dictionary<string, KnownIssue>()
             {
@@ -421,43 +421,60 @@ namespace TestsCommon
                 { "worksheet-range-csharp-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(POST, GET)) },
             };
         }
-    }
+        /// <summary>
+        /// Gets known issues
+        /// </summary>
+        /// <returns>A mapping of test names into known Java issues</returns>
+        public static Dictionary<string, KnownIssue> GetJavaIssues()
+        {
+            return new Dictionary<string, KnownIssue>()
+            {
 
+            };
+        }
+        /// <summary>
+        /// Gets known issues by language
+        /// </summary>
+        /// <param name="language">language to get the issues for</param>
+        /// <returns>A mapping of test names into known issues</returns>
+        public static Dictionary<string, KnownIssue> GetIssues(Languages language)
+        {
+            return language switch
+            {
+                Languages.CSharp => GetCSharpIssues(),
+                Languages.Java => GetJavaIssues(),
+                _ => new Dictionary<string, KnownIssue>(),
+            };
+        }
+    }
     /// <summary>
     /// Generates TestCaseData for NUnit
     /// </summary>
     public static class TestDataGenerator
     {
         /// <summary>
-        /// Snippet links as shown in markdown files in docs repo
-        /// </summary>
-        private const string SnippetLinkPattern = @"includes\/snippets\/csharp\/(.*)\-csharp\-snippets\.md";
-
-        /// <summary>
-        /// Regex matching the pattern above
-        /// </summary>
-        private static readonly Regex SnippetLinkRegex = new Regex(SnippetLinkPattern, RegexOptions.Compiled);
-
-        /// <summary>
         /// Generates a dictionary mapping from snippet file name to documentation page listing the snippet.
         /// </summary>
         /// <param name="version">Docs version (e.g. V1, Beta)</param>
         /// <returns>Dictionary holding the mapping from snippet file name to documentation page listing the snippet.</returns>
-        private static Dictionary<string, string> GetDocumentationLinks(Versions version)
+        private static Dictionary<string, string> GetDocumentationLinks(Versions version, Languages language)
         {
             var documentationLinks = new Dictionary<string, string>();
             var documentationDirectory = GraphDocsDirectory.GetDocumentationDirectory(version);
             var files = Directory.GetFiles(documentationDirectory);
+            var languageName = language.ToString().ToLowerInvariant();
+            var SnippetLinkPattern = @$"includes\/snippets\/{languageName}\/(.*)\-{languageName}\-snippets\.md";
+            var SnippetLinkRegex = new Regex(SnippetLinkPattern, RegexOptions.Compiled);
             foreach (var file in files)
             {
                 var content = File.ReadAllText(file);
                 var fileName = Path.GetFileNameWithoutExtension(file);
-                var docsLink = $"https://docs.microsoft.com/en-us/graph/api/{fileName}?view=graph-rest-{new VersionString(version).DocsUrlSegment()}&tabs=csharp";
+                var docsLink = $"https://docs.microsoft.com/en-us/graph/api/{fileName}?view=graph-rest-{new VersionString(version).DocsUrlSegment()}&tabs={languageName}";
 
                 var match = SnippetLinkRegex.Match(content);
                 while (match.Success)
                 {
-                    documentationLinks[match.Groups[1].Value + "-csharp-snippets.md"] = docsLink;
+                    documentationLinks[$"{match.Groups[1].Value}-{languageName}-snippets.md"] = docsLink;
                     match = match.NextMatch();
                 }
             }
@@ -474,10 +491,10 @@ namespace TestsCommon
         /// <returns>
         /// TestCaseData to be consumed by C# compilation tests
         /// </returns>
-        public static IEnumerable<TestCaseData> GetTestCaseData(Versions version, bool knownFailuresRequested = false)
+        public static IEnumerable<TestCaseData> GetTestCaseData(Versions version, Languages language, bool knownFailuresRequested = false)
         {
-            var documentationLinks = GetDocumentationLinks(version);
-            var knownIssues = KnownIssues.GetIssues();
+            var documentationLinks = GetDocumentationLinks(version, language);
+            var knownIssues = KnownIssues.GetIssues(language);
             var snippetFileNames = documentationLinks.Keys.ToList();
             return from fileName in snippetFileNames                                // e.g. application-addpassword-csharp-snippets.md
                    let testNamePostfix = version.ToString() + "-compiles"           // e.g. Beta-compiles
@@ -487,7 +504,7 @@ namespace TestsCommon
                    let knownIssue = isKnownIssue ? knownIssues[testName] : null
                    let knownIssueMessage = knownIssue?.Message ?? string.Empty
                    let owner = knownIssue?.Owner ?? string.Empty
-                   let testCaseData = new CsharpTestData
+                   let testCaseData = new LanguageTestData
                    {
                        Version = version,
                        IsKnownIssue = isKnownIssue,
