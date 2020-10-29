@@ -1,8 +1,3 @@
-parameters:
-  - name: 'metadataVersion'
-    type: string
-    default: 'beta'
-
 steps:
 - task: PowerShell@2
   inputs:
