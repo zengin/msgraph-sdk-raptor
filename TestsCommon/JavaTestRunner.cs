@@ -21,8 +21,12 @@ import com.microsoft.graph.http.IHttpRequest;
 import com.microsoft.graph.models.extensions.IGraphServiceClient;
 import com.microsoft.graph.requests.extensions.GraphServiceClient;
 import java.util.LinkedList;
+import java.io.InputStream;
+import com.google.gson.JsonPrimitive;
 import com.microsoft.graph.models.extensions.*;
 import com.microsoft.graph.requests.extensions.*;
+import com.microsoft.graph.models.generated.*;
+import com.microsoft.graph.options.*;
 public class App
 {
     public static void main(String[] args)
