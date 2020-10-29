@@ -14,7 +14,7 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    projects: msgraph-sdk-raptor/**/*.csproj
+    projects: msgraph-sdk-raptor/**/${{ parameters.projectFileName }}.csproj
     arguments: '--configuration $(buildConfiguration)'
   displayName: 'Build Projects'
 
