@@ -11,3 +11,9 @@ steps:
   env:
     SHARED: ${{ parameters.shared }}
 
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      echo "second $env:SHARED"
+
