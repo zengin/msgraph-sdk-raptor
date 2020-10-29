@@ -1,0 +1,12 @@
+trigger: none
+pr: none
+
+parameters:
+  - name: 'metadataVersion'
+    type: string
+    default: 'beta'
+
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: 'echo $(metadataVersion)'
