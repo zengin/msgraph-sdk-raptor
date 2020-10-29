@@ -1,5 +1,8 @@
+variables: # shared variables
+  shared: 'shared variable value'
+
 steps:
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
-    script: 'echo $(metadataVersion)'
+    script: 'echo $(metadataVersion) $(shared)'
