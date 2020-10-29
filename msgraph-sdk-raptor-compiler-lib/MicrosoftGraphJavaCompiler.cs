@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Text;
 using MsGraphSDKSnippetsCompiler.Models;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace MsGraphSDKSnippetsCompiler
@@ -99,8 +101,51 @@ application {
             {
                 MarkdownFileName = _markdownFileName,
                 IsSuccess = hasExited && stdOutput.Contains("BUILD SUCCESSFUL"),
-                Diagnostics = new List<Diagnostic>() //TODO parse output diagnostics, maybe switch to a generic class?
+                Diagnostics = GetDiagnosticsFromStdErr(stdErr, hasExited)
             };
+        }
+
+        private const string errorsSuffix = "FAILURE";
+        private static Regex notesFilterRegex = new Regex(@"^Note:\s[^\n]*$", RegexOptions.Compiled | RegexOptions.Multiline);
+        private static Regex doubleLineReturnCleanupRegex = new Regex(@"\n{2,}", RegexOptions.Compiled | RegexOptions.Multiline);
+        private static Regex errorCountCleanupRegex = new Regex(@"\d+ error", RegexOptions.Compiled);
+        private static Regex errorMessageCaptureRegex = new Regex(@":(?<linenumber>\d+):(?<message>[^\/\\]+)", RegexOptions.Compiled | RegexOptions.Multiline);
+        private List<Diagnostic> GetDiagnosticsFromStdErr(string stdErr, bool hasExited)
+        {
+            var result = new List<Diagnostic>();
+            if(stdErr.Contains(errorsSuffix))
+            {
+                var diagnosticsToParse = doubleLineReturnCleanupRegex.Replace(
+                                                errorCountCleanupRegex.Replace(
+                                                    notesFilterRegex.Replace(// we don't need informational notes
+                                                        stdErr[0..stdErr.IndexOf(errorsSuffix)], // we want the traces before FAILURE
+                                                        string.Empty),
+                                                    string.Empty),
+                                                string.Empty);
+                result.AddRange(errorMessageCaptureRegex
+                                            .Matches(diagnosticsToParse)
+                                            .Select(x => new { message = x.Groups["message"].Value, linenumber = int.Parse(x.Groups["linenumber"].Value) })
+                                            .Select(x => Diagnostic.Create(new DiagnosticDescriptor("JAVA1001", 
+                                                                                "Error during Java compilation",
+                                                                                x.message,
+                                                                                "JAVA1001: 'Java.Language'",
+                                                                                DiagnosticSeverity.Error,
+                                                                                true),
+                                                                            Location.Create("App.java", 
+                                                                                new TextSpan(0, 5),
+                                                                                new LinePositionSpan(
+                                                                                    new LinePosition(x.linenumber, 0),
+                                                                                    new LinePosition(x.linenumber, 2))))));
+            }
+            if (!hasExited)
+                result.Add(Diagnostic.Create(new DiagnosticDescriptor("JAVA1000", 
+                                                                        "Sample didn't finish compiling",
+                                                                        "The compilation for that sample timed out", 
+                                                                        "JAVA1000: 'Gradle.Build'", 
+                                                                        DiagnosticSeverity.Error, 
+                                                                        true),
+                                            null));
+            return result;
         }
 
         private async Task InitializeProjectStructure(Versions version, string rootPath)
