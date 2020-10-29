@@ -1,0 +1,7 @@
+resources:
+  repositories:
+    - repository: microsoft-graph-docs
+      type: github
+      endpoint: microsoftgraph
+      name: microsoftgraph/microsoft-graph-docs
+      ref: master
