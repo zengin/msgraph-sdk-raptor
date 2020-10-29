@@ -1,9 +1,18 @@
+resources:
+  repositories:
+    - repository: microsoft-graph-docs
+      type: github
+      endpoint: microsoftgraph
+      name: microsoftgraph/microsoft-graph-docs
+      ref: master
+
 parameters:
   - name: 'shared'
     default: 'shared test'
     type: string
 
 steps:
+- checkout: microsoft-graph-docs
 - task: PowerShell@2
   inputs:
     targetType: 'inline'

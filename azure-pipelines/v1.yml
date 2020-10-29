@@ -3,9 +3,6 @@ trigger: none
 variables:
 - template: variables.yml
 
-extends:
-  template: resources.yml
-
 steps:
 - template: base.yml
   parameters:
