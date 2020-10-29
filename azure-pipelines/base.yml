@@ -5,11 +5,9 @@ parameters:
 
 steps:
 - task: PowerShell@2
-  env:
-    SHARED: ${{ parameters.shared }}
-
-- task: PowerShell@2
   inputs:
     targetType: 'inline'
     script: 'echo $env:SHARED'
+  env:
+    SHARED: ${{ parameters.shared }}
 
