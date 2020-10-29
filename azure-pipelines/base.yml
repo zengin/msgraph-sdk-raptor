@@ -17,3 +17,8 @@ steps:
     script: |
       echo "second $env:SHARED"
 
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      echo $(buildConfiguration)
