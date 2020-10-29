@@ -48,5 +48,5 @@ steps:
     testResultsFormat: 'VSTest'
     searchFolder: '$(Agent.TempDirectory)'
     testResultsFiles: '**/*.trx'
-    testRunTitle: 'Beta C# Snippet Compilation Tests $(testRunTitle)'
+    testRunTitle: 'Beta Java Snippet Compilation Tests $(testRunTitle)'
   displayName: 'Publish Test Results'
