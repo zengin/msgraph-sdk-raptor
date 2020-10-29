@@ -20,4 +20,4 @@ steps:
 - template: compile-run-tests-template.yml
   parameters:
     projectFileName: CsharpV1KnownFailureTests
-    runName: 'V1 C# Snippet Compilation Tests - Known Issues'
+    runName: 'V1 C# Snippet Compilation Tests - Known Issues $(testRunTitle)'

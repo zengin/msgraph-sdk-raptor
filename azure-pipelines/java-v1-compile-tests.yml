@@ -20,4 +20,4 @@ steps:
 - template: compile-run-tests-template.yml
   parameters:
     projectFileName: JavaV1Tests
-    runName: 'V1 Java Snippet Compilation Tests'
+    runName: 'V1 Java Snippet Compilation Tests $(testRunTitle)'
