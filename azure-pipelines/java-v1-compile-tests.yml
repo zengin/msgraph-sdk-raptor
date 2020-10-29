@@ -19,6 +19,8 @@ variables:
   GRADLE_OPTS: '-Dorg.gradle.daemon=false'
 
 steps:
+- script: gradle --version
+# to avoid having the welcome message and preload some things
 - template: compile-run-tests-template.yml
   parameters:
     projectFileName: JavaV1Tests
