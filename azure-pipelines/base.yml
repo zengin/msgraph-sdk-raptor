@@ -3,11 +3,13 @@ parameters:
     default: 'shared test'
     type: string
 
-variables:
-  shared: $ {{ parameters.shared }}
-
 steps:
+- task: PowerShell@2
+  env:
+    SHARED: ${{ parameters.shared }}
+
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
-    script: 'echo $(shared)'
+    script: 'echo $env:SHARED'
+
