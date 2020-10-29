@@ -14,7 +14,7 @@ namespace CsharpV1Tests
         /// Gets TestCaseData for V1
         /// TestCaseData contains snippet file name, version and test case name
         /// </summary>
-        public static IEnumerable<TestCaseData> TestDataV1 => TestDataGenerator.GetTestCaseData(Versions.V1);
+        public static IEnumerable<TestCaseData> TestDataV1 => TestDataGenerator.GetTestCaseData(Versions.V1, Languages.CSharp);
 
         /// <summary>
         /// Represents test runs generated from test case data
@@ -24,7 +24,7 @@ namespace CsharpV1Tests
         /// <param name="version">Docs version (e.g. V1, Beta)</param>
         [Test]
         [TestCaseSource(typeof(SnippetCompileV1Tests), nameof(TestDataV1))]
-        public void Test(CsharpTestData testData)
+        public void Test(LanguageTestData testData)
         {
             CSharpTestRunner.Run(testData);
         }

@@ -14,7 +14,7 @@ namespace CsharpBetaKnownFailureTests
         /// Gets TestCaseData for Beta known failures
         /// TestCaseData contains snippet file name, version and test case name
         /// </summary>
-        public static IEnumerable<TestCaseData> TestDataBeta => TestDataGenerator.GetTestCaseData(Versions.Beta, knownFailuresRequested: true);
+        public static IEnumerable<TestCaseData> TestDataBeta => TestDataGenerator.GetTestCaseData(Versions.Beta, Languages.CSharp, knownFailuresRequested: true);
 
         /// <summary>
         /// Represents test runs generated from test case data
@@ -24,7 +24,7 @@ namespace CsharpBetaKnownFailureTests
         /// <param name="version">Docs version (e.g. V1, Beta)</param>
         [Test]
         [TestCaseSource(typeof(KnownFailuresBeta), nameof(TestDataBeta))]
-        public void Test(CsharpTestData testData)
+        public void Test(LanguageTestData testData)
         {
             CSharpTestRunner.Run(testData);
         }
