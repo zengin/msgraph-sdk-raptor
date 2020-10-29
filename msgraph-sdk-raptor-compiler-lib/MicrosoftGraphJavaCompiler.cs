@@ -101,7 +101,7 @@ application {
             {
                 MarkdownFileName = _markdownFileName,
                 IsSuccess = hasExited && stdOutput.Contains("BUILD SUCCESSFUL"),
-                Diagnostics = GetDiagnosticsFromStdErr(stdErr, hasExited)
+                Diagnostics = GetDiagnosticsFromStdErr(stdOutput, stdErr, hasExited)
             };
         }
 
@@ -110,7 +110,7 @@ application {
         private static Regex doubleLineReturnCleanupRegex = new Regex(@"\n{2,}", RegexOptions.Compiled | RegexOptions.Multiline);
         private static Regex errorCountCleanupRegex = new Regex(@"\d+ error", RegexOptions.Compiled);
         private static Regex errorMessageCaptureRegex = new Regex(@":(?<linenumber>\d+):(?<message>[^\/\\]+)", RegexOptions.Compiled | RegexOptions.Multiline);
-        private List<Diagnostic> GetDiagnosticsFromStdErr(string stdErr, bool hasExited)
+        private List<Diagnostic> GetDiagnosticsFromStdErr(string stdOutput, string stdErr, bool hasExited)
         {
             var result = new List<Diagnostic>();
             if(stdErr.Contains(errorsSuffix))
@@ -138,13 +138,29 @@ application {
                                                                                     new LinePosition(x.linenumber, 2))))));
             }
             if (!hasExited)
-                result.Add(Diagnostic.Create(new DiagnosticDescriptor("JAVA1000", 
+            {
+                result.Add(Diagnostic.Create(new DiagnosticDescriptor("JAVA1000",
                                                                         "Sample didn't finish compiling",
-                                                                        "The compilation for that sample timed out", 
-                                                                        "JAVA1000: 'Gradle.Build'", 
-                                                                        DiagnosticSeverity.Error, 
+                                                                        "The compilation for that sample timed out",
+                                                                        "JAVA1000: 'Gradle.Build'",
+                                                                        DiagnosticSeverity.Error,
                                                                         true),
                                             null));
+                result.Add(Diagnostic.Create(new DiagnosticDescriptor("JAVA1000",
+                                                                        "Sample didn't finish compiling",
+                                                                        stdErr,
+                                                                        "JAVA1000: 'Gradle.StdErr'",
+                                                                        DiagnosticSeverity.Error,
+                                                                        true),
+                                            null));
+                result.Add(Diagnostic.Create(new DiagnosticDescriptor("JAVA1000",
+                                                                        "Sample didn't finish compiling",
+                                                                        stdOutput,
+                                                                        "JAVA1000: 'Gradle.StdOut'",
+                                                                        DiagnosticSeverity.Error,
+                                                                        true),
+                                            null));
+            }
             return result;
         }
 
