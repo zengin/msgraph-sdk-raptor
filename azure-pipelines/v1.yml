@@ -3,8 +3,8 @@ trigger: none
 variables:
 - template: variables.yml
 
-resources:
-- template: resources.yml
+extends:
+  template: resources.yml
 
 steps:
 - template: base.yml
