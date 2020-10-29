@@ -3,8 +3,11 @@ parameters:
     default: 'shared test'
     type: string
 
+variables:
+  shared: $ {{ parameters.shared }}
+
 steps:
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
-    script: 'echo $(parameters.shared)'
+    script: 'echo $(shared)'
