@@ -50,8 +50,6 @@ public class App
         /// </summary>
         private static readonly Regex RegExp = new Regex(Pattern, RegexOptions.Singleline | RegexOptions.Compiled);
 
-        private static readonly Lazy<bool> isRunningOnAgent = new Lazy<bool>(() => !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("AGENT_ID")));
-
 
         /// <summary>
         /// 1. Fetches snippet from docs repo
@@ -81,9 +79,9 @@ public class App
                 .Replace("\r\n\r\n\r\n", "\r\n\r\n");       // do not have two consecutive empty lines
 
             var codeToCompile = BaseTestRunner.ConcatBaseTemplateWithSnippet(codeSnippetFormatted, SDKShellTemplate);
-            
+
             // Compile Code
-            var microsoftGraphCSharpCompiler = new MicrosoftGraphJavaCompiler(testData.FileName, isRunningOnAgent.Value);
+            var microsoftGraphCSharpCompiler = new MicrosoftGraphJavaCompiler(testData.FileName);
             var compilationResultsModel = microsoftGraphCSharpCompiler.CompileSnippet(codeToCompile, testData.Version);
 
             if (compilationResultsModel.IsSuccess)

@@ -15,7 +15,6 @@ namespace MsGraphSDKSnippetsCompiler
     public class MicrosoftGraphJavaCompiler : IMicrosoftGraphSnippetsCompiler
     {
         private readonly string _markdownFileName;
-        private readonly bool isRunningOnAgent;
         private static readonly string[] testFileSubDirectories = new string[] { "src", "main", "java", "com", "microsoft", "graph", "raptor" };
 
         private static readonly string gradleBuildFileName = "build.gradle";
@@ -58,18 +57,16 @@ application {
         private static Versions? currentlyConfiguredVersion;
         private static object versionLock = new { };
 
-        private static void setCurrentlyConfiguredVersion(Versions version)
+        private static void setCurrentlyConfiguredVersion (Versions version)
         {// we don't want to overwrite the build.gradle for each test, this prevents gradle from caching things and slows down build time
-            lock (versionLock)
-            {
+            lock(versionLock) {
                 currentlyConfiguredVersion = version;
             }
         }
 
-        public MicrosoftGraphJavaCompiler(string markdownFileName, bool isRunningOnAgent)
+        public MicrosoftGraphJavaCompiler(string markdownFileName)
         {
             _markdownFileName = markdownFileName;
-            this.isRunningOnAgent = isRunningOnAgent;
         }
         public CompilationResultsModel CompileSnippet(string codeSnippet, Versions version)
         {
@@ -88,14 +85,14 @@ application {
                 StartInfo = new ProcessStartInfo
                 {
                     FileName = "gradle",
-                    Arguments = "build" + (isRunningOnAgent ? "--no-daemon" : ""), // agent takes longer to start the deamon and eventually gets stuck because we start too many daemons
+                    Arguments = "build",
                     RedirectStandardError = true,
                     RedirectStandardOutput = true,
                     WorkingDirectory = rootPath,
                 },
             };
             javacProcess.Start();
-            var hasExited = javacProcess.WaitForExit(10000 * (isRunningOnAgent ? 2 : 1));
+            var hasExited = javacProcess.WaitForExit(10000);
             if (!hasExited)
                 javacProcess.Kill(true);
             var stdOutput = javacProcess.StandardOutput.ReadToEnd(); //could be async
@@ -116,7 +113,7 @@ application {
         private List<Diagnostic> GetDiagnosticsFromStdErr(string stdOutput, string stdErr, bool hasExited)
         {
             var result = new List<Diagnostic>();
-            if (stdErr.Contains(errorsSuffix))
+            if(stdErr.Contains(errorsSuffix))
             {
                 var diagnosticsToParse = doubleLineReturnCleanupRegex.Replace(
                                                 errorCountCleanupRegex.Replace(
@@ -128,13 +125,13 @@ application {
                 result.AddRange(errorMessageCaptureRegex
                                             .Matches(diagnosticsToParse)
                                             .Select(x => new { message = x.Groups["message"].Value, linenumber = int.Parse(x.Groups["linenumber"].Value) })
-                                            .Select(x => Diagnostic.Create(new DiagnosticDescriptor("JAVA1001",
+                                            .Select(x => Diagnostic.Create(new DiagnosticDescriptor("JAVA1001", 
                                                                                 "Error during Java compilation",
                                                                                 x.message,
                                                                                 "JAVA1001: 'Java.Language'",
                                                                                 DiagnosticSeverity.Error,
                                                                                 true),
-                                                                            Location.Create("App.java",
+                                                                            Location.Create("App.java", 
                                                                                 new TextSpan(0, 5),
                                                                                 new LinePositionSpan(
                                                                                     new LinePosition(x.linenumber, 0),
