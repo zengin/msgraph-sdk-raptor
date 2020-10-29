@@ -1,7 +1,6 @@
 trigger: none
 
-variables:
-  metadataVersion: 'v1'
-
 steps:
 - template: base.yml
+  parameters:
+    shared: 'overriden shared'

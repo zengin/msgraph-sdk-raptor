@@ -1,8 +1,10 @@
-variables: # shared variables
-  shared: 'shared variable value'
+parameters:
+  - name: 'shared'
+    default: 'shared test'
+    type: string
 
 steps:
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
-    script: 'echo $(metadataVersion) $(shared)'
+    script: 'echo $(parameters.shared)'
