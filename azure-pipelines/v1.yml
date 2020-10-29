@@ -1,6 +1,7 @@
 trigger: none
 
-extends:
-  template: base.yml
-  parameters:
-      metadataVersion: 'v1'
+variables:
+  metadataVersion: 'v1'
+
+steps:
+- template: base.yml
