@@ -4,8 +4,8 @@ steps:
   inputs:
     versionSpec: '15'
     jdkArchitectureOption: 'x64'
-	jdkSourceOption: LocalDirectory
-	jdkFile: "OpenJDK15U-jdk_x64_linux_hotspot_15.0.1_9.tar.gz"
-	jdkDestinationDirectory: "/builds/binaries/externals"
+    jdkSourceOption: 'LocalDirectory'
+    jdkFile: 'OpenJDK15U-jdk_x64_linux_hotspot_15.0.1_9.tar.gz'
+    jdkDestinationDirectory: '/builds/binaries/externals'
 - script: gradle --version
 # to avoid having the welcome message and preload some things
