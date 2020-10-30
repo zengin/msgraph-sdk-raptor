@@ -92,7 +92,7 @@ application {
                 },
             };
             javacProcess.Start();
-            var hasExited = javacProcess.WaitForExit(10000);
+            var hasExited = javacProcess.WaitForExit(20000);
             if (!hasExited)
                 javacProcess.Kill(true);
             var stdOutput = javacProcess.StandardOutput.ReadToEnd(); //could be async
