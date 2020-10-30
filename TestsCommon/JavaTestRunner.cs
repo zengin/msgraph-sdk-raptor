@@ -22,11 +22,14 @@ import com.microsoft.graph.models.extensions.IGraphServiceClient;
 import com.microsoft.graph.requests.extensions.GraphServiceClient;
 import java.util.LinkedList;
 import java.io.InputStream;
+import java.util.UUID;
+import java.util.Base64;
 import com.google.gson.JsonPrimitive;
 import com.microsoft.graph.models.extensions.*;
 import com.microsoft.graph.requests.extensions.*;
 import com.microsoft.graph.models.generated.*;
 import com.microsoft.graph.options.*;
+import com.microsoft.graph.serializer.CalendarSerializer;
 public class App
 {
     public static void main(String[] args)
