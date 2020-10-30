@@ -16,7 +16,6 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
-  GRADLE_OPTS: '-Dorg.gradle.daemon=false'
 
 steps:
 - script: gradle --version
