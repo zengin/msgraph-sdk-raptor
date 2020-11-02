@@ -27,8 +27,9 @@ import java.util.Base64;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.Duration;
 import com.google.gson.JsonPrimitive;
-import com.microsoft.graph.core.DateOnly;
-import com.microsoft.graph.core.TimeOfDay;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonElement;
+import com.microsoft.graph.core.*;
 import com.microsoft.graph.models.extensions.*;
 import com.microsoft.graph.requests.extensions.*;
 import com.microsoft.graph.models.generated.*;
@@ -36,7 +37,7 @@ import com.microsoft.graph.options.*;
 import com.microsoft.graph.serializer.CalendarSerializer;
 public class App
 {
-    public static void main(String[] args)
+    public static void main(String[] args) throws Exception
     {
         final IAuthenticationProvider authProvider = new IAuthenticationProvider() {
             @Override
