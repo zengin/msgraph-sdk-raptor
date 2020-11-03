@@ -506,6 +506,23 @@ namespace TestsCommon
                 {"get-alert-java-Beta-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
                 {"get-alerts-java-Beta-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
                 {"update-alert-java-Beta-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
+                
+                {"group-getmembergroups-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {"group-getmemberobjects-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {"orgcontact-getmembergroups-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {"orgcontact-getmemberobjects-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {"serviceprincipal-getmembergroups-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {"serviceprincipal-getmemberobjects-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {"user-getmembergroups-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {"user-getmemberobjects-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {"device-checkmemberobjects-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {"group-checkmembergroups-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {"group-checkmemberobjects-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {"orgcontact-checkmembergroups-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {"serviceprincipal-checkmembergroups-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {"serviceprincipal-checkmemberobjects-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {"user-checkmembergroups-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {"user-checkmemberobjects-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
             };
         }
         /// <summary>
