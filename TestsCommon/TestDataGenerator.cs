@@ -499,8 +499,8 @@ namespace TestsCommon
                 { "update-page-java-V1-compiles", new KnownIssue(SnippetGeneration, "See issue: https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/288") },
                 { "get-singlevaluelegacyextendedproperty-1-java-Beta-compiles", new KnownIssue(SnippetGeneration, SnippetGenerationFlattens) },
                 { "get-singlevaluelegacyextendedproperty-1-java-V1-compiles", new KnownIssue(SnippetGeneration, SnippetGenerationFlattens) },
-                { "get-rooms-in-roomlist-csharp-java-compiles", new KnownIssue(SDK, "SDK doesn't generate type segment in OData URL. https://microsoftgraph.visualstudio.com/Graph%20Developer%20Experiences/_workitems/edit/4997") },
-                { "get-rooms-in-roomlist-csharp-java-compiles", new KnownIssue(SDK, "SDK doesn't generate type segment in OData URL. https://microsoftgraph.visualstudio.com/Graph%20Developer%20Experiences/_workitems/edit/4997") },
+                { "get-rooms-in-roomlist-java-Beta-compiles", new KnownIssue(SDK, "SDK doesn't generate type segment in OData URL. https://microsoftgraph.visualstudio.com/Graph%20Developer%20Experiences/_workitems/edit/4997") },
+                { "get-rooms-in-roomlist-java-V1-compiles", new KnownIssue(SDK, "SDK doesn't generate type segment in OData URL. https://microsoftgraph.visualstudio.com/Graph%20Developer%20Experiences/_workitems/edit/4997") },
                 { "get-opentypeextension-3-java-Beta-compiles", new KnownIssue(SnippetGeneration, SnippetGenerationFlattens) },
                 { "get-opentypeextension-3-java-V1-compiles", new KnownIssue(SnippetGeneration, SnippetGenerationFlattens) },
 
