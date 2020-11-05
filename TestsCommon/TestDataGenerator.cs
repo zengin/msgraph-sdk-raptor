@@ -44,7 +44,6 @@ namespace TestsCommon
         private const string SearchHeaderIsNotSupported = "Search header is not supported by the SDK";
         private const string CountIsNotSupported = "OData $count is not supported by the SDK at the moment";
         private const string MissingContentProperty = "IReportRootGetM365AppPlatformUserCountsRequestBuilder is missing Content property";
-        private const string NamespacesSupport = "Multiple namespaces are not yet supported.";
 
         #endregion
 
@@ -173,7 +172,6 @@ namespace TestsCommon
                 { $"create-allowedgroup-from-printers-{lng}-Beta-compiles", new KnownIssue(Metadata, GetContainsTargetRemoveMessage("printerShare", "allowedGroups"))},
                 { $"create-alloweduser-from-printers-{lng}-Beta-compiles", new KnownIssue(Metadata, GetContainsTargetRemoveMessage("printerShare", "allowedUsers"))},
                 { $"create-certificatebasedauthconfiguration-from-certificatebasedauthconfiguration-{lng}-Beta-compiles", new KnownIssue(HTTP, RefNeeded) },
-                { $"create-certificatebasedauthconfiguration-from-certificatebasedauthconfiguration-{lng}-V1-compiles", new KnownIssue(HTTP, RefNeeded) },
                 { $"create-directoryobject-from-featurerolloutpolicy-{lng}-Beta-compiles", new KnownIssue(Metadata, GetContainsTargetRemoveMessage("featureRolloutPolicy", "appliesTo"))},
                 { $"create-directoryobject-from-orgcontact-{lng}-Beta-compiles", new KnownIssue(HTTP, RefNeeded) },
                 { $"create-educationrubric-from-educationassignment-{lng}-Beta-compiles", new KnownIssue(Metadata, GetContainsTargetRemoveMessage("educationAssignment", "rubric"))},
@@ -188,7 +186,6 @@ namespace TestsCommon
                 { $"create-rejectedsender-{lng}-Beta-compiles", new KnownIssue(Metadata, GetContainsTargetRemoveMessage("group", "rejectedSender")) },
                 { $"create-rejectedsenders-from-group-{lng}-V1-compiles", new KnownIssue(Metadata, GetContainsTargetRemoveMessage("group", "rejectedSender")) },
                 { $"create-serviceprincipal-from-serviceprincipals-{lng}-Beta-compiles", new KnownIssue(HTTP, GetCasingIssueMessage("serviceprincipal", "servicePrincipal")) },
-                { $"create-serviceprincipal-from-serviceprincipals-{lng}-V1-compiles", new KnownIssue(HTTP, GetCasingIssueMessage("serviceprincipal", "servicePrincipal")) },
                 { $"create-tablecolumn-from-table-{lng}-Beta-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": Id should be string not int") },
                 { $"create-tablecolumn-from-table-{lng}-V1-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": Id should be string not int") },
                 { $"create-team-post-full-payload-{lng}-Beta-compiles", new KnownIssue(HTTP, "name should be displayName on teamsTab objects") },
@@ -216,7 +213,6 @@ namespace TestsCommon
                 { $"informationprotectionlabel-extractlabel-{lng}-Beta-compiles", new KnownIssue(HTTPCamelCase, GetCasingIssueMessage("informationprotection","informationProtection")) },
                 { $"list-conversation-members-{lng}-V1-compiles", new KnownIssue(HTTP, HttpSnippetWrong + "Me doesn't have \"Chats\". \"Chats\" is a high level EntitySet.") },
                 { $"list-serviceprincipal-{lng}-Beta-compiles", new KnownIssue(HTTP, GetCasingIssueMessage("serviceprincipal", "servicePrincipal")) },
-                { $"list-serviceprincipal-{lng}-V1-compiles", new KnownIssue(HTTP, GetCasingIssueMessage("serviceprincipal", "servicePrincipal")) },
                 { $"nameditem-range-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(POST, GET)) },
                 { $"oauth2permissiongrant-delta-{lng}-Beta-compiles", new KnownIssue(HTTPCamelCase, GetCasingIssueMessage("oAuth2permissiongrants","oAuth2PermissionGrants")) },
                 { $"oauth2permissiongrant-delta-{lng}-V1-compiles", new KnownIssue(HTTPCamelCase, GetCasingIssueMessage("oAuth2permissiongrants","oAuth2PermissionGrants")) },
@@ -230,34 +226,24 @@ namespace TestsCommon
                 { $"removeonpremisesagentfromanonpremisesagentgroup-{lng}-Beta-compiles", new KnownIssue(HTTP, RefShouldBeRemoved) },
                 { $"schedule-put-schedulinggroups-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
                 { $"securescorecontrolprofiles-update-{lng}-Beta-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": A list of SecureScoreControlStateUpdate objects should be provided instead of placeholder string.") },
-                { $"securescorecontrolprofiles-update-{lng}-V1-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": A list of SecureScoreControlStateUpdate objects should be provided instead of placeholder string.") },
-                { $"serviceprincipal-addkey-{lng}-V1-compiles", new KnownIssue(HTTP, GetCasingIssueMessage("serviceprincipal", "servicePrincipal")) },
                 { $"serviceprincipal-delete-owners-{lng}-Beta-compiles", new KnownIssue(HTTP, GetCasingIssueMessage("serviceprincipal", "servicePrincipal")) },
-                { $"serviceprincipal-delete-owners-{lng}-V1-compiles", new KnownIssue(HTTP, GetCasingIssueMessage("serviceprincipal", "servicePrincipal")) },
-                { $"serviceprincipal-removekey-{lng}-V1-compiles", new KnownIssue(HTTP, GetCasingIssueMessage("serviceprincipal", "servicePrincipal")) },
                 { $"shift-get-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
                 { $"shift-get-{lng}-V1-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
                 { $"shift-put-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
                 { $"shift-put-{lng}-V1-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
                 { $"table-databodyrange-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(POST, GET)) },
                 { $"table-headerrowrange-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(POST, GET)) },
-                { $"table-headerrowrange-{lng}-V1-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(POST, GET)) },
                 { $"table-totalrowrange-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(POST, GET)) },
-                { $"table-totalrowrange-{lng}-V1-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(POST, GET)) },
                 { $"tablecolumn-databodyrange-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(POST, GET)) },
                 { $"tablecolumn-headerrowrange-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(POST, GET)) },
-                { $"tablecolumn-headerrowrange-{lng}-V1-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(POST, GET)) },
                 { $"tablecolumn-range-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(POST, GET)) },
-                { $"tablecolumn-range-{lng}-V1-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(POST, GET)) },
                 { $"tablecolumn-totalrowrange-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(POST, GET)) },
-                { $"tablecolumn-totalrowrange-{lng}-V1-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(POST, GET)) },
                 { $"tablerow-range-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(POST, GET)) },
                 { $"timeoff-put-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
                 { $"timeoff-put-{lng}-V1-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
                 { $"timeoffreason-put-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
                 { $"timeoffreason-put-{lng}-V1-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
                 { $"unfollow-item-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(DELETE, POST)) },
-                { $"unfollow-item-{lng}-V1-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(DELETE, POST)) },
                 { $"update-activitybasedtimeoutpolicy-{lng}-Beta-compiles", new KnownIssue(HTTP, GetPropertyNotFoundMessage("ActivityBasedTimeoutPolicy", "Type")) },
                 { $"update-activitybasedtimeoutpolicy-{lng}-V1-compiles", new KnownIssue(HTTP, GetPropertyNotFoundMessage("ActivityBasedTimeoutPolicy", "Type")) },
                 { $"update-claimsmappingpolicy-{lng}-Beta-compiles", new KnownIssue(HTTP, GetPropertyNotFoundMessage("ClaimsMappingPolicy", "Type")) },
@@ -270,7 +256,6 @@ namespace TestsCommon
                 { $"update-room-{lng}-Beta-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": Capacity should be int, isWheelchairAccessible should be renamed as isWheelChairAccessible") },
                 { $"update-room-{lng}-V1-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": Capacity should be int, isWheelchairAccessible should be renamed as isWheelChairAccessible") },
                 { $"update-roomlist-{lng}-Beta-compiles", new KnownIssue(HTTPCamelCase, GetCasingIssueMessage("roomlist", "roomList")) },
-                { $"update-roomlist-{lng}-V1-compiles", new KnownIssue(HTTPCamelCase, GetCasingIssueMessage("roomlist", "roomList")) },
                 { $"update-synchronizationschema-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
                 { $"update-synchronizationtemplate-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
                 { $"update-teamsapp-{lng}-V1-compiles", new KnownIssue(Metadata, $"teamsApp needs hasStream=true. In addition to that, we need these fixed: {Environment.NewLine}https://github.com/microsoftgraph/msgraph-sdk-dotnet-core/issues/160 {Environment.NewLine}https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/336") },
@@ -306,26 +291,26 @@ namespace TestsCommon
                 { "create-schema-from-connection-async-csharp-Beta-compiles", new KnownIssue(SnippetGeneration, SnippetGenerationCreateAsyncSupport) },
                 { "follow-site-csharp-Beta-compiles", new KnownIssue(SDK, "SDK doesn't convert actions defined on collections to methods. https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/250") },
                 { "follow-site-csharp-V1-compiles", new KnownIssue(SDK, "SDK doesn't convert actions defined on collections to methods. https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/250") },
+                { "get-android-count-csharp-V1-compiles", new KnownIssue(SDK, CountIsNotSupported) },
                 { "get-borders-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
                 { "get-borders-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "get-callrecord-csharp-Beta-compiles", new KnownIssue(SDK, NamespacesSupport) },
-                { "get-callrecord-csharp-V1-compiles", new KnownIssue(SDK, NamespacesSupport) },
-                { "get-callrecord-expanded-csharp-Beta-compiles", new KnownIssue(SDK, NamespacesSupport) },
-                { "get-callrecord-expanded-csharp-V1-compiles", new KnownIssue(SDK, NamespacesSupport) },
-                { "get-callrecord-sessions-csharp-Beta-compiles", new KnownIssue(SDK, NamespacesSupport) },
-                { "get-callrecord-sessions-csharp-V1-compiles", new KnownIssue(SDK, NamespacesSupport) },
-                { "get-callrecord-sessions-expanded-csharp-Beta-compiles", new KnownIssue(SDK, NamespacesSupport) },
-                { "get-callrecord-sessions-expanded-csharp-V1-compiles", new KnownIssue(SDK, NamespacesSupport) },
+                { "get-channel-messages-delta-1-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
                 { "get-count-group-only-csharp-Beta-compiles", new KnownIssue(SDK, CountIsNotSupported) },
+                { "get-count-group-only-csharp-V1-compiles", new KnownIssue(SDK, CountIsNotSupported) },
                 { "get-count-only-csharp-Beta-compiles", new KnownIssue(SDK, CountIsNotSupported) },
+                { "get-count-only-csharp-V1-compiles", new KnownIssue(SDK, CountIsNotSupported) },
                 { "get-count-user-only-csharp-Beta-compiles", new KnownIssue(SDK, CountIsNotSupported) },
+                { "get-count-user-only-csharp-V1-compiles", new KnownIssue(SDK, CountIsNotSupported) },
                 { "get-formatprotection-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
                 { "get-formatprotection-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
                 { "get-group-transitivemembers-count-csharp-Beta-compiles", new KnownIssue(SDK, CountIsNotSupported) },
+                { "get-group-transitivemembers-count-csharp-V1-compiles", new KnownIssue(SDK, CountIsNotSupported) },
                 { "get-opentypeextension-3-csharp-Beta-compiles", new KnownIssue(SnippetGeneration, SnippetGenerationFlattens) },
                 { "get-opentypeextension-3-csharp-V1-compiles", new KnownIssue(SnippetGeneration, SnippetGenerationFlattens) },
                 { "get-phone-count-csharp-Beta-compiles", new KnownIssue(SDK, SearchHeaderIsNotSupported) },
+                { "get-phone-count-csharp-V1-compiles", new KnownIssue(SDK, SearchHeaderIsNotSupported) },
                 { "get-pr-count-csharp-Beta-compiles", new KnownIssue(SDK, SearchHeaderIsNotSupported) },
+                { "get-pr-count-csharp-V1-compiles", new KnownIssue(SDK, SearchHeaderIsNotSupported) },
                 { "get-rangeborder-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
                 { "get-rangeborder-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
                 { "get-rangebordercollection-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
@@ -343,11 +328,16 @@ namespace TestsCommon
                 { "get-singlevaluelegacyextendedproperty-1-csharp-Beta-compiles", new KnownIssue(SnippetGeneration, SnippetGenerationFlattens) },
                 { "get-singlevaluelegacyextendedproperty-1-csharp-V1-compiles", new KnownIssue(SnippetGeneration, SnippetGenerationFlattens) },
                 { "get-team-count-csharp-Beta-compiles", new KnownIssue(SDK, SearchHeaderIsNotSupported) },
+                { "get-team-count-csharp-V1-compiles", new KnownIssue(SDK, SearchHeaderIsNotSupported) },
                 { "get-tier-count-csharp-Beta-compiles", new KnownIssue(SDK, SearchHeaderIsNotSupported) },
+                { "get-tier-count-csharp-V1-compiles", new KnownIssue(SDK, SearchHeaderIsNotSupported) },
                 { "get-user-memberof-count-only-csharp-Beta-compiles", new KnownIssue(SDK, CountIsNotSupported) },
+                { "get-user-memberof-count-only-csharp-V1-compiles", new KnownIssue(SDK, CountIsNotSupported) },
                 { "get-video-count-csharp-Beta-compiles", new KnownIssue(SDK, SearchHeaderIsNotSupported) },
                 { "get-wa-count-csharp-Beta-compiles", new KnownIssue(SDK, SearchHeaderIsNotSupported) },
+                { "get-wa-count-csharp-V1-compiles", new KnownIssue(SDK, SearchHeaderIsNotSupported) },
                 { "get-web-count-csharp-Beta-compiles", new KnownIssue(SDK, SearchHeaderIsNotSupported) },
+                { "get-web-count-csharp-V1-compiles", new KnownIssue(SDK, SearchHeaderIsNotSupported) },
                 { "post-privilegedroleassignmentrequest-csharp-Beta-compiles", new KnownIssue(SnippetGeneration, SnippetGenerationRequestObjectDisambiguation) },
                 { "put-privilegedrolesettings-csharp-Beta-compiles", new KnownIssue(SnippetGeneration, SnippetGenerationCreateAsyncSupport) },
                 { "put-regionalandlanguagesettings-csharp-Beta-compiles", new KnownIssue(SnippetGeneration, SnippetGenerationCreateAsyncSupport) },
@@ -663,22 +653,30 @@ namespace TestsCommon
         /// For each snippet file creates a test case which takes the file name and version as reference
         /// Test case name is also set to to unique name based on file name
         /// </summary>
-        /// <param name="version">Docs version (e.g. V1, Beta)</param>
-        /// <param name="knownFailuresRequested">return whether known failures as test cases or not</param>
+        /// <param name="runSettings">Test run settings</param>
         /// <returns>
         /// TestCaseData to be consumed by C# compilation tests
         /// </returns>
-        public static IEnumerable<TestCaseData> GetTestCaseData(Versions version, Languages language, bool knownFailuresRequested = false)
+        public static IEnumerable<TestCaseData> GetTestCaseData(RunSettings runSettings)
         {
+            if (runSettings == null)
+            {
+                throw new ArgumentNullException(nameof(runSettings));
+            }
+
+            var language = runSettings.Language;
+            var version = runSettings.Version;
             var documentationLinks = GetDocumentationLinks(version, language);
             var knownIssues = KnownIssues.GetIssues(language);
             var snippetFileNames = documentationLinks.Keys.ToList();
-            return from fileName in snippetFileNames                                // e.g. application-addpassword-csharp-snippets.md
-                   let testNamePostfix = version.ToString() + "-compiles"           // e.g. Beta-compiles
-                   let testName = fileName.Replace("snippets.md", testNamePostfix)  // e.g. application-addpassword-csharp-Beta-compiles
+            return from fileName in snippetFileNames                                            // e.g. application-addpassword-csharp-snippets.md
+                   let arbitraryDllPostfix = runSettings.DllPath == null ? string.Empty : "arbitraryDll-"
+                   let testNamePostfix = arbitraryDllPostfix + version.ToString() + "-compiles" // e.g. Beta-compiles or arbitraryDll-Beta-compiles
+                   let testName = fileName.Replace("snippets.md", testNamePostfix)              // e.g. application-addpassword-csharp-Beta-compiles
                    let docsLink = documentationLinks[fileName]
-                   let isKnownIssue = knownIssues.ContainsKey(testName)
-                   let knownIssue = isKnownIssue ? knownIssues[testName] : null
+                   let knownIssueLookupKey = testName.Replace("arbitraryDll-", string.Empty)
+                   let isKnownIssue = knownIssues.ContainsKey(knownIssueLookupKey)
+                   let knownIssue = isKnownIssue ? knownIssues[knownIssueLookupKey] : null
                    let knownIssueMessage = knownIssue?.Message ?? string.Empty
                    let owner = knownIssue?.Owner ?? string.Empty
                    let testCaseData = new LanguageTestData
@@ -687,9 +685,10 @@ namespace TestsCommon
                        IsKnownIssue = isKnownIssue,
                        KnownIssueMessage = knownIssueMessage,
                        DocsLink = docsLink,
-                       FileName = fileName
+                       FileName = fileName,
+                       DllPath = runSettings.DllPath
                    }
-                   where !(isKnownIssue ^ knownFailuresRequested) // select known issues if requested
+                   where !(isKnownIssue ^ runSettings.KnownFailuresRequested) // select known issues if requested
                    select new TestCaseData(testCaseData).SetName(testName).SetProperty("Owner", owner);
         }
     }

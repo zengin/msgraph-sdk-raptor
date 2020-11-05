@@ -1,0 +1,38 @@
+# Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.  See License in the project root for license information.
+# Steps to generate a Microsoft.Graph.dll from given metadata
+
+steps:
+- task: NuGetCommand@2
+  displayName: 'Restore packages for Typewriter tool'
+  inputs:
+    restoreSolution: '$(typewriterSolution)'
+
+- task: VSBuild@1
+  displayName: 'Build Typewriter'
+  inputs:
+    solution: '$(typewriterSolution)'
+    platform: 'Any CPU'
+    configuration: '$(buildConfiguration)'
+
+- task: PowerShell@2
+  displayName: 'Transform metadata, run Typewriter and update models'
+  inputs:
+    targetType: filePath
+    filePath: '$(Build.SourcesDirectory)/msgraph-sdk-raptor/scripts/generateCSharpModels.ps1'
+  env:
+    BuildConfiguration: $(buildConfiguration)
+    MetadataURL: $(metadataURL)
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish metadata files as artifact'
+  inputs:
+   PathtoPublish: '$(Build.SourcesDirectory)\metadata'
+   ArtifactName: 'metadata'
+   publishLocation: 'Container'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Build Microsoft.Graph.dll'
+  inputs:
+    command: 'build'
+    projects: msgraph-sdk-dotnet/**/*.csproj
+    arguments: '--configuration $(buildConfiguration)'
