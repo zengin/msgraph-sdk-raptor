@@ -268,6 +268,9 @@ namespace TestsCommon
                 { $"update-workforceintegration-{lng}-V1-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": workforceintegration id is needed in the url.") },
                 { $"update-phoneauthenticationmethod-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
                 { $"worksheet-range-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(POST, GET)) },
+                { $"get-channel-messages-delta-1-{lng}-V1-compiles", new KnownIssue(Metadata, "Delta function is not declared") },
+                { $"get-channel-messages-delta-2-{lng}-V1-compiles", new KnownIssue(Metadata, "Delta function is not declared") },
+                { $"get-channel-messages-delta-3-{lng}-V1-compiles", new KnownIssue(Metadata, "Delta function is not declared") },
             };
         }
 
@@ -294,7 +297,6 @@ namespace TestsCommon
                 { "get-android-count-csharp-V1-compiles", new KnownIssue(SDK, CountIsNotSupported) },
                 { "get-borders-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
                 { "get-borders-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "get-channel-messages-delta-1-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
                 { "get-count-group-only-csharp-Beta-compiles", new KnownIssue(SDK, CountIsNotSupported) },
                 { "get-count-group-only-csharp-V1-compiles", new KnownIssue(SDK, CountIsNotSupported) },
                 { "get-count-only-csharp-Beta-compiles", new KnownIssue(SDK, CountIsNotSupported) },
