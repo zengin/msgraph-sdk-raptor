@@ -30,6 +30,7 @@ import javax.xml.datatype.Duration;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.microsoft.graph.core.*;
 import com.microsoft.graph.models.extensions.*;
 import com.microsoft.graph.requests.extensions.*;
