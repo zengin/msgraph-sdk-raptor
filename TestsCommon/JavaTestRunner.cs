@@ -4,8 +4,10 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace TestsCommon
 {
@@ -92,16 +94,28 @@ public class App
 
             // Compile Code
             var microsoftGraphCSharpCompiler = new MicrosoftGraphJavaCompiler(testData.FileName);
-            var compilationResultsModel = microsoftGraphCSharpCompiler.CompileSnippet(codeToCompile, testData.Version);
 
-            if (compilationResultsModel.IsSuccess)
+            var jvmRetryAttmptsLeft = 3;
+            while (jvmRetryAttmptsLeft > 0)
             {
-                Assert.Pass();
+                var compilationResultsModel = microsoftGraphCSharpCompiler.CompileSnippet(codeToCompile, testData.Version);
+
+                if (compilationResultsModel.IsSuccess)
+                {
+                    Assert.Pass();
+                } 
+                else if(compilationResultsModel.Diagnostics.Any(x => x.GetMessage().Contains("Starting a Gradle Daemon")))
+                {//the JVM takes time to start making the first test to be run to be flaky, this is a workaround
+                    jvmRetryAttmptsLeft--;
+                    Thread.Sleep(20000);
+                    continue;
+                }
+
+                var compilationOutputMessage = new CompilationOutputMessage(compilationResultsModel, codeToCompile, testData.DocsLink, testData.KnownIssueMessage, testData.IsKnownIssue);
+
+                Assert.Fail($"{compilationOutputMessage}");
+                break;
             }
-
-            var compilationOutputMessage = new CompilationOutputMessage(compilationResultsModel, codeToCompile, testData.DocsLink, testData.KnownIssueMessage, testData.IsKnownIssue);
-
-            Assert.Fail($"{compilationOutputMessage}");
         }
     }
 }
