@@ -214,23 +214,19 @@ namespace TestsCommon
                 { $"list-conversation-members-{lng}-V1-compiles", new KnownIssue(HTTP, HttpSnippetWrong + "Me doesn't have \"Chats\". \"Chats\" is a high level EntitySet.") },
                 { $"list-serviceprincipal-{lng}-Beta-compiles", new KnownIssue(HTTP, GetCasingIssueMessage("serviceprincipal", "servicePrincipal")) },
                 { $"nameditem-range-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(POST, GET)) },
-                { $"oauth2permissiongrant-delta-{lng}-Beta-compiles", new KnownIssue(HTTPCamelCase, GetCasingIssueMessage("oAuth2permissiongrants","oAuth2PermissionGrants")) },
-                { $"oauth2permissiongrant-delta-{lng}-V1-compiles", new KnownIssue(HTTPCamelCase, GetCasingIssueMessage("oAuth2permissiongrants","oAuth2PermissionGrants")) },
                 { $"participant-configuremixer-{lng}-Beta-compiles", new KnownIssue(Metadata, "ConfigureMixer doesn't exist in metadata") },
                 { $"post-reply-{lng}-Beta-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": Odata.Type for concrete Attachment type should be added") },
-                { $"post-reply-{lng}-V1-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": Odata.Type for concrete Attachment type should be added") },
                 { $"printer-getcapabilities-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(POST, GET)) },
                 { $"remove-group-from-rejectedsenderslist-of-group-{lng}-Beta-compiles", new KnownIssue(Metadata, GetContainsTargetRemoveMessage("group", "rejectedSender")) },
                 { $"remove-rejectedsender-from-group-{lng}-V1-compiles", new KnownIssue(Metadata, GetContainsTargetRemoveMessage("group", "rejectedSender")) },
                 { $"remove-user-from-rejectedsenderslist-of-group-{lng}-Beta-compiles", new KnownIssue(Metadata, GetContainsTargetRemoveMessage("group", "rejectedSender")) },
                 { $"removeonpremisesagentfromanonpremisesagentgroup-{lng}-Beta-compiles", new KnownIssue(HTTP, RefShouldBeRemoved) },
                 { $"schedule-put-schedulinggroups-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
+                { $"securescorecontrolprofiles-update-{lng}-V1-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": A list of SecureScoreControlStateUpdate objects should be provided instead of placeholder string.") },
                 { $"securescorecontrolprofiles-update-{lng}-Beta-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": A list of SecureScoreControlStateUpdate objects should be provided instead of placeholder string.") },
                 { $"serviceprincipal-delete-owners-{lng}-Beta-compiles", new KnownIssue(HTTP, GetCasingIssueMessage("serviceprincipal", "servicePrincipal")) },
                 { $"shift-get-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
-                { $"shift-get-{lng}-V1-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
                 { $"shift-put-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
-                { $"shift-put-{lng}-V1-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
                 { $"table-databodyrange-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(POST, GET)) },
                 { $"table-headerrowrange-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(POST, GET)) },
                 { $"table-totalrowrange-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(POST, GET)) },
@@ -240,9 +236,7 @@ namespace TestsCommon
                 { $"tablecolumn-totalrowrange-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(POST, GET)) },
                 { $"tablerow-range-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(POST, GET)) },
                 { $"timeoff-put-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
-                { $"timeoff-put-{lng}-V1-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
                 { $"timeoffreason-put-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
-                { $"timeoffreason-put-{lng}-V1-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
                 { $"unfollow-item-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(DELETE, POST)) },
                 { $"update-activitybasedtimeoutpolicy-{lng}-Beta-compiles", new KnownIssue(HTTP, GetPropertyNotFoundMessage("ActivityBasedTimeoutPolicy", "Type")) },
                 { $"update-activitybasedtimeoutpolicy-{lng}-V1-compiles", new KnownIssue(HTTP, GetPropertyNotFoundMessage("ActivityBasedTimeoutPolicy", "Type")) },
@@ -252,7 +246,6 @@ namespace TestsCommon
                 { $"update-homerealmdiscoverypolicy-{lng}-V1-compiles", new KnownIssue(HTTP, GetPropertyNotFoundMessage("HomeRealmDiscoveryPolicy", "Type")) },
                 { $"update-openidconnectprovider-{lng}-Beta-compiles", new KnownIssue(HTTP, "OpenIdConnectProvider should be specified") },
                 { $"update-openshift-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
-                { $"update-openshift-{lng}-V1-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
                 { $"update-room-{lng}-Beta-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": Capacity should be int, isWheelchairAccessible should be renamed as isWheelChairAccessible") },
                 { $"update-room-{lng}-V1-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": Capacity should be int, isWheelchairAccessible should be renamed as isWheelChairAccessible") },
                 { $"update-roomlist-{lng}-Beta-compiles", new KnownIssue(HTTPCamelCase, GetCasingIssueMessage("roomlist", "roomList")) },
@@ -269,8 +262,6 @@ namespace TestsCommon
                 { $"update-phoneauthenticationmethod-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
                 { $"worksheet-range-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(POST, GET)) },
                 { $"get-channel-messages-delta-1-{lng}-V1-compiles", new KnownIssue(Metadata, "Delta function is not declared") },
-                { $"get-channel-messages-delta-2-{lng}-V1-compiles", new KnownIssue(Metadata, "Delta function is not declared") },
-                { $"get-channel-messages-delta-3-{lng}-V1-compiles", new KnownIssue(Metadata, "Delta function is not declared") },
             };
         }
 
@@ -430,6 +421,11 @@ namespace TestsCommon
                 { "workbookrange-visibleview-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
                 { "workbookrangeview-range-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
                 { "workbookrangeview-range-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                { "oauth2permissiongrant-delta-csharp-Beta-compiles", new KnownIssue(HTTPCamelCase, GetCasingIssueMessage("oAuth2permissiongrants","oAuth2PermissionGrants")) },
+                { "oauth2permissiongrant-delta-csharp-V1-compiles", new KnownIssue(HTTPCamelCase, GetCasingIssueMessage("oAuth2permissiongrants","oAuth2PermissionGrants")) },
+                { "timeoff-put-csharp-V1-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
+                { "timeoffreason-put-csharp-V1-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
+                { "post-reply-csharp-V1-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": Odata.Type for concrete Attachment type should be added") },
             };
         }
         /// <summary>
@@ -442,7 +438,6 @@ namespace TestsCommon
             {
                 { "range-merge-java-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
                 { "range-merge-java-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "create-manager-from-group-java-V1-compiles", new KnownIssue(SnippetGeneration, "See issue: https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/349") },
                 { "range-lastrow-java-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported)},
                 { "range-lastrow-java-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
                 { "range-cell-java-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
@@ -510,7 +505,7 @@ namespace TestsCommon
                 {"get-alert-java-Beta-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
                 {"get-alerts-java-Beta-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
                 {"update-alert-java-Beta-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
-                
+
                 {"group-getmembergroups-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
                 {"group-getmemberobjects-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
                 {"orgcontact-getmembergroups-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
@@ -555,6 +550,10 @@ namespace TestsCommon
                 {"swapshiftchangerequest-decline-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
                 {"timeoffrequest-approve-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
                 {"timeoffrequest-decline-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {"get-group-transitivemembers-count-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/318") },
+                {"get-user-memberof-count-only-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/318") },
+                {"get-group-transitivemembers-count-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/318") },
+                {"get-user-memberof-count-only-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/318") },
 
                 {"get-deleteditems-java-V1-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
                 {"get-all-roomlists-java-V1-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
@@ -597,6 +596,14 @@ namespace TestsCommon
 
                 {"user-supportedtimezones-iana-java-V1-compiles", new KnownIssue(SnippetGeneration, "Missing quotes around query string parameter argument?") },
                 {"user-supportedtimezones-iana-java-Beta-compiles", new KnownIssue(SnippetGeneration, "Missing quotes around query string parameter argument?") },
+
+                { "get-channel-messages-delta-2-java-V1-compiles", new KnownIssue(Metadata, "Delta function is not declared") },
+                { "get-channel-messages-delta-3-java-V1-compiles", new KnownIssue(Metadata, "Delta function is not declared") },
+                { "shift-put-java-V1-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
+
+                {"upload-via-put-id-java-V1-compiles", new KnownIssue(SnippetGeneration, "Missing support for content: https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/371") },
+                {"upload-via-put-id-java-Beta-compiles", new KnownIssue(SnippetGeneration, "Missing support for content: https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/371") },
+
             };
         }
         /// <summary>
