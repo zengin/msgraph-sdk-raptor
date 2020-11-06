@@ -154,12 +154,14 @@ namespace TestsCommon
         /// Returns a mapping of issues of which the source comes from service/documentation/metadata and are common accross langauges
         /// </summary>
         /// <param name="language">language to generate the exception from</param>
+        /// <param name="versionEnum">version to get the known issues for</param>
         /// <returns>mapping of issues of which the source comes from service/documentation/metadata and are common accross langauges</returns>
-        public static Dictionary<string, KnownIssue> GetCommonIssues(Languages language)
+        public static Dictionary<string, KnownIssue> GetCommonIssues(Languages language, Versions versionEnum)
         {
 #pragma warning disable CA1308 // Normalize strings to uppercase
             var lng = language.ToString().ToLowerInvariant();
 #pragma warning restore CA1308 // Normalize strings to uppercase
+            var version = versionEnum == Versions.V1 ? "V1" : "Beta";
             return new Dictionary<string, KnownIssue>()
             {
                 { $"convert-team-from-group-{lng}-V1-compiles", new KnownIssue(HTTP, "isFavoriteByDefault is only available in Beta. https://github.com/microsoftgraph/microsoft-graph-docs/issues/10145") },
@@ -252,9 +254,11 @@ namespace TestsCommon
         /// <summary>
         /// Gets known issues
         /// </summary>
+        /// <param name="versionEnum">version to get the known issues for</param>
         /// <returns>A mapping of test names into known CSharp issues</returns>
-        public static Dictionary<string, KnownIssue> GetCSharpIssues()
+        public static Dictionary<string, KnownIssue> GetCSharpIssues(Versions versionEnum)
         {
+            var version = versionEnum == Versions.V1 ? "V1" : "Beta";
             return new Dictionary<string, KnownIssue>()
             {
                 { "call-transfer-csharp-Beta-compiles", new KnownIssue(SnippetGeneration, SnippetGenerationAdditionalData) },
@@ -431,178 +435,105 @@ namespace TestsCommon
         /// <summary>
         /// Gets known issues
         /// </summary>
+        /// <param name="versionEnum">version to get the known issues for</param>
         /// <returns>A mapping of test names into known Java issues</returns>
-        public static Dictionary<string, KnownIssue> GetJavaIssues()
+        public static Dictionary<string, KnownIssue> GetJavaIssues(Versions versionEnum)
         {
+            var version = versionEnum == Versions.V1 ? "V1" : "Beta";
             return new Dictionary<string, KnownIssue>()
             {
-                { "range-merge-java-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "range-merge-java-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "range-lastrow-java-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported)},
-                { "range-lastrow-java-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
                 { "range-cell-java-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "workbookrange-rowsbelow-java-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "workbookrange-rowsbelow-java-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "get-rows-java-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "get-rows-java-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "range-entirecolumn-java-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "range-entirecolumn-java-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "workbookrangeview-range-java-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "workbookrangeview-range-java-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "range-delete-java-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "range-delete-java-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
                 { "range-usedrange-valuesonly-java-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
                 { "workbookrange-rowsabove-nocount-java-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
                 { "workbookrange-rowsbelow-nocount-java-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "range-lastcell-java-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "range-lastcell-java-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "range-unmerge-java-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "range-unmerge-java-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "range-entirerow-java-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "range-entirerow-java-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "workbookrange-columnsbefore-java-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "workbookrange-columnsbefore-java-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "range-insert-java-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "range-insert-java-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "range-clear-java-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "range-clear-java-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "range-usedrange-java-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "range-usedrange-java-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "range-column-java-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "range-column-java-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "range-lastcolumn-java-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "range-lastcolumn-java-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "workbookrange-columnsafter-java-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "workbookrange-columnsafter-java-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "workbookrange-rowsabove-java-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "workbookrange-rowsabove-java-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "unfollow-site-java-Beta-compiles", new KnownIssue(SDK, "SDK doesn't convert actions defined on collections to methods. https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/250") },
-                { "unfollow-site-java-V1-compiles", new KnownIssue(SDK, "SDK doesn't convert actions defined on collections to methods. https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/250") },
-                { "follow-site-java-Beta-compiles", new KnownIssue(SDK, "SDK doesn't convert actions defined on collections to methods. https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/250") },
-                { "follow-site-java-V1-compiles", new KnownIssue(SDK, "SDK doesn't convert actions defined on collections to methods. https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/250") },
-                { "workbookrange-visibleview-java-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "workbookrange-visibleview-java-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
-                { "update-page-java-Beta-compiles", new KnownIssue(SnippetGeneration, "See issue: https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/288") },
-                { "update-page-java-V1-compiles", new KnownIssue(SnippetGeneration, "See issue: https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/288") },
-                { "get-singlevaluelegacyextendedproperty-1-java-Beta-compiles", new KnownIssue(SnippetGeneration, SnippetGenerationFlattens) },
-                { "get-singlevaluelegacyextendedproperty-1-java-V1-compiles", new KnownIssue(SnippetGeneration, SnippetGenerationFlattens) },
-                { "get-rooms-in-roomlist-java-Beta-compiles", new KnownIssue(SDK, "SDK doesn't generate type segment in OData URL. https://microsoftgraph.visualstudio.com/Graph%20Developer%20Experiences/_workitems/edit/4997") },
-                { "get-rooms-in-roomlist-java-V1-compiles", new KnownIssue(SDK, "SDK doesn't generate type segment in OData URL. https://microsoftgraph.visualstudio.com/Graph%20Developer%20Experiences/_workitems/edit/4997") },
-                { "get-opentypeextension-3-java-Beta-compiles", new KnownIssue(SnippetGeneration, SnippetGenerationFlattens) },
-                { "get-opentypeextension-3-java-V1-compiles", new KnownIssue(SnippetGeneration, SnippetGenerationFlattens) },
+                {$"range-merge-java-{version}-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {$"range-lastrow-java-{version}-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {$"workbookrange-rowsbelow-java-{version}-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {$"get-rows-java-{version}-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {$"range-entirecolumn-java-{version}-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {$"workbookrangeview-range-java-{version}-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {$"range-delete-java-{version}-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {$"range-lastcell-java-{version}-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {$"range-unmerge-java-{version}-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {$"range-entirerow-java-{version}-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {$"workbookrange-columnsbefore-java-{version}-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {$"range-insert-java-{version}-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {$"range-clear-java-{version}-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {$"range-usedrange-java-{version}-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {$"range-column-java-{version}-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {$"range-lastcolumn-java-{version}-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {$"workbookrange-columnsafter-java-{version}-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {$"workbookrange-rowsabove-java-{version}-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {$"unfollow-site-java-{version}-compiles", new KnownIssue(SDK, "SDK doesn't convert actions defined on collections to methods. https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/250") },
+                {$"follow-site-java-{version}-compiles", new KnownIssue(SDK, "SDK doesn't convert actions defined on collections to methods. https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/250") },
+                {$"workbookrange-visibleview-java-{version}-compiles", new KnownIssue(SDK, FeatureNotSupported) },
+                {$"update-page-java-{version}-compiles", new KnownIssue(SnippetGeneration, "See issue: https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/288") },
+                {$"get-singlevaluelegacyextendedproperty-1-java-{version}-compiles", new KnownIssue(SnippetGeneration, SnippetGenerationFlattens) },
+                {$"get-rooms-in-roomlist-java-{version}-compiles", new KnownIssue(SDK, "SDK doesn't generate type segment in OData URL. https://microsoftgraph.visualstudio.com/Graph%20Developer%20Experiences/_workitems/edit/4997") },
+                {$"get-opentypeextension-3-java-{version}-compiles", new KnownIssue(SnippetGeneration, SnippetGenerationFlattens) },
 
-                {"get-securescore-java-V1-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
-                {"get-securescorecontrolprofile-java-V1-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
-                {"get-securescorecontrolprofiles-java-V1-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
-                {"get-securescores-java-V1-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
-                {"get-alert-java-V1-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
-                {"get-alerts-java-V1-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
-                {"update-alert-java-V1-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
-                {"get-securescore-java-Beta-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
-                {"get-securescorecontrolprofile-java-Beta-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
-                {"get-securescorecontrolprofiles-java-Beta-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
-                {"get-securescores-java-Beta-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
-                {"get-alert-java-Beta-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
-                {"get-alerts-java-Beta-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
-                {"update-alert-java-Beta-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
+                {$"get-securescore-java-{version}-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
+                {$"get-securescorecontrolprofile-java-{version}-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
+                {$"get-securescorecontrolprofiles-java-{version}-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
+                {$"get-securescores-java-{version}-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
+                {$"get-alert-java-{version}-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
+                {$"get-alerts-java-{version}-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
+                {$"update-alert-java-{version}-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
 
-                {"group-getmembergroups-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"group-getmemberobjects-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"orgcontact-getmembergroups-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"orgcontact-getmemberobjects-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"serviceprincipal-getmembergroups-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"serviceprincipal-getmemberobjects-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"user-getmembergroups-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"user-getmemberobjects-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"device-checkmemberobjects-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"group-checkmembergroups-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"group-checkmemberobjects-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"orgcontact-checkmembergroups-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"serviceprincipal-checkmembergroups-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"serviceprincipal-checkmemberobjects-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"user-checkmembergroups-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"user-checkmemberobjects-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"offershiftrequest-approve-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"offershiftrequest-decline-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"swapshiftchangerequest-approve-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"swapshiftchangerequest-decline-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"timeoffrequest-approve-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"timeoffrequest-decline-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"group-getmembergroups-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"group-getmemberobjects-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"orgcontact-getmembergroups-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"orgcontact-getmemberobjects-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"serviceprincipal-getmembergroups-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"serviceprincipal-getmemberobjects-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"user-getmembergroups-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"user-getmemberobjects-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"device-checkmemberobjects-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"group-checkmembergroups-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"group-checkmemberobjects-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"orgcontact-checkmembergroups-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"serviceprincipal-checkmembergroups-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"serviceprincipal-checkmemberobjects-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"user-checkmembergroups-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"user-checkmemberobjects-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"offershiftrequest-approve-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"offershiftrequest-decline-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"swapshiftchangerequest-approve-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"swapshiftchangerequest-decline-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"timeoffrequest-approve-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"timeoffrequest-decline-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
-                {"get-group-transitivemembers-count-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/318") },
-                {"get-user-memberof-count-only-java-V1-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/318") },
-                {"get-group-transitivemembers-count-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/318") },
-                {"get-user-memberof-count-only-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/318") },
+                {$"group-getmembergroups-java-{version}-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {$"group-getmemberobjects-java-{version}-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {$"orgcontact-getmembergroups-java-{version}-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {$"orgcontact-getmemberobjects-java-{version}-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {$"serviceprincipal-getmembergroups-java-{version}-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {$"serviceprincipal-getmemberobjects-java-{version}-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {$"user-getmembergroups-java-{version}-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {$"user-getmemberobjects-java-{version}-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {$"device-checkmemberobjects-java-{version}-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {$"group-checkmembergroups-java-{version}-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {$"group-checkmemberobjects-java-{version}-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {$"orgcontact-checkmembergroups-java-{version}-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {$"serviceprincipal-checkmembergroups-java-{version}-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {$"serviceprincipal-checkmemberobjects-java-{version}-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {$"user-checkmembergroups-java-{version}-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {$"user-checkmemberobjects-java-{version}-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {$"offershiftrequest-approve-java-{version}-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {$"offershiftrequest-decline-java-{version}-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {$"swapshiftchangerequest-approve-java-{version}-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {$"swapshiftchangerequest-decline-java-{version}-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {$"timeoffrequest-approve-java-{version}-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {$"timeoffrequest-decline-java-{version}-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {$"get-group-transitivemembers-count-java-{version}-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/318") },
+                {$"get-user-memberof-count-only-java-{version}-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/318") },
 
-                {"get-deleteditems-java-V1-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
-                {"get-all-roomlists-java-V1-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
-                {"get-all-rooms-java-V1-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
-                {"get-pr-count-java-V1-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
-                {"get-tier-count-java-V1-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
-                {"get-count-group-only-java-V1-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
-                {"get-count-only-java-V1-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
-                {"get-count-user-only-java-V1-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
-                {"get-deleteditems-java-Beta-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
-                {"get-all-roomlists-java-Beta-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
-                {"get-all-rooms-java-Beta-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
-                {"get-pr-count-java-Beta-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
-                {"get-tier-count-java-Beta-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
-                {"get-count-group-only-java-Beta-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
-                {"get-count-only-java-Beta-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
-                {"get-count-user-only-java-Beta-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
+                {$"get-deleteditems-java-{version}-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
+                {$"get-all-roomlists-java-{version}-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
+                {$"get-all-rooms-java-{version}-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
+                {$"get-pr-count-java-{version}-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
+                {$"get-tier-count-java-{version}-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
+                {$"get-count-group-only-java-{version}-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
+                {$"get-count-only-java-{version}-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
+                {$"get-count-user-only-java-{version}-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
 
-                {"create-list-java-V1-compiles", new KnownIssue(SnippetGeneration, "Duplicated variable name") },
-                {"create-list-java-Beta-compiles", new KnownIssue(SnippetGeneration, "Duplicated variable name") },
+                {$"create-list-java-{version}-compiles", new KnownIssue(SnippetGeneration, "Duplicated variable name") },
 
-                {"create-listitem-java-V1-compiles", new KnownIssue(SnippetGeneration, "Should be in additional data manager") },
-                {"update-listitem-java-V1-compiles", new KnownIssue(SnippetGeneration, "Should be in additional data manager") },
-                {"update-plannerassignedtotaskboardtaskformat-java-V1-compiles", new KnownIssue(SnippetGeneration, "Should be in additional data manager") },
-                {"update-plannerplandetails-java-V1-compiles", new KnownIssue(SnippetGeneration, "Should be in additional data manager") },
-                {"create-listitem-java-Beta-compiles", new KnownIssue(SnippetGeneration, "Should be in additional data manager") },
-                {"update-listitem-java-Beta-compiles", new KnownIssue(SnippetGeneration, "Should be in additional data manager") },
-                {"update-plannerassignedtotaskboardtaskformat-java-Beta-compiles", new KnownIssue(SnippetGeneration, "Should be in additional data manager") },
-                {"update-plannerplandetails-java-Beta-compiles", new KnownIssue(SnippetGeneration, "Should be in additional data manager") },
+                {$"create-listitem-java-{version}-compiles", new KnownIssue(SnippetGeneration, "Should be in additional data manager") },
+                {$"update-listitem-java-{version}-compiles", new KnownIssue(SnippetGeneration, "Should be in additional data manager") },
+                {$"update-plannerassignedtotaskboardtaskformat-java-{version}-compiles", new KnownIssue(SnippetGeneration, "Should be in additional data manager") },
+                {$"update-plannerplandetails-java-{version}-compiles", new KnownIssue(SnippetGeneration, "Should be in additional data manager") },
 
-                {"create-or-get-onlinemeeting-java-V1-compiles", new KnownIssue(SnippetGeneration, "Conflicting Graph and Java type") },
-                {"schedule-share-java-V1-compiles", new KnownIssue(SnippetGeneration, "Conflicting Graph and Java type") },
-                {"create-or-get-onlinemeeting-java-Beta-compiles", new KnownIssue(SnippetGeneration, "Conflicting Graph and Java type") },
-                {"schedule-share-java-Beta-compiles", new KnownIssue(SnippetGeneration, "Conflicting Graph and Java type") },
+                {$"create-or-get-onlinemeeting-java-{version}-compiles", new KnownIssue(SnippetGeneration, "Conflicting Graph and Java type") },
+                {$"schedule-share-java-{version}-compiles", new KnownIssue(SnippetGeneration, "Conflicting Graph and Java type") },
 
-                {"get-one-thumbnail-java-V1-compiles", new KnownIssue(SnippetGeneration, "Issue with Size argument") },
-                {"get-thumbnail-content-java-V1-compiles", new KnownIssue(SnippetGeneration, "Issue with Size argument") },
-                {"get-one-thumbnail-java-Beta-compiles", new KnownIssue(SnippetGeneration, "Issue with Size argument") },
-                {"get-thumbnail-content-java-Beta-compiles", new KnownIssue(SnippetGeneration, "Issue with Size argument") },
+                {$"get-one-thumbnail-java-{version}-compiles", new KnownIssue(SnippetGeneration, "Issue with Size argument") },
+                {$"get-thumbnail-content-java-{version}-compiles", new KnownIssue(SnippetGeneration, "Issue with Size argument") },
 
-                {"user-supportedtimezones-iana-java-V1-compiles", new KnownIssue(SnippetGeneration, "Missing quotes around query string parameter argument?") },
-                {"user-supportedtimezones-iana-java-Beta-compiles", new KnownIssue(SnippetGeneration, "Missing quotes around query string parameter argument?") },
+                {$"user-supportedtimezones-iana-java-{version}-compiles", new KnownIssue(SnippetGeneration, "Missing quotes around query string parameter argument?") },
 
                 { "get-channel-messages-delta-2-java-V1-compiles", new KnownIssue(Metadata, "Delta function is not declared") },
                 { "get-channel-messages-delta-3-java-V1-compiles", new KnownIssue(Metadata, "Delta function is not declared") },
                 { "shift-put-java-V1-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
 
-                {"upload-via-put-id-java-V1-compiles", new KnownIssue(SnippetGeneration, "Missing support for content: https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/371") },
-                {"upload-via-put-id-java-Beta-compiles", new KnownIssue(SnippetGeneration, "Missing support for content: https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/371") },
+                {$"upload-via-put-id-java-{version}-compiles", new KnownIssue(SnippetGeneration, "Missing support for content: https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/371") },
 
             };
         }
@@ -610,15 +541,16 @@ namespace TestsCommon
         /// Gets known issues by language
         /// </summary>
         /// <param name="language">language to get the issues for</param>
+        /// <param name="version">version to get the issues for</param>
         /// <returns>A mapping of test names into known issues</returns>
-        public static Dictionary<string, KnownIssue> GetIssues(Languages language)
+        public static Dictionary<string, KnownIssue> GetIssues(Languages language, Versions version)
         {
             return (language switch
             {
-                Languages.CSharp => GetCSharpIssues(),
-                Languages.Java => GetJavaIssues(),
+                Languages.CSharp => GetCSharpIssues(version),
+                Languages.Java => GetJavaIssues(version),
                 _ => new Dictionary<string, KnownIssue>(),
-            }).Union(GetCommonIssues(language)).ToDictionary(x => x.Key, x => x.Value);
+            }).Union(GetCommonIssues(language, version)).ToDictionary(x => x.Key, x => x.Value);
         }
     }
     /// <summary>
@@ -676,7 +608,7 @@ namespace TestsCommon
             var language = runSettings.Language;
             var version = runSettings.Version;
             var documentationLinks = GetDocumentationLinks(version, language);
-            var knownIssues = KnownIssues.GetIssues(language);
+            var knownIssues = KnownIssues.GetIssues(language, version);
             var snippetFileNames = documentationLinks.Keys.ToList();
             return from fileName in snippetFileNames                                            // e.g. application-addpassword-csharp-snippets.md
                    let arbitraryDllPostfix = runSettings.DllPath == null ? string.Empty : "arbitraryDll-"
