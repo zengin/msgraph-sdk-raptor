@@ -86,6 +86,7 @@ namespace TestsCommon
         private const string Metadata = nameof(Metadata);
         private const string MetadataPreprocessing = nameof(MetadataPreprocessing);
         private const string SnippetGeneration = nameof(SnippetGeneration);
+        private const string TestGeneration = nameof(TestGeneration);
         #endregion
 
         #region HTTP methods
@@ -248,6 +249,9 @@ namespace TestsCommon
                 { $"update-workforceintegration-{lng}-V1-compiles", new KnownIssue(HTTP, HttpSnippetWrong + ": workforceintegration id is needed in the url.") },
                 { $"worksheet-range-{lng}-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(POST, GET)) },
                 { $"get-channel-messages-delta-1-{lng}-V1-compiles", new KnownIssue(Metadata, "Delta function is not declared") },
+                { $"create-printer-{lng}-Beta-compiles", new KnownIssue(SnippetGeneration, SnippetGenerationTypeHint) },
+                { $"post-privilegedroleassignmentrequest-{lng}-Beta-compiles", new KnownIssue(SnippetGeneration, SnippetGenerationRequestObjectDisambiguation) },
+                { $"create-b2cuserflow-from-b2cuserflows-identityprovider-{lng}-Beta-compiles", new KnownIssue(SnippetGeneration, "Snippet Generation needs casting support for *CollectionWithReferencesPage. See details at: https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/327") },
             };
         }
 
@@ -262,12 +266,10 @@ namespace TestsCommon
             return new Dictionary<string, KnownIssue>()
             {
                 { "call-transfer-csharp-Beta-compiles", new KnownIssue(SnippetGeneration, SnippetGenerationAdditionalData) },
-                { "create-b2cuserflow-from-b2cuserflows-identityprovider-csharp-Beta-compiles", new KnownIssue(SnippetGeneration, "Snippet Generation needs casting support for *CollectionWithReferencesPage. See details at: https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/327") },
                 { "create-b2xuserflow-from-b2xuserflows-identityproviders-csharp-Beta-compiles", new KnownIssue(SnippetGeneration, "Snippet Generation needs casting support for *CollectionWithReferencesPage. See details at: https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/327") },
                 { "create-externalitem-from-connections-csharp-Beta-compiles", new KnownIssue(SnippetGeneration, SnippetGenerationCreateAsyncSupport) },
                 { "create-manager-for-user-csharp-Beta-compiles", new KnownIssue(SnippetGeneration, SnippetGenerationReferenceCreation) },
                 { "create-manager-from-group-csharp-V1-compiles", new KnownIssue(SnippetGeneration, "See issue: https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/289") },
-                { "create-printer-csharp-Beta-compiles", new KnownIssue(SnippetGeneration, SnippetGenerationTypeHint) },
                 { "create-rangeborder-from-rangeformat-csharp-Beta-compiles", new KnownIssue(SDK, FeatureNotSupported) },
                 { "create-rangeborder-from-rangeformat-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
                 { "create-schema-from-connection-async-csharp-Beta-compiles", new KnownIssue(SnippetGeneration, SnippetGenerationCreateAsyncSupport) },
@@ -319,7 +321,6 @@ namespace TestsCommon
                 { "get-wa-count-csharp-V1-compiles", new KnownIssue(SDK, SearchHeaderIsNotSupported) },
                 { "get-web-count-csharp-Beta-compiles", new KnownIssue(SDK, SearchHeaderIsNotSupported) },
                 { "get-web-count-csharp-V1-compiles", new KnownIssue(SDK, SearchHeaderIsNotSupported) },
-                { "post-privilegedroleassignmentrequest-csharp-Beta-compiles", new KnownIssue(SnippetGeneration, SnippetGenerationRequestObjectDisambiguation) },
                 { "put-privilegedrolesettings-csharp-Beta-compiles", new KnownIssue(SnippetGeneration, SnippetGenerationCreateAsyncSupport) },
                 { "put-regionalandlanguagesettings-csharp-Beta-compiles", new KnownIssue(SnippetGeneration, SnippetGenerationCreateAsyncSupport) },
                 { "range-cell-csharp-V1-compiles", new KnownIssue(SDK, FeatureNotSupported) },
@@ -479,6 +480,21 @@ namespace TestsCommon
                 {$"get-alert-java-{version}-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
                 {$"get-alerts-java-{version}-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
                 {$"update-alert-java-{version}-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
+                {"get-securityaction-java-Beta-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
+                {"tiindicator-updatetiindicators-java-Beta-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
+                {"create-tiindicator-from-security-java-Beta-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
+                {"securityaction-cancelsecurityaction-java-Beta-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
+                {"delete-tiindicator-java-Beta-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
+                {"securescorecontrolprofiles-list-java-Beta-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
+                {"update-tiindicator-java-Beta-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
+                {"create-securityaction-from-security-java-Beta-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
+                {"tiindicator-deletetiindicators-java-Beta-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
+                {"tiindicator-submittiindicators-java-Beta-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
+                {"get-tiindicator-java-Beta-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
+                {"get-tiindicators-java-Beta-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
+                {"tiindicator-deletetiindicatorsbyexternalid-java-Beta-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
+                {"get-securityactions-java-Beta-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
+                {"securescores-list-java-Beta-compiles", new KnownIssue(SDK, "Path had wrong casing in SDK due to an error in the metadata") },
 
                 {$"group-getmembergroups-java-{version}-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
                 {$"group-getmemberobjects-java-{version}-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
@@ -504,6 +520,15 @@ namespace TestsCommon
                 {$"timeoffrequest-decline-java-{version}-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
                 {$"get-group-transitivemembers-count-java-{version}-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/318") },
                 {$"get-user-memberof-count-only-java-{version}-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/318") },
+                {"directoryobject-checkmembergroups-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {"directoryobject-getmembergroups-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {"directoryobject-getmemberobjects-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/317") },
+                {"phoneauthenticationmethod-disablesmssignin-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/318") },
+                {"phoneauthenticationmethod-enablesmssignin-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/318") },
+                {"passwordauthenticationmethod-resetpassword-systemgenerated-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/318") },
+                {"passwordauthenticationmethod-resetpassword-adminprovided-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/318") },
+                {"user-upgrade-teamsapp-java-Beta-compiles", new KnownIssue(SDK, "Missing method in SDK generation https://github.com/microsoftgraph/MSGraph-SDK-Code-Generator/issues/318") },
+
 
                 {$"get-deleteditems-java-{version}-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
                 {$"get-all-roomlists-java-{version}-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
@@ -513,6 +538,10 @@ namespace TestsCommon
                 {$"get-count-group-only-java-{version}-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
                 {$"get-count-only-java-{version}-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
                 {$"get-count-user-only-java-{version}-compiles", new KnownIssue(SnippetGeneration, "Missing support for odata cast https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/361") },
+                
+                {"update-accesspackageassignmentpolicy-java-Beta-compiles", new KnownIssue(SDK, "Missing property") },
+                {"reportroot-getcredentialusagesummary-java-Beta-compiles", new KnownIssue(SDK, "Missing method") },
+                {"create-connector-from-connectorgroup-java-Beta-compiles", new KnownIssue(SDK, "Missing method") },
 
                 {$"create-list-java-{version}-compiles", new KnownIssue(SnippetGeneration, "Duplicated variable name") },
 
@@ -529,11 +558,39 @@ namespace TestsCommon
 
                 {$"user-supportedtimezones-iana-java-{version}-compiles", new KnownIssue(SnippetGeneration, "Missing quotes around query string parameter argument?") },
 
-                { "get-channel-messages-delta-2-java-V1-compiles", new KnownIssue(Metadata, "Delta function is not declared") },
-                { "get-channel-messages-delta-3-java-V1-compiles", new KnownIssue(Metadata, "Delta function is not declared") },
-                { "shift-put-java-V1-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
+                {"alert-updatealerts-java-Beta-compiles", new KnownIssue(SnippetGeneration, "Enums are not generated properly") },
+                
+                {$"get-channel-messages-delta-2-java-{version}-compiles", new KnownIssue(Metadata, "Delta function is not declared") },
+                {$"get-channel-messages-delta-3-java-{version}-compiles", new KnownIssue(Metadata, "Delta function is not declared") },
+                {$"get-document-value-java-Beta-compiles", new KnownIssue(Metadata, "HasStream missing") },
+                {"shift-put-java-V1-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
+                {"update-b2xuserflows-identityprovider-java-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
+                {"update-b2cuserflows-identityprovider-java-Beta-compiles", new KnownIssue(HTTPMethodWrong, GetMethodWrongMessage(PUT, PATCH)) },
 
                 {$"upload-via-put-id-java-{version}-compiles", new KnownIssue(SnippetGeneration, "Missing support for content: https://github.com/microsoftgraph/microsoft-graph-explorer-api/issues/371") },
+
+                {"get-group-java-Beta-compiles", new KnownIssue(TestGeneration, "Imports need to be deduplicated for namespaces") },
+                {"get-set-java-Beta-compiles", new KnownIssue(TestGeneration, "Imports need to be deduplicated for namespaces") },
+                {"update-set-java-Beta-compiles", new KnownIssue(TestGeneration, "Imports need to be deduplicated for namespaces") },
+                {"update-term-java-Beta-compiles", new KnownIssue(TestGeneration, "Imports need to be deduplicated for namespaces") },
+                {"get-store-java-Beta-compiles", new KnownIssue(TestGeneration, "Imports need to be deduplicated for namespaces") },
+                {"update-store-java-Beta-compiles", new KnownIssue(TestGeneration, "Imports need to be deduplicated for namespaces") },
+                {"get-term-java-Beta-compiles", new KnownIssue(TestGeneration, "Imports need to be deduplicated for namespaces") },
+                {"get-relation-java-Beta-compiles", new KnownIssue(TestGeneration, "Imports need to be deduplicated for namespaces") },
+                {"create-term-from--java-Beta-compiles", new KnownIssue(TestGeneration, "Imports need to be deduplicated for namespaces") },
+
+                {"create-accesspackageresourcerequest-from-accesspackageresourcerequests-java-Beta-compiles", new KnownIssue(SDK, SnippetGenerationRequestObjectDisambiguation) },
+                {"governanceroleassignmentrequest-post-java-Beta-compiles", new KnownIssue(SDK, SnippetGenerationRequestObjectDisambiguation) },
+                {"create-accesspackageassignmentrequest-from-accesspackageassignmentrequests-java-Beta-compiles", new KnownIssue(SDK, SnippetGenerationRequestObjectDisambiguation) },
+                {"get-accesspackageassignmentrequest-java-Beta-compiles", new KnownIssue(SDK, SnippetGenerationRequestObjectDisambiguation) },
+
+                {"update-educationpointsoutcome-java-Beta-compiles", new KnownIssue(SnippetGeneration, "Lossy conversion") },
+                {"update-printer-java-Beta-compiles", new KnownIssue(SnippetGeneration, "Lossy conversion") },
+                {"update-connector-java-Beta-compiles", new KnownIssue(SnippetGeneration, "Lossy conversion") },
+                {"educationsubmission-return-java-Beta-compiles", new KnownIssue(SnippetGeneration, "Reserved keyword usage") },
+                {"tablecolumncollection-add-java-Beta-compiles", new KnownIssue(SnippetGeneration, "Tries to instantiate a primite??") },
+                {"group-evaluatedynamicmembership-java-Beta-compiles", new KnownIssue(SnippetGeneration, "Double Quotes not escaped") },
+                {"create-educationrubric-from-educationuser-java-Beta-compiles", new KnownIssue(TestGeneration, "Code truncated???") },
 
             };
         }
