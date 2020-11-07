@@ -55,7 +55,7 @@ application {
         private static readonly string gradleSettingsFileTemplate = @"rootProject.name = 'msgraph-sdk-java-raptor'";
 
         private static Versions? currentlyConfiguredVersion;
-        private static object versionLock = new { };
+        private static readonly object versionLock = new { };
 
         private static void setCurrentlyConfiguredVersion (Versions version)
         {// we don't want to overwrite the build.gradle for each test, this prevents gradle from caching things and slows down build time
@@ -92,7 +92,7 @@ application {
                 },
             };
             javacProcess.Start();
-            var hasExited = javacProcess.WaitForExit(10000);
+            var hasExited = javacProcess.WaitForExit(20000);
             if (!hasExited)
                 javacProcess.Kill(true);
             var stdOutput = javacProcess.StandardOutput.ReadToEnd(); //could be async
@@ -106,10 +106,10 @@ application {
         }
 
         private const string errorsSuffix = "FAILURE";
-        private static Regex notesFilterRegex = new Regex(@"^Note:\s[^\n]*$", RegexOptions.Compiled | RegexOptions.Multiline);
-        private static Regex doubleLineReturnCleanupRegex = new Regex(@"\n{2,}", RegexOptions.Compiled | RegexOptions.Multiline);
-        private static Regex errorCountCleanupRegex = new Regex(@"\d+ error", RegexOptions.Compiled);
-        private static Regex errorMessageCaptureRegex = new Regex(@":(?<linenumber>\d+):(?<message>[^\/\\]+)", RegexOptions.Compiled | RegexOptions.Multiline);
+        private static readonly Regex notesFilterRegex = new Regex(@"^Note:\s[^\n]*$", RegexOptions.Compiled | RegexOptions.Multiline);
+        private static readonly Regex doubleLineReturnCleanupRegex = new Regex(@"\n{2,}", RegexOptions.Compiled | RegexOptions.Multiline);
+        private static readonly Regex errorCountCleanupRegex = new Regex(@"\d+ error", RegexOptions.Compiled);
+        private static readonly Regex errorMessageCaptureRegex = new Regex(@":(?<linenumber>\d+):(?<message>[^\/\\]+)", RegexOptions.Compiled | RegexOptions.Multiline);
         private List<Diagnostic> GetDiagnosticsFromStdErr(string stdOutput, string stdErr, bool hasExited)
         {
             var result = new List<Diagnostic>();
