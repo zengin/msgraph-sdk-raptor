@@ -22,7 +22,7 @@ steps:
   inputs:
     command: 'test'
     projects: '**/${{ parameters.projectFileName }}.csproj'
-    arguments: '--configuration $(buildConfiguration) --logger trx --results-directory $(Agent.TempDirectory)'
+    arguments: '--configuration $(buildConfiguration) --logger trx --results-directory $(Agent.TempDirectory) --settings $(Build.SourcesDirectory)/$(projectFileName)/Test.runsettings'
     publishTestResults: false
   displayName: '${{ parameters.projectFileName }} Compilation Tests'
   continueOnError: true

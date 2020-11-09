@@ -18,7 +18,11 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- template: java-prepare-template.yml
+- template: java-templates/java-prepare.yml
+- template: java-templates/java-replace-local-path.yml
+  parameters:
+    projectFileName: JavaBetaTests
+    dllPath: ''
 - template: compile-run-tests-template.yml
   parameters:
     projectFileName: JavaBetaTests

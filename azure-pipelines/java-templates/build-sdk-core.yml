@@ -1,0 +1,5 @@
+steps:
+- checkout: msgraph-sdk-java-core
+  clean: true
+- script: 'gradle build'
+  workingDirectory: '$(Build.SourcesDirectory)/msgraph-sdk-java-core'
