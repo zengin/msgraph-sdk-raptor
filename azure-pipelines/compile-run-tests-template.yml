@@ -2,15 +2,6 @@ parameters:
   projectFileName: JavaV1Tests
   runName: 'V1 Java Snippet Compilation Tests'
 steps:
-- checkout: microsoft-graph-docs
-  clean: true
-  fetchDepth: 1
-  persistCredentials: true
-
-- checkout: self
-  clean: true
-  fetchDepth: 1
-
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'

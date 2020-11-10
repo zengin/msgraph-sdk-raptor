@@ -19,6 +19,7 @@ variables:
 
 steps:
 - template: java-templates/java-prepare.yml
+- template: common-templates/checkout.yml
 - template: java-templates/java-replace-local-path.yml
   parameters:
     projectFileName: JavaV1Tests
