@@ -35,15 +35,24 @@
 .Parameter JavaPreviewLibPath
     Optional. Path containing the core and service library repositories. Using this setting will ignore Java Core and Service lib versions.
 #>
+[CmdletBinding(DefaultParameterSetName='CSharp')]
 Param(
-    [Parameter(Mandatory = $true)][string]$Version,
-    [Parameter(Mandatory = $true)][string]$KnownFailuresRequested,
-    [Parameter(Mandatory = $true)][string]$DllPath,
-    [Parameter(Mandatory = $true)][string]$Language,
-    [Parameter(Mandatory = $true)][string]$RunSettingsPath,
-    [Parameter(Mandatory = $false)][string]$JavaCoreVersion="",
-    [Parameter(Mandatory = $false)][string]$JavaLibVersion="",
-    [Parameter(Mandatory = $false)][string]$JavaPreviewLibPath=""
+    [Parameter(Mandatory = $true, ParameterSetName="CSharp")]
+    [Parameter(Mandatory = $false, ParameterSetName="Java")]
+    [string]$Version,
+    [Parameter(Mandatory = $true, ParameterSetName="CSharp")]
+    [Parameter(Mandatory = $false, ParameterSetName="Java")]
+    [string]$KnownFailuresRequested,
+    [Parameter(Mandatory = $true, ParameterSetName="CSharp")][string]$DllPath,
+    [Parameter(Mandatory = $true, ParameterSetName="CSharp")]
+    [Parameter(Mandatory = $false, ParameterSetName="Java")]
+    [string]$Language,
+    [Parameter(Mandatory = $true, ParameterSetName="CSharp")]
+    [Parameter(Mandatory = $true, ParameterSetName="Java")]
+    [string]$RunSettingsPath,
+    [Parameter(Mandatory = $false, ParameterSetName="Java")][string]$JavaCoreVersion="",
+    [Parameter(Mandatory = $false, ParameterSetName="Java")][string]$JavaLibVersion="",
+    [Parameter(Mandatory = $false, ParameterSetName="Java")][string]$JavaPreviewLibPath=""
 )
 
 $mapping = @{}
