@@ -3,4 +3,4 @@ steps:
   clean: true
 - script: 'gradle build'
   workingDirectory: '$(Build.SourcesDirectory)/msgraph-sdk-java-core'
-  diplayName: 'Build java core library'
+  displayName: 'Build java core library'
