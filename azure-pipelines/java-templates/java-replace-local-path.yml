@@ -10,3 +10,4 @@ steps:
   env:
     RunSettingsPath: '$(Build.SourcesDirectory)/msgraph-sdk-raptor/${{ parameters.projectFileName}}/Test.runsettings'
     JavaPreviewLibPath: ${{ parameters.javaPreviewLibPath}}
+  displayName: 'Replace test settings parameters'
