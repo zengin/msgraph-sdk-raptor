@@ -672,7 +672,10 @@ namespace TestsCommon
                        KnownIssueMessage = knownIssueMessage,
                        DocsLink = docsLink,
                        FileName = fileName,
-                       DllPath = runSettings.DllPath
+                       DllPath = runSettings.DllPath,
+                       JavaCoreVersion = runSettings.JavaCoreVersion,
+                       JavaLibVersion = runSettings.JavaLibVersion,
+                       JavaPreviewLibPath = runSettings.JavaPreviewLibPath,
                    }
                    where !(isKnownIssue ^ runSettings.KnownFailuresRequested) // select known issues if requested
                    select new TestCaseData(testCaseData).SetName(testName).SetProperty("Owner", owner);

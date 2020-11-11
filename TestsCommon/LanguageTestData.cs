@@ -33,5 +33,17 @@ namespace TestsCommon
         /// Optional dll path to load Microsoft.Graph from a local resource instead of published nuget
         /// </summary>
         public string DllPath { get; set; }
+        /// <summary>
+        /// Optional. Version to use for the java core library. Ignored when using JavaPreviewLibPath
+        /// </summary>
+        public string JavaCoreVersion { get; set; }
+        /// <summary>
+        /// Optional. Version to use for the java service library. Ignored when using JavaPreviewLibPath
+        /// </summary>
+        public string JavaLibVersion { get; set; }
+        /// <summary>
+        /// Optional. Folder container the java core and java service library repositories so the unit testing uses that local version instead.
+        /// </summary>
+        public string JavaPreviewLibPath { get; set; }
     }
 }

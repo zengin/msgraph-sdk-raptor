@@ -23,7 +23,7 @@ steps:
 - template: java-templates/java-replace-local-path.yml
   parameters:
     projectFileName: JavaV1Tests
-    dllPath: ''
+    javaPreviewLibPath: ''
 - template: compile-run-tests-template.yml
   parameters:
     projectFileName: JavaV1Tests

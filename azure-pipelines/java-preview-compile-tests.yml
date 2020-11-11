@@ -35,7 +35,7 @@ steps:
 - template: java-templates/java-replace-local-path.yml
   parameters:
     projectFileName: JavaV1Tests
-    dllPath: '$(Build.SourcesDirectory)'
+    javaPreviewLibPath: '$(Build.SourcesDirectory)'
 - template: compile-run-tests-template.yml
   parameters:
     projectFileName: JavaV1Tests

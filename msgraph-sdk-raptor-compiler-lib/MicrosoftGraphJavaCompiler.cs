@@ -15,7 +15,9 @@ namespace MsGraphSDKSnippetsCompiler
     public class MicrosoftGraphJavaCompiler : IMicrosoftGraphSnippetsCompiler
     {
         private readonly string _markdownFileName;
-        private readonly string _dllPath;
+        private readonly string _previewLibraryPath;
+        private readonly string _javaLibVersion;
+        private readonly string _javaCoreVersion;
         private static readonly string[] testFileSubDirectories = new string[] { "src", "main", "java", "com", "microsoft", "graph", "raptor" };
 
         private static readonly string gradleBuildFileName = "build.gradle";
@@ -47,8 +49,8 @@ repositories {
 }
 dependencies {
     --deps--
-    implementation 'com.microsoft.graph:microsoft-graph-core:1.0.5'
-    implementation 'com.microsoft.graph:microsoft-graph:2.3.2'
+    implementation 'com.microsoft.graph:microsoft-graph-core:--coreversion--'
+    implementation 'com.microsoft.graph:microsoft-graph:--libversion--'
 }
 application {
     mainClassName = 'com.microsoft.graph.raptor.App'
@@ -65,8 +67,8 @@ repositories {
 }
 dependencies {
     --deps--
-    implementation 'com.microsoft.graph:microsoft-graph-core:1.0.5'
-    implementation 'com.microsoft.graph:microsoft-graph-beta:0.1.0-SNAPSHOT'
+    implementation 'com.microsoft.graph:microsoft-graph-core:--coreversion--'
+    implementation 'com.microsoft.graph:microsoft-graph-beta:--libversion--'
 }
 application {
     mainClassName = 'com.microsoft.graph.raptor.App'
@@ -89,10 +91,12 @@ application {
             }
         }
 
-        public MicrosoftGraphJavaCompiler(string markdownFileName, string dllPath = null)
+        public MicrosoftGraphJavaCompiler(string markdownFileName, string previewLibPath, string javaLibVersion, string javaCoreVersion)
         {
             _markdownFileName = markdownFileName;
-            _dllPath = dllPath;
+            _previewLibraryPath = previewLibPath;
+            _javaLibVersion = javaLibVersion;
+            _javaCoreVersion = javaCoreVersion;
         }
         public CompilationResultsModel CompileSnippet(string codeSnippet, Versions version)
         {
@@ -194,9 +198,12 @@ application {
         {
             Directory.CreateDirectory(rootPath);
             var buildGradleFileContent = version == Versions.V1 ? v1GradleBuildFileTemplate : betaGradleBuildFileTemplate;
-            if (!string.IsNullOrEmpty(_dllPath))
-                buildGradleFileContent = previewGradleBuildFileTemplate.Replace("--path--", _dllPath);
-            await File.WriteAllTextAsync(Path.Combine(rootPath, gradleBuildFileName), buildGradleFileContent.Replace("--deps--", string.IsNullOrEmpty(_dllPath) ? depsCurrent : depsvNext ));
+            if (!string.IsNullOrEmpty(_previewLibraryPath))
+                buildGradleFileContent = previewGradleBuildFileTemplate.Replace("--path--", _previewLibraryPath);
+            await File.WriteAllTextAsync(Path.Combine(rootPath, gradleBuildFileName), buildGradleFileContent
+                                                                            .Replace("--deps--", string.IsNullOrEmpty(_previewLibraryPath) ? depsCurrent : depsvNext )
+                                                                            .Replace("--coreversion--", _javaCoreVersion)
+                                                                            .Replace("--libversion--", _javaLibVersion));
             var gradleSettingsFilePath = Path.Combine(rootPath, gradleSettingsFileName);
             if (!File.Exists(gradleSettingsFilePath))
                 await File.WriteAllTextAsync(gradleSettingsFilePath, gradleSettingsFileTemplate);

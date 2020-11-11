@@ -8,5 +8,8 @@
     <Parameter name="DllPath" value="C:/sources/github" />
     <Parameter name="KnownFailuresRequested" value="---KnownFailuresRequestedPlaceholder---" />
     <Parameter name="Language" value="---LanguagePlaceHolder---" />
+    <Parameter name="JavaCoreVersion" value="---JavaCoreVersionPlaceHolder---" />
+    <Parameter name="JavaLibVersion" value="---JavaLibVersionPlaceHolder---" />
+    <Parameter name="JavaPreviewLibPath" value="---JavaPreviewLibPathPlaceHolder---" />
   </TestRunParameters>
 </RunSettings>

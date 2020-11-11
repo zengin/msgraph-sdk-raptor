@@ -23,13 +23,27 @@
 .Parameter RunSettingsPath
     Required. Full or relative path to .runsettings file to be modified
 
+.Parameter Language
+    Required. Language to run the tests against
+
+.Parameter JavaCoreVersion
+    Optional. Version number for the core library to use
+
+.Parameter JavaLibVersion
+    Optional. Version number for the service library to use
+
+.Parameter JavaPreviewLibPath
+    Optional. Path containing the core and service library repositories. Using this setting will ignore Java Core and Service lib versions.
 #>
 Param(
     [Parameter(Mandatory = $true)][string]$Version,
     [Parameter(Mandatory = $true)][string]$KnownFailuresRequested,
     [Parameter(Mandatory = $true)][string]$DllPath,
     [Parameter(Mandatory = $true)][string]$Language,
-    [Parameter(Mandatory = $true)][string]$RunSettingsPath
+    [Parameter(Mandatory = $true)][string]$RunSettingsPath,
+    [Parameter(Mandatory = $false)][string]$JavaCoreVersion="",
+    [Parameter(Mandatory = $false)][string]$JavaLibVersion="",
+    [Parameter(Mandatory = $false)][string]$JavaPreviewLibPath=""
 )
 
 $mapping = @{}
@@ -38,6 +52,9 @@ $mapping.Add("Version", $Version)
 $mapping.Add("KnownFailuresRequested", $KnownFailuresRequested)
 $mapping.Add("DllPath", $DllPath)
 $mapping.Add("Language", $Language)
+$mapping.Add("JavaCoreVersion", $JavaCoreVersion)
+$mapping.Add("JavaLibVersion", $JavaLibVersion)
+$mapping.Add("JavaPreviewLibPath", $JavaPreviewLibPath)
 
 [xml]$settings = Get-Content $RunSettingsPath
 $settings.RunSettings.TestRunParameters.Parameter | % {

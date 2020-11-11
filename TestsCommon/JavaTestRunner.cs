@@ -100,13 +100,13 @@ public class App
                 .Replace("\r\n        \r\n", "\r\n\r\n")    // remove indentation added to empty lines
                 .Replace("\t", "    ")                      // do not use tabs
                 .Replace("\r\n\r\n\r\n", "\r\n\r\n");       // do not have two consecutive empty lines
-            var isCurrentSdk = string.IsNullOrEmpty(testData.DllPath);
+            var isCurrentSdk = string.IsNullOrEmpty(testData.JavaPreviewLibPath);
             var codeToCompile = BaseTestRunner.ConcatBaseTemplateWithSnippet(codeSnippetFormatted, SDKShellTemplate
                                                                             .Replace("--auth--",  isCurrentSdk ? authProviderCurrent: authProvidervNext)
                                                                             .Replace("--imports--", isCurrentSdk ? importsCurrent: importsVNext));
 
             // Compile Code
-            var microsoftGraphCSharpCompiler = new MicrosoftGraphJavaCompiler(testData.FileName, testData.DllPath);
+            var microsoftGraphCSharpCompiler = new MicrosoftGraphJavaCompiler(testData.FileName, testData.JavaPreviewLibPath, testData.JavaLibVersion, testData.JavaCoreVersion);
 
             var jvmRetryAttmptsLeft = 3;
             while (jvmRetryAttmptsLeft > 0)
