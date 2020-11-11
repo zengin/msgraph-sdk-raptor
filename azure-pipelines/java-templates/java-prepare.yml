@@ -1,5 +1,6 @@
 steps:
 - script: 'wget https://github.com/AdoptOpenJDK/openjdk15-binaries/releases/download/jdk-15.0.1%2B9/OpenJDK15U-jdk_x64_linux_hotspot_15.0.1_9.tar.gz'
+  displayName: 'Download JDK'
 - task: JavaToolInstaller@0
   inputs:
     versionSpec: '15'
@@ -8,4 +9,5 @@ steps:
     jdkFile: 'OpenJDK15U-jdk_x64_linux_hotspot_15.0.1_9.tar.gz'
     jdkDestinationDirectory: 'binaries'
 - script: gradle --version
+  displayName: 'Warm up JVM'
 # to avoid having the welcome message and preload some things

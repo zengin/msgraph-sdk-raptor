@@ -11,3 +11,4 @@ steps:
   displayName: 'Replace reference to core'
 - script: 'gradle build'
   workingDirectory: '$(Build.SourcesDirectory)/msgraph-sdk-java'
+  displayName: 'Build java service lib'
