@@ -18,6 +18,7 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- template: common-templates/checkout.yml
 - template: compile-run-tests-template.yml
   parameters:
     projectFileName: CsharpV1Tests

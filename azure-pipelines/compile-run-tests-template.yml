@@ -2,15 +2,6 @@ parameters:
   projectFileName: JavaV1Tests
   runName: 'V1 Java Snippet Compilation Tests'
 steps:
-- checkout: microsoft-graph-docs
-  clean: true
-  fetchDepth: 1
-  persistCredentials: true
-
-- checkout: self
-  clean: true
-  fetchDepth: 1
-
 - task: UseDotNet@2
   displayName: 'Use .NET Core sdk'
   inputs:
@@ -29,7 +20,7 @@ steps:
   inputs:
     command: 'test'
     projects: '**/${{ parameters.projectFileName }}.csproj'
-    arguments: '--configuration $(buildConfiguration) --logger trx --results-directory $(Agent.TempDirectory)'
+    arguments: '--configuration $(buildConfiguration) --logger trx --results-directory $(Agent.TempDirectory) --settings $(Build.SourcesDirectory)/msgraph-sdk-raptor/${{ parameters.projectFileName}}/Test.runsettings'
     publishTestResults: false
   displayName: '${{ parameters.projectFileName }} Compilation Tests'
   continueOnError: true

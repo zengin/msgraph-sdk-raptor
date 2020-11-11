@@ -13,7 +13,7 @@ namespace JavaV1Tests
         /// TestCaseData contains snippet file name, version and test case name
         /// </summary>
         public static IEnumerable<TestCaseData> TestDataV1 => TestDataGenerator.GetTestCaseData(
-            new RunSettings
+            new RunSettings(TestContext.Parameters)
             {
                 Version = Versions.V1,
                 Language = Languages.Java,

@@ -18,7 +18,12 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- template: java-prepare-template.yml
+- template: java-templates/java-prepare.yml
+- template: common-templates/checkout.yml
+- template: java-templates/java-replace-local-path.yml
+  parameters:
+    projectFileName: JavaV1KnownFailureTests
+    javaPreviewLibPath: ''
 - template: compile-run-tests-template.yml
   parameters:
     projectFileName: JavaV1KnownFailureTests

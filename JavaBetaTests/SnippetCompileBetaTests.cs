@@ -13,7 +13,7 @@ namespace JavaBetaTests
         /// TestCaseData contains snippet file name, version and test case name
         /// </summary>
         public static IEnumerable<TestCaseData> TestDataBeta => TestDataGenerator.GetTestCaseData(
-            new RunSettings
+            new RunSettings(TestContext.Parameters)
             {
                 Version = Versions.Beta,
                 Language = Languages.Java,

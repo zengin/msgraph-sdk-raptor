@@ -15,9 +15,31 @@ namespace MsGraphSDKSnippetsCompiler
     public class MicrosoftGraphJavaCompiler : IMicrosoftGraphSnippetsCompiler
     {
         private readonly string _markdownFileName;
+        private readonly string _previewLibraryPath;
+        private readonly string _javaLibVersion;
+        private readonly string _javaCoreVersion;
         private static readonly string[] testFileSubDirectories = new string[] { "src", "main", "java", "com", "microsoft", "graph", "raptor" };
 
         private static readonly string gradleBuildFileName = "build.gradle";
+        private static readonly string previewGradleBuildFileTemplate = @"plugins {
+    id 'java'
+    id 'application'
+}
+repositories {
+    jcenter()
+    flatDir {
+        dirs '--path--/msgraph-sdk-java-core/build/libs'
+        dirs '--path--/msgraph-sdk-java/build/libs'
+    }
+}
+dependencies {
+    --deps--
+    implementation name: 'msgraph-sdk-java'
+    implementation name: 'msgraph-sdk-java-core'
+}
+application {
+    mainClassName = 'com.microsoft.graph.raptor.App'
+}";
         private static readonly string v1GradleBuildFileTemplate = @"plugins {
     id 'java'
     id 'application'
@@ -26,9 +48,9 @@ repositories {
     jcenter()
 }
 dependencies {
-    implementation 'com.google.guava:guava:23.0'
-    implementation 'com.microsoft.graph:microsoft-graph-core:1.0.5'
-    implementation 'com.microsoft.graph:microsoft-graph:2.3.2'
+    --deps--
+    implementation 'com.microsoft.graph:microsoft-graph-core:--coreversion--'
+    implementation 'com.microsoft.graph:microsoft-graph:--libversion--'
 }
 application {
     mainClassName = 'com.microsoft.graph.raptor.App'
@@ -44,17 +66,22 @@ repositories {
 	}
 }
 dependencies {
-    implementation 'com.google.guava:guava:23.0'
-    implementation 'com.microsoft.graph:microsoft-graph-core:1.0.5'
-    implementation 'com.microsoft.graph:microsoft-graph-beta:0.1.0-SNAPSHOT'
+    --deps--
+    implementation 'com.microsoft.graph:microsoft-graph-core:--coreversion--'
+    implementation 'com.microsoft.graph:microsoft-graph-beta:--libversion--'
 }
 application {
     mainClassName = 'com.microsoft.graph.raptor.App'
 }";
+        private const string depsCurrent = @"implementation 'com.google.guava:guava:23.0'";
+        private const string depsvNext = @"implementation 'com.google.guava:guava:23.0'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'";
         private static readonly string gradleSettingsFileName = "settings.gradle";
         private static readonly string gradleSettingsFileTemplate = @"rootProject.name = 'msgraph-sdk-java-raptor'";
 
         private static Versions? currentlyConfiguredVersion;
+        private static readonly Lazy<int> currentExcutionFolder = new Lazy<int>(() => new Random().Next(0, int.MaxValue));
         private static readonly object versionLock = new { };
 
         private static void setCurrentlyConfiguredVersion (Versions version)
@@ -64,15 +91,18 @@ application {
             }
         }
 
-        public MicrosoftGraphJavaCompiler(string markdownFileName)
+        public MicrosoftGraphJavaCompiler(string markdownFileName, string previewLibPath, string javaLibVersion, string javaCoreVersion)
         {
             _markdownFileName = markdownFileName;
+            _previewLibraryPath = previewLibPath;
+            _javaLibVersion = javaLibVersion;
+            _javaCoreVersion = javaCoreVersion;
         }
         public CompilationResultsModel CompileSnippet(string codeSnippet, Versions version)
         {
             var tempPath = Path.Combine(Path.GetTempPath(), "msgraph-sdk-raptor");
             Directory.CreateDirectory(tempPath);
-            var rootPath = Path.Combine(tempPath, "java");
+            var rootPath = Path.Combine(tempPath, "java" + currentExcutionFolder.Value);
             var sourceFileDirectory = Path.Combine(new string[] { rootPath }.Union(testFileSubDirectories).ToArray());
             if (!currentlyConfiguredVersion.HasValue || currentlyConfiguredVersion.Value != version)
             {
@@ -167,7 +197,13 @@ application {
         private async Task InitializeProjectStructure(Versions version, string rootPath)
         {
             Directory.CreateDirectory(rootPath);
-            await File.WriteAllTextAsync(Path.Combine(rootPath, gradleBuildFileName), version == Versions.V1 ? v1GradleBuildFileTemplate : betaGradleBuildFileTemplate);
+            var buildGradleFileContent = version == Versions.V1 ? v1GradleBuildFileTemplate : betaGradleBuildFileTemplate;
+            if (!string.IsNullOrEmpty(_previewLibraryPath))
+                buildGradleFileContent = previewGradleBuildFileTemplate.Replace("--path--", _previewLibraryPath);
+            await File.WriteAllTextAsync(Path.Combine(rootPath, gradleBuildFileName), buildGradleFileContent
+                                                                            .Replace("--deps--", string.IsNullOrEmpty(_previewLibraryPath) ? depsCurrent : depsvNext )
+                                                                            .Replace("--coreversion--", _javaCoreVersion)
+                                                                            .Replace("--libversion--", _javaLibVersion));
             var gradleSettingsFilePath = Path.Combine(rootPath, gradleSettingsFileName);
             if (!File.Exists(gradleSettingsFilePath))
                 await File.WriteAllTextAsync(gradleSettingsFilePath, gradleSettingsFileTemplate);

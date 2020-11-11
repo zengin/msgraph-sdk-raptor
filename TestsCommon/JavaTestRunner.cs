@@ -13,15 +13,18 @@ namespace TestsCommon
 {
     public static class JavaTestRunner
     {
+        private const string importsCurrent = @"import com.microsoft.graph.authentication.IAuthenticationProvider;
+import com.microsoft.graph.models.extensions.IGraphServiceClient;
+import com.microsoft.graph.requests.extensions.GraphServiceClient;";
+        private const string importsVNext = @"import com.microsoft.graph.httpcore.*;
+import com.microsoft.graph.core.IGraphServiceClient;
+import com.microsoft.graph.core.GraphServiceClient;";
         /// <summary>
         /// template to compile snippets in
         /// </summary>
         private const string SDKShellTemplate = @"package com.microsoft.graph.raptor;
-// import com.microsoft.graph.httpcore.*;
-import com.microsoft.graph.authentication.IAuthenticationProvider;
+--imports--
 import com.microsoft.graph.http.IHttpRequest;
-import com.microsoft.graph.models.extensions.IGraphServiceClient;
-import com.microsoft.graph.requests.extensions.GraphServiceClient;
 import java.util.LinkedList;
 import java.io.InputStream;
 import java.util.UUID;
@@ -33,6 +36,7 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import okhttp3.Request;
 import com.microsoft.graph.core.*;
 import com.microsoft.graph.models.extensions.*;
 import com.microsoft.graph.requests.extensions.*;
@@ -43,14 +47,21 @@ public class App
 {
     public static void main(String[] args) throws Exception
     {
-        final IAuthenticationProvider authProvider = new IAuthenticationProvider() {
-            @Override
-            public void authenticateRequest(IHttpRequest request) {
-            }
-        };
+--auth--
         //insert-code-here
     }
 }";
+        private const string authProviderCurrent = @"        final IAuthenticationProvider authProvider = new IAuthenticationProvider() {
+            @Override
+            public void authenticateRequest(IHttpRequest request) {
+            }
+        };";
+        private const string authProvidervNext = @"        final ICoreAuthenticationProvider authProvider = new ICoreAuthenticationProvider() {
+            @Override
+            public Request authenticateRequest(Request request) {
+                return request;
+            }
+        };";
         /// <summary>
         /// matches csharp snippet from C# snippets markdown output
         /// </summary>
@@ -89,11 +100,13 @@ public class App
                 .Replace("\r\n        \r\n", "\r\n\r\n")    // remove indentation added to empty lines
                 .Replace("\t", "    ")                      // do not use tabs
                 .Replace("\r\n\r\n\r\n", "\r\n\r\n");       // do not have two consecutive empty lines
-
-            var codeToCompile = BaseTestRunner.ConcatBaseTemplateWithSnippet(codeSnippetFormatted, SDKShellTemplate);
+            var isCurrentSdk = string.IsNullOrEmpty(testData.JavaPreviewLibPath);
+            var codeToCompile = BaseTestRunner.ConcatBaseTemplateWithSnippet(codeSnippetFormatted, SDKShellTemplate
+                                                                            .Replace("--auth--",  isCurrentSdk ? authProviderCurrent: authProvidervNext)
+                                                                            .Replace("--imports--", isCurrentSdk ? importsCurrent: importsVNext));
 
             // Compile Code
-            var microsoftGraphCSharpCompiler = new MicrosoftGraphJavaCompiler(testData.FileName);
+            var microsoftGraphCSharpCompiler = new MicrosoftGraphJavaCompiler(testData.FileName, testData.JavaPreviewLibPath, testData.JavaLibVersion, testData.JavaCoreVersion);
 
             var jvmRetryAttmptsLeft = 3;
             while (jvmRetryAttmptsLeft > 0)

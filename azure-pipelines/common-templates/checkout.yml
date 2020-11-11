@@ -1,0 +1,9 @@
+steps:
+- checkout: microsoft-graph-docs
+  clean: true
+  fetchDepth: 1
+  persistCredentials: true
+
+- checkout: self
+  clean: true
+  fetchDepth: 1
