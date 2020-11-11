@@ -2,6 +2,13 @@ parameters:
   projectFileName: JavaV1Tests
   runName: 'V1 Java Snippet Compilation Tests'
 steps:
+- task: UseDotNet@2
+  displayName: 'Use .NET Core sdk'
+  inputs:
+    packageType: sdk
+    version: 5.0.100
+    installationPath: $(Agent.ToolsDirectory)/dotnet
+
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
