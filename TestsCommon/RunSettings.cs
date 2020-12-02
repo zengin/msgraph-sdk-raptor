@@ -23,17 +23,18 @@ namespace TestsCommon
             get
             {
                 if (string.IsNullOrEmpty(_javaLibVersion))
+                {
                     return Version == Versions.V1 ? "2.3.2" : "0.1.0-SNAPSHOT";
+                }
                 else
+                {
                     return _javaLibVersion;
+                }
             }
-            set
-            {
-                _javaLibVersion = value;
-            }
+            set => _javaLibVersion = value;
         }
         public string JavaPreviewLibPath { get; init; }
-        private const string dashdash = "---";
+        private const string DashDash = "---";
         public RunSettings() { }
 
         public RunSettings(TestParameters parameters)
@@ -48,7 +49,8 @@ namespace TestsCommon
             var knownFailuresRequested = parameters.Get("KnownFailuresRequested");
 
             var lng = parameters.Get("Language");
-            if (!string.IsNullOrEmpty(lng) && !lng.Contains(dashdash))
+            if (!string.IsNullOrEmpty(lng) && !lng.Contains(DashDash))
+            {
                 Language = lng.ToUpperInvariant() switch
                 {
                     "CSHARP" => Languages.CSharp,
@@ -61,17 +63,25 @@ namespace TestsCommon
                     "OBJECTIVE-C" => Languages.ObjC,
                     _ => Languages.CSharp
                 };
+            }
 
-            if (!string.IsNullOrEmpty(dllPath) && !dllPath.Contains(dashdash))
+            if (!string.IsNullOrEmpty(dllPath) && !dllPath.Contains(DashDash))
             {
                 DllPath = dllPath;
                 if (Language == Languages.CSharp && !File.Exists(dllPath))
+                {
                     throw new ArgumentException("File specified with DllPath in Test.runsettings doesn't exist!");
+                }
             }
-            if (!string.IsNullOrEmpty(versionString) && !versionString.Contains(dashdash))
+            if (!string.IsNullOrEmpty(versionString) && !versionString.Contains(DashDash))
+            {
                 Version = VersionString.GetVersion(versionString);
-            if (!string.IsNullOrEmpty(knownFailuresRequested) && !knownFailuresRequested.Contains(dashdash))
+            }
+
+            if (!string.IsNullOrEmpty(knownFailuresRequested) && !knownFailuresRequested.Contains(DashDash))
+            {
                 KnownFailuresRequested = bool.Parse(knownFailuresRequested);
+            }
 
             JavaCoreVersion = InitializeParameter(parameters, nameof(JavaCoreVersion)) ?? JavaCoreVersion;
             JavaLibVersion = InitializeParameter(parameters, nameof(JavaLibVersion)); // we don't have the Graph version information just yet as it could be provided later with parameter initizaliation
@@ -82,10 +92,14 @@ namespace TestsCommon
         {
             var value = parameters.Get(parameterName);
 
-            if (!string.IsNullOrEmpty(value) && !value.Contains(dashdash))
+            if (!string.IsNullOrEmpty(value) && !value.Contains(DashDash))
+            {
                 return value;
+            }
             else
+            {
                 return null;
+            }
         }
     }
 }
