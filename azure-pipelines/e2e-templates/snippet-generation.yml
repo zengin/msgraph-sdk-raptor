@@ -39,4 +39,4 @@ steps:
       $apidoctorPath = (Get-ChildItem $apidoctorBinDirectory apidoc.exe -Recurse).FullName
       Write-Host "Path to apidoctor tool: $apidoctorPath"
 
-      & $apidoctorPath generate-snippets --ignore-warnings --path . --snippet-generator-path $snippetGeneratorPath --lang $(snippetLanguages) --git-path "C:\Program Files\Git\bin\git.exe"
+      & $apidoctorPath generate-snippets --ignore-warnings --path . --snippet-generator-path $snippetGeneratorPath --lang $(snippetLanguages) --git-path "C:\Program Files\Git\bin\git.exe" --custom-metadata-path $(Build.SourcesDirectory)\metadata\metadata.xml
