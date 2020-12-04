@@ -1,11 +1,9 @@
 # updates prerelease dependencies for packages listed below as $packages
 # expected to be run where working directory is the root of the repo
 
-Write-Host "Working directory: $PWD"
-
 $packages = "Microsoft.Graph.Beta","Microsoft.Graph.Auth"
 
-$projectFile = "msgraph-sdk-raptor-compiler-lib\msgraph-sdk-raptor-compiler-lib.csproj"
+$projectFile = (Resolve-Path "msgraph-sdk-raptor-compiler-lib\msgraph-sdk-raptor-compiler-lib.csproj").Path
 
 foreach ($package in $packages)
 {
