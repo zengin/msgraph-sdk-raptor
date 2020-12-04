@@ -26,10 +26,10 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           commit-message: Update prerelease dependencies
-          committer: GitHub <noreply@github.com>
+          committer: Microsoft Graph DevX Tooling <GraphTooling@service.microsoft.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           signoff: false
-          branch: example-patches
+          branch: prerelease-updates
           delete-branch: true
           title: 'Updated prerelease dependencies'
           body: |
