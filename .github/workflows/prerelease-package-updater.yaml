@@ -30,6 +30,7 @@ jobs:
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           signoff: false
           branch: prerelease-updates
+          branch-suffix: timestamp
           delete-branch: true
           title: 'Updated prerelease dependencies'
           body: |
