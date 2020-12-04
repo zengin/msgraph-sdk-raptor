@@ -3,7 +3,7 @@
 
 $packages = "Microsoft.Graph.Beta","Microsoft.Graph.Auth"
 
-$projectFile = (Resolve-Path "msgraph-sdk-raptor-compiler-lib\msgraph-sdk-raptor-compiler-lib.csproj").Path
+$projectFile = "msgraph-sdk-raptor-compiler-lib/msgraph-sdk-raptor-compiler-lib.csproj"
 
 foreach ($package in $packages)
 {
