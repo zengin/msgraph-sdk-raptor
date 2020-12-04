@@ -38,13 +38,16 @@ jobs:
           delete-branch: true
           title: 'Updated prerelease dependencies'
           body: |
-            Please review if only prerelease packages are updated to newer versions
+            This is an automated PR.
+            Please review if only prerelease packages are updated to newer versions.
           labels: |
             prerelease update
           reviewers: |
-            zengin
+            peombwa
             baywet
             MIchaelMainer
+            nikithauc
+            ddyett
           draft: false
 
       - name: Check outputs
