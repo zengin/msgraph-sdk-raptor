@@ -37,7 +37,10 @@ jobs:
             Please review if only prerelease packages are updated to newer versions
           labels: |
             prerelease update
-          reviewers: zengin
+          reviewers: |
+            zengin
+            baywet
+            MIchaelMainer
           draft: false
 
       - name: Check outputs
