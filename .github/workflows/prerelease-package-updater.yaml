@@ -3,6 +3,8 @@
 name: "update prerelease packages"
 
 on:
+  repository_dispatch:
+    types: update-prerelease-packages
   schedule:
     - cron: "0 12 * * *" # everyday at noon
 
