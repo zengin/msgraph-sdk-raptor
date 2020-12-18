@@ -2,37 +2,31 @@
 
 trigger: none # disable triggers based on commits
 
-variables:
-  cond: true
-
 pool:
   vmImage: 'ubuntu-latest'
 
 jobs:
-  - job: A
-    condition: eq(variables['cond'], true)
+  - job: beta_metadata
     steps:
       - pwsh: |
-          Write-Host "Job A1"
-        displayName: "Job A1"
-      - pwsh: |
-          Write-Host "Job A2"
-        displayName: "Job A2"
-  - job: B
-    condition: succeeded('A')
-    dependsOn:
-      - A
+          Write-Host "Create Beta Metadata"
+        displayName: Create Beta Metadata
+  - job: v1_metadata
     steps:
       - pwsh: |
-          Write-Host "Job B1"
-        displayName: "Job B1"
-      - pwsh: |
-          Write-Host "Job B2"
-        displayName: "Job B2"
-  - job: C
-    dependsOn:
-    - B
+          Write-Error "Create v1 Metadata"
+        displayName: Create v1 Metadata
+  - job: beta_generation
+    dependsOn: beta_metadata
+    condition: succeeded('beta_metadata')
     steps:
       - pwsh: |
-          Write-Host "Job C1"
-        displayName: "Job C2"
+          Write-Host "Generate Beta SDK"
+        displayName: Generate Beta SDK
+  - job: v1_generation
+    dependsOn: v1_metadata
+    condition: succeeded('v1_metadata')
+    steps:
+      - pwsh: |
+          Write-Host "Generate V1 SDK"
+        displayName: Generate V1 SDK
