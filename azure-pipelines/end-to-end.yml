@@ -6,42 +6,33 @@ variables:
   cond: true
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage: 'ubuntu-latest'
 
 jobs:
   - job: A
     condition: eq(variables['cond'], true)
     steps:
-      - task: PowerShell@2
+      - pwsh: |
+          Write-Host "Job A1"
         displayName: "Job A1"
-        inputs:
-          targetType: 'inline'
-          script: 'Write-Host "Job A1"'
-      - task: PowerShell@2
+      - pwsh: |
+          Write-Host "Job A2"
         displayName: "Job A2"
-        inputs:
-          targetType: 'inline'
-          script: 'Write-Host "Job A2"'
   - job: B
-    condition: ne(variables['cond'], true)
+    condition: succeeded('A')
+    dependsOn:
+      - A
     steps:
-      - task: PowerShell@2
+      - pwsh: |
+          Write-Host "Job B1"
         displayName: "Job B1"
-        inputs:
-          targetType: 'inline'
-          script: 'Write-Host "Job B1"'
-      - task: PowerShell@2
-        displayName: "Job A2"
-        inputs:
-          targetType: 'inline'
-          script: 'Write-Host "Job B2"'
+      - pwsh: |
+          Write-Host "Job B2"
+        displayName: "Job B2"
   - job: C
     dependsOn:
-    - A
     - B
     steps:
-      - task: PowerShell@2
-        displayName: "Job C"
-        inputs:
-          targetType: 'inline'
-          script: 'Write-Host "Job C"'
+      - pwsh: |
+          Write-Host "Job C1"
+        displayName: "Job C2"
