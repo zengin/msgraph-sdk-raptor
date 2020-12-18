@@ -5,6 +5,13 @@ trigger: none # disable triggers based on commits
 pool:
   vmImage: 'ubuntu-latest'
 
+parameters:
+  - name: test
+    type: enum
+    values:
+    - test1
+    - test2
+
 jobs:
   - job: beta_metadata
     steps:
