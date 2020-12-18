@@ -7,10 +7,7 @@ pool:
 
 parameters:
   - name: test
-    type: enum
-    values:
-    - test1
-    - test2
+    type: step
 
 jobs:
   - job: beta_metadata
