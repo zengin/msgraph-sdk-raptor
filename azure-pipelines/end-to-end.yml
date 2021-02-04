@@ -13,6 +13,10 @@ jobs:
   - job: beta_metadata
     steps:
       - pwsh: |
+          if ($env:Build_Reason -ne 'Schedule')
+          {
+            Write-Error "Non-scheduled runs are not allowed on this pipeline"
+          }
           Write-Host "Create Beta Metadata"
         displayName: Create Beta Metadata
   - job: v1_metadata
